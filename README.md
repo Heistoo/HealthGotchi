@@ -1,2 +1,2 @@
 # HealthGotchi
-## Second College project throughout the semester.
+Second College project throughout the semester.
