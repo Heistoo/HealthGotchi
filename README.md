@@ -1,6 +1,8 @@
 # HealthGotchi
 Second College project throughout the semester.
 
+Game based on Pokemon with subjects and functions related to a healthy lifestyle.
+
 ## Basic Information
 | Languages to be used  |
 | ------------- |
