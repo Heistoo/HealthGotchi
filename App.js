@@ -1,6 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, SafeAreaView, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
 
+import {SVG} from 'react-native-svg';
+import FB from './assets/facebookicon.svg';
+
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
@@ -17,7 +20,8 @@ export default function App() {
         <TouchableOpacity onPress={() => console.log("Registrado")}>
         <Text style={styles.text}>Registrar</Text>
         </TouchableOpacity>
-        <Image source={require("./assets/facebook2.png")} style={styles.imageLogo}/>
+        <FB style={styles.imageLogo}/>
+        {/* <Image source={require("./assets/facebookicon.svg")} style={styles.imageLogo}/> */}
         <Image source={require("./assets/social2.png")} style={styles.imageLogo2}/>
       </ImageBackground>      
     </SafeAreaView>
