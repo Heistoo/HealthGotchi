@@ -1,6 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, SafeAreaView, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
+
+// import stylesheet from index file
 import styles from '../src/index.js';
+
+// package for svg images
 import {SVG} from 'react-native-svg';
 import FB from './assets/facebookicon.svg';
 
