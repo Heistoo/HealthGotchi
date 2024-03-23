@@ -22,12 +22,10 @@ export default function App() {
           <View style={styles.containerLogin}>
             <Text style={styles.placeholder}>Nome:</Text>
             <TextInput
-            style={styles.input}
-            placeholder="Nome do Usuário:"/>
+            style={styles.input}/>
             <Text style={styles.placeholder}>Senha:</Text>
             <TextInput
             style={styles.input}
-            placeholder="Senha:"
             secureTextEntry={true}/>
             <View style={styles.buttoncontainer}>
               <TouchableOpacity onPress={() => console.log("Registrado")}>
