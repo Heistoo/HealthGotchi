@@ -14,22 +14,29 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground source={require("./assets/oip1.png")} resizeMode="cover" style={styles.image}>
-        <Pika style={styles.pika}/>
-        <Text style={styles.titulo}>HealthGotchi</Text>
-        <TextInput
-        style={styles.input}
-        placeholder="Nome do Usuário:"/>
-      <TextInput
-        style={styles.input}
-        placeholder="Senha:"
-        secureTextEntry={true}/>
-        <View style={styles.buttoncontainer}>
-          <TouchableOpacity onPress={() => console.log("Registrado")}>
-            <Text style={styles.text}>Registrar</Text>
-          </TouchableOpacity>
+        <View style={styles.titleContainer}>
+          <Pika style={styles.pika}/>
+          <Text style={styles.titulo}>HealthGotchi</Text>
         </View>
-        <FB style={styles.imageLogo}/>
-        <Social2 style={styles.imageLogo2}/>
+        <View style={styles.mainContainer}>
+          <View style={styles.containerLogin}>
+            <Text>Nome:</Text>
+            <TextInput
+            style={styles.input}
+            placeholder="Nome do Usuário:"/>
+            <TextInput
+            style={styles.input}
+            placeholder="Senha:"
+            secureTextEntry={true}/>
+            <View style={styles.buttoncontainer}>
+              <TouchableOpacity onPress={() => console.log("Registrado")}>
+                <Text style={styles.text}>Registrar</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <FB style={styles.imageLogo}/>
+          <Social2 style={styles.imageLogo2}/>
+        </View>
       </ImageBackground>      
     </SafeAreaView>
   );
