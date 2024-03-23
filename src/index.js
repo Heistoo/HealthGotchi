@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     },
     containerLogin:{
       top:'10%',
+      alignItems: 'center',
     },
     input: {
       height: 40,
@@ -51,19 +52,19 @@ const styles = StyleSheet.create({
       // position:"relative",
     },
     buttoncontainer:{
-      alignItems: 'center',
+      backgroundColor:"#7A5BF6",
+      borderRadius:100,
+      alignItems:"center",
+      justifyContent: 'center',
+      width:200,
+      height:40,
+      marginTop: 20,
     },
     text:{
-      backgroundColor:"#7A5BF6",
       fontFamily:"Roboto",
-      borderRadius:50,
       textAlign:"center",
       color:"#111111",
-      width:300,
-      height:50,
-      marginTop: 20,
-      fontSize:30,
-      position:"relative",
+      fontSize: 20,
     },
     placeholder:{
       color:"#111111",
