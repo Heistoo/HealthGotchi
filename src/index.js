@@ -1,10 +1,20 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-    container: {
+  titleContainer:{
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: '20%',
+    marginLeft: '-13%',
+  },  
+  container: {
       flex: 1,
       display: 'flex',
       justifyContent: 'center',
+    },
+    mainContainer: {
+      flex:1,
     },
     image: {
       flex: 1,
@@ -17,21 +27,23 @@ const styles = StyleSheet.create({
       lineHeight: 84,
       textAlign: 'center',
       position:'relative',
-      top:'-26%',
     },
     pika:{
       position:'relative',
-      top:'-17%',
-      left:'10%',
-      width:50
+      left:'52%',
+      top:'-2%',
+      width:50,
+      zIndex: -1,
+    },
+    containerLogin:{
+      top:'10%',
     },
     input: {
       height: 40,
       margin: 12,
       borderWidth: 1,
       padding: 10,
-      position:"relative",
-      top:"-15%",
+      // position:"relative",
     },
     buttoncontainer:{
       alignItems: 'center',
@@ -46,7 +58,6 @@ const styles = StyleSheet.create({
       height:50,
       fontSize:30,
       position:"relative",
-      top:"-150%",
     },
     imageLogo:{
       position:"absolute",
