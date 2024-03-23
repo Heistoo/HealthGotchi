@@ -20,10 +20,10 @@ export default function App() {
         </View>
         <View style={styles.mainContainer}>
           <View style={styles.containerLogin}>
-            <Text style={styles.placeholder}>Nome:</Text>
+            <Text style={styles.placeholder}>Nome do Usuário</Text>
             <TextInput
             style={styles.input}/>
-            <Text style={styles.placeholder}>Senha:</Text>
+            <Text style={styles.placeholder2}>Senha</Text>
             <TextInput
             style={styles.input}
             secureTextEntry={true}/>

@@ -40,14 +40,14 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
     input: {
-      height: 40,
+      height: 30,
       // margin: 12,
       // borderWidth: 1,
       width: 310,
       marginTop : -2,
+      marginBottom: 20,
       borderBottomColor: '#111111',
       borderBottomWidth: 1,
-      padding: 10,
       // position:"relative",
     },
     buttoncontainer:{
@@ -68,8 +68,15 @@ const styles = StyleSheet.create({
     placeholder:{
       color:"#000000",
       opacity:0.4,
-      top: 8,
-      left: -130,
+      top: 0,
+      left: -103,
+
+    },
+    placeholder2:{
+      color:"#000000",
+      opacity:0.4,
+      top: 0,
+      left: -135,
 
     },
     underline: {
