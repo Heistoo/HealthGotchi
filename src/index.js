@@ -59,6 +59,12 @@ const styles = StyleSheet.create({
       fontSize:30,
       position:"relative",
     },
+    placeholder:{
+      color:"#111111",
+      left: 15,
+      top: 7,
+
+    },
     imageLogo:{
       position:"absolute",
       left:"15%",
