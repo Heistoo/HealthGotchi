@@ -7,6 +7,7 @@ import styles from '../src/index.js';
 // package for svg images
 import {SVG} from 'react-native-svg';
 import FB from './assets/facebookicon.svg';
+import Social2 from './assets/social2.svg'
 
 export default function App() {
   return (
@@ -25,8 +26,7 @@ export default function App() {
         <Text style={styles.text}>Registrar</Text>
         </TouchableOpacity>
         <FB style={styles.imageLogo}/>
-        {/* <Image source={require("./assets/facebookicon.svg")} style={styles.imageLogo}/> */}
-        <Image source={require("./assets/social2.png")} style={styles.imageLogo2}/>
+        <Social2 style={styles.imageLogo2}/>
       </ImageBackground>      
     </SafeAreaView>
   );
