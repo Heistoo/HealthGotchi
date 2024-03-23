@@ -12,11 +12,12 @@ const styles = StyleSheet.create({
     },
     titulo: {
       color: 'black',
+      fontFamily: 'Roboto',
       fontSize: 42,
       lineHeight: 84,
       textAlign: 'center',
       position:'relative',
-      top:'-24%',
+      top:'-26%',
     },
     pika:{
       position:'relative',
@@ -37,6 +38,7 @@ const styles = StyleSheet.create({
     },
     text:{
       backgroundColor:"#7A5BF6",
+      fontFamily:"Roboto",
       borderRadius:50,
       textAlign:"center",
       color:"#111111",
