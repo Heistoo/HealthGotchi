@@ -16,6 +16,10 @@ const styles = StyleSheet.create({
     mainContainer: {
       flex:1,
     },
+    section: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
     image: {
       flex: 1,
       justifyContent: 'center',
@@ -77,7 +81,9 @@ const styles = StyleSheet.create({
       opacity:0.4,
       top: 0,
       left: -135,
-
+    },
+    checkbox:{
+      margin: 8,
     },
     underline: {
       height: 1, // This will be the "thickness" of your underline
