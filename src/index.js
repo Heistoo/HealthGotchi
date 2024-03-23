@@ -3,6 +3,8 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
     container: {
       flex: 1,
+      display: 'flex',
+      justifyContent: 'center',
     },
     image: {
       flex: 1,
@@ -30,16 +32,18 @@ const styles = StyleSheet.create({
       position:"relative",
       top:"-15%",
     },
+    buttoncontainer:{
+      alignItems: 'center',
+    },
     text:{
-      fontWeight:"bold",
-      backgroundColor:"lightblue",
+      backgroundColor:"#7A5BF6",
       borderRadius:50,
       textAlign:"center",
+      color:"#111111",
       width:300,
       height:50,
       fontSize:30,
       position:"relative",
-      left:"14%",
       top:"-150%",
     },
     imageLogo:{

@@ -22,9 +22,11 @@ export default function App() {
         style={styles.input}
         placeholder="Senha:"
         secureTextEntry={true}/>
-        <TouchableOpacity onPress={() => console.log("Registrado")}>
-        <Text style={styles.text}>Registrar</Text>
-        </TouchableOpacity>
+        <View style={styles.buttoncontainer}>
+          <TouchableOpacity onPress={() => console.log("Registrado")}>
+            <Text style={styles.text}>Registrar</Text>
+          </TouchableOpacity>
+        </View>
         <FB style={styles.imageLogo}/>
         <Social2 style={styles.imageLogo2}/>
       </ImageBackground>      
