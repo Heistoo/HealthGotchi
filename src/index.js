@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
     },
     pika:{
       position:'relative',
-      top:'-16%',
-      left:'17%',
+      top:'-17%',
+      left:'10%',
       width:50
     },
     input: {
