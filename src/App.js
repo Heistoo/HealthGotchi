@@ -8,12 +8,13 @@ import styles from '../src/index.js';
 import {SVG} from 'react-native-svg';
 import FB from './assets/facebookicon.svg';
 import Social2 from './assets/social2.svg'
+import Pika from './assets/pikachu.svg';
 
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground source={require("./assets/oip1.png")} resizeMode="cover" style={styles.image}>
-        <Image source={require("./assets/pikachu.png")} style={styles.pika}/>
+        <Pika style={styles.pika}/>
         <Text style={styles.titulo}>HealthGotchi</Text>
         <TextInput
         style={styles.input}
