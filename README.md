@@ -1,13 +1,14 @@
-# HealthGotchi
-Second College project throughout the semester.
+# HealthGotchi - WIP
+3rd College project.
 
-Game based on Pokemon with subjects and functions related to a healthy lifestyle.
+Reactjs Game based on Pokemon with subjects, functions and gameplay following on a healthy lifestyle. 
+Will utilize GPS functions such as Google Maps alongside with having a diverse collection of Pokemon, calendar with daily and weekly activities for the user to work with and more.
 
 ## Basic Information
-| Languages to be used  |
+| Languages being utilized  |
 | ------------- |
 | React  |
-| AWS  |
+| AWS for back-end  |
 | JavaScript  |
 | Node.js  |
 
@@ -16,7 +17,7 @@ Game based on Pokemon with subjects and functions related to a healthy lifestyle
 | Name     | Role |
 | :--- | :--- |
 | [Allan Kenzo](https://github.com/AllanKenzo) | Back-End |
-| [Cesar Kumakura](https://github.com/CesarKumakura) | Fullstack |
-| [Gabriel/Lin](https://github.com/Heistoo) | Fullstack / Software Manager |
+| [Cesar Kumakura](https://github.com/CesarKumakura) | Docs |
+| [Gabriel/Lin](https://github.com/Heistoo) | Front-End / Software Manager |
 | [Felipe](https://github.com/felip-000) | Front-End |
-| [Lucas Kenz](https://github.com/LucasKenz) | Designer / Project Manager |
+| [Lucas Kenz](https://github.com/LucasKenz) | Designer / Project Manager / Back-End |
