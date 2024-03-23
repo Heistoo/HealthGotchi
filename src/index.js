@@ -44,8 +44,7 @@ const styles = StyleSheet.create({
       // margin: 12,
       // borderWidth: 1,
       width: 310,
-      marginLeft: 20,
-      outline: 'none',
+      marginTop : -2,
       borderBottomColor: '#111111',
       borderBottomWidth: 1,
       padding: 10,
@@ -67,9 +66,10 @@ const styles = StyleSheet.create({
       fontSize: 20,
     },
     placeholder:{
-      color:"#111111",
-      left: 15,
-      top: 7,
+      color:"#000000",
+      opacity:0.4,
+      top: 8,
+      left: -130,
 
     },
     underline: {
