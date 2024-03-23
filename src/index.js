@@ -40,8 +40,13 @@ const styles = StyleSheet.create({
     },
     input: {
       height: 40,
-      margin: 12,
-      borderWidth: 1,
+      // margin: 12,
+      // borderWidth: 1,
+      width: 310,
+      marginLeft: 20,
+      outline: 'none',
+      borderBottomColor: '#111111',
+      borderBottomWidth: 1,
       padding: 10,
       // position:"relative",
     },
@@ -65,6 +70,12 @@ const styles = StyleSheet.create({
       left: 15,
       top: 7,
 
+    },
+    underline: {
+      height: 1, // This will be the "thickness" of your underline
+      width: '50%', // Adjust this as needed
+      backgroundColor: '#111111', // This will be the color of your underline
+      alignSelf: 'center', // This will center the underline
     },
     imageLogo:{
       position:"absolute",
