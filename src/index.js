@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
     },
     containerIcon:{
       flexDirection: 'row',
+      marginTop: 60,
     },
     text:{
       fontFamily:"Roboto",
@@ -103,6 +104,7 @@ const styles = StyleSheet.create({
     },
     imageLogo2:{
       position:"relative",
+      marginLeft: 80,
       // left:"70%",
       // top:"70%",
       // width:"21%",
