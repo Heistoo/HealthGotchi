@@ -1,9 +1,12 @@
 {
   "expo": {
+    "main": "expo-router/entry",
+    "scheme": "healthgotchi",
     "name": "HealthGotchi",
     "slug": "HealthGotchi",
     "version": "1.0.0",
     "orientation": "portrait",
+    "jsEngine": "hermes",
     "icon": "./src/assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
