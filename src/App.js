@@ -4,7 +4,7 @@
 
 import { StatusBar } from 'expo-status-bar';
 import CheckBox from 'expo-checkbox';
-import { StyleSheet, Text, View, Image, SafeAreaView, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, SafeAreaView, ImageBackground, TextInput, TouchableOpacity, Linking } from 'react-native';
 import React, { useState } from 'react';
 
 // import stylesheet from index file
@@ -15,10 +15,31 @@ import {SVG} from 'react-native-svg';
 import FB from './assets/facebookicon.svg';
 import Social2 from './assets/social2.svg'
 import Pika from './assets/pikachu.svg';
+import Login from './Teste.js';
 
-export default function App() {
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
+
+// Navigation tools
+export default function Main() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="App" component={App} options={{headerShown: false}}/>
+        <Stack.Screen name="Teste" component={Login} options={{headerShown: false}}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+function App({ navigation }) {
   const [isChecked, setChecked] = React.useState(false);
-
+  // on press = goes to Login page
+  const handleLinkPress = () => {
+    navigation.navigate('Teste');
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground source={require("./assets/oip1.png")} resizeMode="cover" style={styles.image}>
@@ -50,6 +71,9 @@ export default function App() {
                 <Text style={styles.text}>Registrar</Text>
               </TouchableOpacity>
             </View>
+            <TouchableOpacity onPress={handleLinkPress}>
+              <Text>Ir para a tela de login</Text>
+            </TouchableOpacity>
             <View style={styles.containerIcon}>
               <FB style={styles.imageLogo}/>
               <Social2 style={styles.imageLogo2}/>
@@ -57,6 +81,6 @@ export default function App() {
           </View>
         </View>
       </ImageBackground>      
-    </SafeAreaView>
+    </SafeAreaView> 
   );
 }
