@@ -15,7 +15,7 @@ import {SVG} from 'react-native-svg';
 import FB from './assets/facebookicon.svg';
 import Social2 from './assets/social2.svg'
 import Pika from './assets/pikachu.svg';
-import Login from './Teste.js';
+import Login from './Login.js';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -28,7 +28,7 @@ export default function Main() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="App" component={App} options={{headerShown: false}}/>
-        <Stack.Screen name="Teste" component={Login} options={{headerShown: false}}/>
+        <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -38,7 +38,7 @@ function App({ navigation }) {
   const [isChecked, setChecked] = React.useState(false);
   // on press = goes to Login page
   const handleLinkPress = () => {
-    navigation.navigate('Teste');
+    navigation.navigate('Login');
   };
   return (
     <SafeAreaView style={styles.container}>
