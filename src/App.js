@@ -4,7 +4,7 @@
 
 import { StatusBar } from 'expo-status-bar';
 import CheckBox from 'expo-checkbox';
-import { StyleSheet, Text, View, Image, SafeAreaView, ImageBackground, TextInput, TouchableOpacity, Linking } from 'react-native';
+import { Text, View, Image, SafeAreaView, ImageBackground, TextInput, TouchableOpacity, Linking } from 'react-native';
 import React, { useState } from 'react';
 
 // import stylesheet from index file
