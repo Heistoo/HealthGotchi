@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
       borderRadius: 30,
       borderWidth: 1, 
       borderColor: '#FFF', 
-      marginTop: 130, 
+      marginTop: 100, 
       paddingVertical: 30, 
       paddingBottom: 200,
       },
@@ -73,6 +73,17 @@ const styles = StyleSheet.create({
       borderBottomColor: '#111111',
       borderBottomWidth: 1,
       // position:"relative",
+    },
+    input2: {
+      height: 40,
+      marginTop : 5,
+      marginBottom: 20,
+      width:'90%',
+      backgroundColor: '#F2F2F2',
+    },
+    roundedInput: {
+      borderRadius: 50,
+      paddingHorizontal: 15,
     },
     buttoncontainer:{
       backgroundColor:"#7A5BF6",
