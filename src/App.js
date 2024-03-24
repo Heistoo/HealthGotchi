@@ -57,15 +57,6 @@ function App({ navigation }) {
             <TextInput
             style={styles.input}
             secureTextEntry={true}/>
-            <View style={styles.section}>
-              <CheckBox 
-                style={styles.checkbox}
-                value={isChecked}
-                onValueChange={setChecked}
-                color={isChecked ? '#4630EB' : undefined}
-              />
-              <Text>Lembrar de mim</Text>
-            </View>
             <View style={styles.buttoncontainer}>
               <TouchableOpacity onPress={() => console.log("Registrado")}>
                 <Text style={styles.text}>Registrar</Text>
