@@ -63,7 +63,7 @@ function App({ navigation }) {
               </TouchableOpacity>
             </View>
             <TouchableOpacity onPress={handleLinkPress}>
-              <Text>Ir para a tela de login</Text>
+              <Text style={{color: '#4D73FA'}}>Ir para a tela de login</Text>
             </TouchableOpacity>
             <View style={styles.containerIcon}>
               <FB style={styles.imageLogo}/>

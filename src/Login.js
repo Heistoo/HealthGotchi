@@ -45,7 +45,7 @@ const Login = () => {
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity onPress={handleLinkPress}>
-                            <Text>Registrar-se</Text>
+                            <Text style={{color: '#4D73FA'}}>Registrar-se</Text>
                     </TouchableOpacity>
                     <View style={styles.containerIcon}>
                         <FB style={styles.imageLogo}/>
