@@ -50,9 +50,11 @@ export default function App() {
                 <Text style={styles.text}>Registrar</Text>
               </TouchableOpacity>
             </View>
+            <View style={styles.containerIcon}>
+              <FB style={styles.imageLogo}/>
+              <Social2 style={styles.imageLogo2}/>
+            </View>
           </View>
-          <FB style={styles.imageLogo}/>
-          <Social2 style={styles.imageLogo2}/>
         </View>
       </ImageBackground>      
     </SafeAreaView>

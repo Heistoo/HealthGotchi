@@ -63,6 +63,9 @@ const styles = StyleSheet.create({
       height:40,
       marginTop: 20,
     },
+    containerIcon:{
+      flexDirection: 'row',
+    },
     text:{
       fontFamily:"Roboto",
       textAlign:"center",
@@ -92,16 +95,16 @@ const styles = StyleSheet.create({
       alignSelf: 'center', // This will center the underline
     },
     imageLogo:{
-      position:"absolute",
-      left:"15%",
-      top:"70%",
+      position:"relative",
+      // left:"15%",
+      // top:"70%",
       // width:"21%",
       // height:"10%",
     },
     imageLogo2:{
-      position:"absolute",
-      left:"70%",
-      top:"70%",
+      position:"relative",
+      // left:"70%",
+      // top:"70%",
       // width:"21%",
       // height:"10%",
     }
