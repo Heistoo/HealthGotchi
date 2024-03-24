@@ -24,11 +24,11 @@ const Login = () => {
                 <View style={styles.containerLoginBox}>
                     <Text style={styles.placeholder}>Nome do Usuário</Text>
                     <TextInput
-                    style={styles.input}/>
+                    style={[styles.input2, styles.roundedInput]}/>
                     <Text style={styles.placeholder2}>Senha</Text>
                     
                     <TextInput
-                    style={styles.input}
+                    style={[styles.input2, styles.roundedInput]}
                     secureTextEntry={true}/>
                     <View style={styles.section}>
                         <CheckBox 
