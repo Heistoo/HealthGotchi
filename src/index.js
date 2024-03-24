@@ -13,6 +13,12 @@ const styles = StyleSheet.create({
       display: 'flex',
       justifyContent: 'center',
     },
+    container2: {
+      flex: 1,
+      display: 'flex',
+      justifyContent: 'center',
+      backgroundColor: '#50FC95',
+    },
     mainContainer: {
       flex:1,
     },
@@ -43,10 +49,18 @@ const styles = StyleSheet.create({
       top:'10%',
       alignItems: 'center',
     },
+    containerLoginBox:{
+      alignItems: 'center',
+      backgroundColor: '#FFF',
+      borderRadius: 30,
+      borderWidth: 1, 
+      borderColor: '#FFF', 
+      marginTop: 130, 
+      paddingVertical: 30, 
+      paddingBottom: 200,
+      },
     input: {
       height: 30,
-      // margin: 12,
-      // borderWidth: 1,
       width: 310,
       marginTop : -2,
       marginBottom: 20,
