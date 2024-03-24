@@ -7,7 +7,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: '20%',
     marginLeft: '-13%',
-  },  
+  },
+  titleContainer2:{
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: '20%',
+  },
   container: {
       flex: 1,
       display: 'flex',

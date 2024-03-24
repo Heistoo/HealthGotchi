@@ -15,8 +15,9 @@ const Login = () => {
     };
 
     return (
+        // to do: linear gradient expo
         <SafeAreaView style={styles.container2}>
-            <View style={styles.titleContainer}>
+            <View style={styles.titleContainer2}>
                 <Text style={styles.titulo}>HealthGotchi</Text>
             </View>
             <View style={styles.mainContainer}>
