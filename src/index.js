@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
+  // Register Page
   titleContainer:{
     display: 'flex',
     flexDirection: 'row',
@@ -8,17 +9,20 @@ const styles = StyleSheet.create({
     marginTop: '20%',
     marginLeft: '-13%',
   },
+  // Login Page
   titleContainer2:{
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: '20%',
   },
+  // Register Page
   container: {
       flex: 1,
       display: 'flex',
       justifyContent: 'center',
     },
+    // Login Page
     container2: {
       flex: 1,
       display: 'flex',
@@ -55,6 +59,7 @@ const styles = StyleSheet.create({
       top:'10%',
       alignItems: 'center',
     },
+    // Login Page
     containerLoginBox:{
       alignItems: 'center',
       backgroundColor: '#FFF',
@@ -74,6 +79,7 @@ const styles = StyleSheet.create({
       borderBottomWidth: 1,
       // position:"relative",
     },
+    // Login page (roundedI and input2)
     input2: {
       height: 40,
       marginTop : 5,
