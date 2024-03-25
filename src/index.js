@@ -47,13 +47,14 @@ const styles = StyleSheet.create({
       lineHeight: 84,
       textAlign: 'center',
       position:'relative',
+      zIndex: 1,
     },
     pika:{
       position:'relative',
       left:'52%',
       top:'-2%',
       width:50,
-      zIndex: -1,
+      zIndex: 1,
     },
     containerLogin:{
       top:'10%',
