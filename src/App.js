@@ -46,14 +46,15 @@ export default function Main() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="App" component={App} options={{headerShown: false}}/>
+        <Stack.Screen name="App" component={AppScreen} options={{headerShown: false}}/>
         <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+}registerRootComponent(Main);
 
-function App({ navigation }) {
+
+function AppScreen({ navigation }) {
   //checkbox state
   const [isChecked, setChecked] = React.useState(false);
   // on press = goes to Login page
@@ -95,4 +96,3 @@ function App({ navigation }) {
     </SafeAreaView> 
   );
 }
-registerRootComponent(App); 
