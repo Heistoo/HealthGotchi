@@ -5,7 +5,7 @@
 import { StatusBar } from 'expo-status-bar';
 import CheckBox from 'expo-checkbox';
 import { Text, View, Image, SafeAreaView, ImageBackground, TextInput, TouchableOpacity, Linking } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // import stylesheet from index file
 import styles from '../src/index.js';
@@ -21,9 +21,27 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
-
+//Image assets
+const images = {
+  'oip1': require('./assets/oip1.png'),
+}
+// Preload image cache
+function loadImage(images){
+  return Promise.all(Object.keys(images).map((i) => {
+    let img = {
+      ...Image.resolveAssetSource(images[i]),
+      cache:'force-cache'
+    };
+    return Image.prefetch(img.uri);
+  }))
+}
 // Navigation tools
 export default function Main() {
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+
+  useEffect(() => {
+    loadImage(images).then(() => setImagesLoaded(true));
+  }, []);
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -35,6 +53,7 @@ export default function Main() {
 }
 
 function App({ navigation }) {
+  //checkbox state
   const [isChecked, setChecked] = React.useState(false);
   // on press = goes to Login page
   const handleLinkPress = () => {
@@ -42,7 +61,7 @@ function App({ navigation }) {
   };
   return (
     <SafeAreaView style={styles.container}>
-      <ImageBackground source={require("./assets/oip1.png")} resizeMode="cover" style={styles.image}>
+      <ImageBackground source={images['oip1']} resizeMode="cover" style={styles.image}>
         <View style={styles.titleContainer}>
           <Pika style={styles.pika}/>
           <Text style={styles.titulo}>HealthGotchi</Text>
