@@ -3,6 +3,7 @@
 // "'../../src/App';"
 
 import { StatusBar } from 'expo-status-bar';
+import { registerRootComponent } from 'expo';
 import CheckBox from 'expo-checkbox';
 import { Text, View, Image, SafeAreaView, ImageBackground, TextInput, TouchableOpacity, Linking } from 'react-native';
 import React, { useState, useEffect } from 'react';
@@ -94,3 +95,4 @@ function App({ navigation }) {
     </SafeAreaView> 
   );
 }
+registerRootComponent(App); 
