@@ -40,7 +40,7 @@ const Login = () => {
                         <Text>Lembrar de mim</Text>
                     </View>
                     <View style={styles.buttoncontainer}>
-                        <TouchableOpacity onPress={() => console.log("Logado")}>
+                        <TouchableOpacity onPress={() => {navigation.navigate('Jogo');}}> {/* Not working */}
                             <Text style={styles.text}>Login</Text>
                         </TouchableOpacity>
                     </View>

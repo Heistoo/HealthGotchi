@@ -147,7 +147,15 @@ const styles = StyleSheet.create({
       // top:"70%",
       // width:"21%",
       // height:"10%",
-    }
+    },
+    // Jogo Page
+    background: {
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      top: 0,
+      height: 300,
+    },
   });
 
   export default styles;

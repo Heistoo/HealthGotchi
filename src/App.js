@@ -17,6 +17,7 @@ import FB from './assets/facebookicon.svg';
 import Social2 from './assets/social2.svg'
 import Pika from './assets/pikachu.svg';
 import Login from './Login.js';
+import Jogo from './Jogo.js';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -48,6 +49,7 @@ export default function Main() {
       <Stack.Navigator>
         <Stack.Screen name="App" component={AppScreen} options={{headerShown: false}}/>
         <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
+        <Stack.Screen name="Jogo" component={Jogo} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
