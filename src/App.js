@@ -20,6 +20,7 @@ import Login from './Login.js';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { screensEnabled } from 'react-native-screens';
 
 const Stack = createStackNavigator();
 //Image assets
@@ -58,8 +59,8 @@ function AppScreen({ navigation }) {
   //checkbox state
   const [isChecked, setChecked] = React.useState(false);
   // on press = goes to Login page
-  const handleLinkPress = () => {
-    navigation.navigate('Login');
+  const handleLinkPress = (screenName) => {
+    navigation.navigate(screenName);
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -83,7 +84,7 @@ function AppScreen({ navigation }) {
                 <Text style={styles.text}>Registrar</Text>
               </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={handleLinkPress}>
+            <TouchableOpacity onPress={() => handleLinkPress('Login')}>
               <Text style={{color: '#4D73FA'}}>Ir para a tela de login</Text>
             </TouchableOpacity>
             <View style={styles.containerIcon}>
