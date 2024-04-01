@@ -10,8 +10,8 @@ import Social2 from './assets/social2.svg'
 const Login = () => {
     const navigation = useNavigation();
     const [isChecked, setChecked] = React.useState(false);
-    const handleLinkPress = () => {
-        navigation.navigate('App');
+    const handleLinkPress = (screenName) => {
+        navigation.navigate(screenName);
     };
 
     return (
@@ -44,7 +44,7 @@ const Login = () => {
                             <Text style={styles.text}>Login</Text>
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity onPress={handleLinkPress}>
+                    <TouchableOpacity onPress={() => handleLinkPress('App')}>
                             <Text style={{color: '#4D73FA'}}>Registrar-se</Text>
                     </TouchableOpacity>
                     <View style={styles.containerIcon}>
