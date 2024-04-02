@@ -26,7 +26,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.piimt.healthgotchi"
     },
     "web": {
       "favicon": "./src/assets/favicon.png"
