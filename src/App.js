@@ -99,8 +99,12 @@ function AppScreen({ navigation }) {
       password: password,
     })
 
-    if (error) Alert.alert(error.message)
-    if (!session) Alert.alert('Please check your inbox for email verification!')
+    if (error){
+      Alert.alert(error.message)
+    }else if (session){
+      Alert.alert('Usuário registrado com sucesso!')
+      navigation.navigate('Login')
+    }
     setLoading(false)
   }
   //checkbox state
