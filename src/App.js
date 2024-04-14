@@ -82,6 +82,14 @@ function AppScreen({ navigation }) {
     setLoading(false)
   }
   async function signUpWithEmail() {
+    if (email === '' || password === '') {
+      Alert.alert('Por favor, preencha todos os campos.')
+      return
+    }
+    if (!email.includes('@')) {
+      Alert.alert('Email inválido.')
+      return
+    }
     setLoading(true)
     const {
       data: { session },
