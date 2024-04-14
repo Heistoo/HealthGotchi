@@ -118,7 +118,7 @@ function AppScreen({ navigation }) {
         </View>
         <View style={styles.mainContainer}>
           <View style={styles.containerLogin}>
-            <Text style={styles.placeholder}>Nome do Usuário</Text>
+            <Text style={styles.placeholder}>Email do Usuário</Text>
             <TextInput
             style={styles.input} value={email} onChangeText={(text) => setEmail(text)}/>
             <Text style={styles.placeholder2}>Senha</Text>
