@@ -1,5 +1,5 @@
-import React from 'react';
-import { Text, View, TouchableOpacity, TextInput } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from './index.js';
@@ -7,12 +7,42 @@ import CheckBox from 'expo-checkbox';
 import FB from './assets/facebookicon.svg';
 import Social2 from './assets/social2.svg'
 
+// Import database
+import { supabase } from './db_service/supabase';
+
 const Login = () => {
     const navigation = useNavigation();
     const [isChecked, setChecked] = React.useState(false);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+
     const handleLinkPress = (screenName) => {
         navigation.navigate(screenName);
     };
+
+    async function signInWithEmail(){
+        if (email === '' || password === ''){
+            Alert.alert('Preencha todos os campos!')
+            return
+        }
+        if (!email.includes('@')) {
+            Alert.alert('Email inválido.')
+            return
+        }
+        setLoading(true)
+        const {error, data} = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password,
+        })
+        if (error){
+            Alert.alert(error.message)
+        } else if (data){
+            Alert.alert('Usuário logado com sucesso!')
+            navigation.navigate('Jogo')
+        }
+        setLoading(false)
+    }
 
     return (
         // to do: linear gradient expo
@@ -22,14 +52,18 @@ const Login = () => {
             </View>
             <View style={styles.mainContainer}>
                 <View style={styles.containerLoginBox}>
-                    <Text style={styles.placeholder}>Nome do Usuário</Text>
+                    <Text style={styles.placeholder}>Email do Usuário</Text>
                     <TextInput
-                    style={[styles.input2, styles.roundedInput]}/>
+                    style={[styles.input2, styles.roundedInput]}
+                    value={email}
+                    onChangeText={(text) => setEmail(text)}/>
                     <Text style={styles.placeholder2}>Senha</Text>
                     
                     <TextInput
                     style={[styles.input2, styles.roundedInput]}
-                    secureTextEntry={true}/>
+                    secureTextEntry={true}
+                    value={password}
+                    onChangeText={(text) => setPassword(text)}/>
                     <View style={styles.section}>
                         <CheckBox 
                             style={styles.checkbox}
@@ -40,7 +74,7 @@ const Login = () => {
                         <Text>Lembrar de mim</Text>
                     </View>
                     <View style={styles.buttoncontainer}>
-                        <TouchableOpacity onPress={() => handleLinkPress('Jogo')}>
+                        <TouchableOpacity onPress={() => signInWithEmail()}>
                             <Text style={styles.text}>Login</Text>
                         </TouchableOpacity>
                     </View>
