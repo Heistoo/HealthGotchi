@@ -1,7 +1,4 @@
-// ## WARNING
-// IF APPLYING PACKAGES UTILIZING NPX EXPO INSTALL OR YARN, MAKE SURE TO CHANGE AppEntry.JS MAIN APP PATH TO: 
-// "'../../src/App';"
-
+//main imports
 import { StatusBar } from 'expo-status-bar';
 import { registerRootComponent } from 'expo';
 import CheckBox from 'expo-checkbox';
