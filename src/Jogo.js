@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from './index.js';
 import CheckBox from 'expo-checkbox';
 import { LinearGradient } from 'react-native-svg';
-// I'm not sure if the gradient worked, since I wasn't able to reach this screen
+
 
 const Jogo = () => {
     const navigation = useNavigation();
