@@ -4,22 +4,22 @@ import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from './index.js';
 import CheckBox from 'expo-checkbox';
-import { LinearGradient } from 'react-native-svg';
-
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Jogo = () => {
     const navigation = useNavigation();
     const [isChecked, setChecked] = React.useState(false);
 
     return (
-        <SafeAreaView>
-            <View style={styles.container}>
-                <LinearGradient
-                    // Background Linear Gradient
-                    colors={['rgba(1,62,217,1)', 'rgba(12,227,240,1)']}
-                    style={styles.background}
-                />
-            </View>
+        <SafeAreaView style={styles.container}>
+            <LinearGradient
+            colors={['#013ED9','#0C9EF0']}
+            style={styles.background}
+            locations={[0.1, 0.9]}
+            >
+                <View style={styles.cameraContainer}>
+                </View>
+            </LinearGradient>
         </SafeAreaView>
     );
 };

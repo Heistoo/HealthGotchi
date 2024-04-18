@@ -1,6 +1,24 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
+  // Background for Jogo gradient
+  background:{
+    left: 0,
+    right: 0,
+    top: 0,
+    height: '110%',
+  },
+  cameraContainer:{
+    backgroundColor: '#FFFFFF',
+    top: 40,
+    width: '88%',
+    height:'70%',
+    alignSelf: 'center',
+    borderRadius: 20,
+    borderColor: 'transparent',
+    borderWidth: 1,
+    overflow: 'hidden',
+},
   // Register Page
   titleContainer:{
     display: 'flex',
