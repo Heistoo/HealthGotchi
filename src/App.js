@@ -1,12 +1,12 @@
-// ## WARNING
-// IF APPLYING PACKAGES UTILIZING NPX EXPO INSTALL OR YARN, MAKE SURE TO CHANGE AppEntry.JS MAIN APP PATH TO: 
-// "'../../src/App';"
-
+//main imports
 import { StatusBar } from 'expo-status-bar';
 import { registerRootComponent } from 'expo';
 import CheckBox from 'expo-checkbox';
-import { Text, View, Image, SafeAreaView, ImageBackground, TextInput, TouchableOpacity, Linking } from 'react-native';
+import { Text, View, Image, SafeAreaView, ImageBackground, TextInput, TouchableOpacity, Linking, AppState, Alert } from 'react-native';
 import React, { useState, useEffect } from 'react';
+
+// Import database
+import { supabase } from './db_service/supabase';
 
 // import stylesheet from index file
 import styles from '../src/index.js';
@@ -21,6 +21,14 @@ import Jogo from './Jogo.js';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { screensEnabled } from 'react-native-screens';
+
+AppState.addEventListener('change', (state) => {
+  if (state === 'active') {
+    supabase.auth.startAutoRefresh()
+  } else {
+    supabase.auth.stopAutoRefresh()
+  }
+})
 
 const Stack = createStackNavigator();
 //Image assets
@@ -57,6 +65,45 @@ export default function Main() {
 
 
 function AppScreen({ navigation }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  async function signInWithEmail(){
+    setLoading(true)
+    const {error} = await supabase.auth.signIn({
+      email: email,
+      password: password,
+    })
+    if (error) Alert.alert(error.message)
+    setLoading(false)
+  }
+  async function signUpWithEmail() {
+    if (email === '' || password === '') {
+      Alert.alert('Por favor, preencha todos os campos.')
+      return
+    }
+    if (!email.includes('@')) {
+      Alert.alert('Email inválido.')
+      return
+    }
+    setLoading(true)
+    const {
+      data: { session },
+      error,
+    } = await supabase.auth.signUp({
+      email: email,
+      password: password,
+    })
+
+    if (error){
+      Alert.alert(error.message)
+    }else if (session){
+      Alert.alert('Usuário registrado com sucesso!')
+      navigation.navigate('Login')
+    }
+    setLoading(false)
+  }
   //checkbox state
   const [isChecked, setChecked] = React.useState(false);
   // on press = goes to Login page
@@ -72,16 +119,16 @@ function AppScreen({ navigation }) {
         </View>
         <View style={styles.mainContainer}>
           <View style={styles.containerLogin}>
-            <Text style={styles.placeholder}>Nome do Usuário</Text>
+            <Text style={styles.placeholder}>Email do Usuário</Text>
             <TextInput
-            style={styles.input}/>
+            style={styles.input} value={email} onChangeText={(text) => setEmail(text)}/>
             <Text style={styles.placeholder2}>Senha</Text>
             
             <TextInput
-            style={styles.input}
+            style={styles.input} value={password} onChangeText={(text) => setPassword(text)}
             secureTextEntry={true}/>
             <View style={styles.buttoncontainer}>
-              <TouchableOpacity onPress={() => console.log("Registrado")}>
+              <TouchableOpacity onPress={() => signUpWithEmail()}>
                 <Text style={styles.text}>Registrar</Text>
               </TouchableOpacity>
             </View>
