@@ -6,6 +6,8 @@ import styles from './index.js';
 import CheckBox from 'expo-checkbox';
 import { LinearGradient } from 'expo-linear-gradient';
 
+import Pika from './assets/pikachu.svg';
+
 const Jogo = () => {
     const navigation = useNavigation();
     const [isChecked, setChecked] = React.useState(false);
@@ -18,6 +20,7 @@ const Jogo = () => {
             locations={[0.1, 0.9]}
             >
                 <View style={styles.cameraContainer}>
+                    <Pika style={styles.pika2}/>
                 </View>
             </LinearGradient>
         </SafeAreaView>

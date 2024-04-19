@@ -18,6 +18,9 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
     borderWidth: 1,
     overflow: 'hidden',
+    resizeMode: 'contain',
+    justifyContent: 'center',
+    alignItems: 'center',
 },
   // Register Page
   titleContainer:{
@@ -67,12 +70,19 @@ const styles = StyleSheet.create({
       position:'relative',
       zIndex: 1,
     },
+    // Pikachu Image for main register screen
     pika:{
       position:'relative',
-      left:'52%',
+      left:'50%',
       top:'-2%',
-      width:50,
+      width: 60,
       zIndex: 1,
+    },
+    pika2:{
+      position: 'absolute',
+      bottom: 0,
+      height: 400,
+      width: 300,
     },
     containerLogin:{
       top:'10%',
