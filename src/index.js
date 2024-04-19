@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
       zIndex: 1,
     },
     pika2:{
-      bottom: 0,
+      bottom: 100,
       height: 400,
       width: 300,
     },

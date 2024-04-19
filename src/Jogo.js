@@ -15,7 +15,7 @@ const Jogo = () => {
     return (
         <SafeAreaView style={styles.container}>
             <LinearGradient
-            colors={['#013ED9','#0C9EF0']}
+            colors={['#FA9943','#F44E58']}
             style={styles.background}
             locations={[0.1, 0.9]}
             >
