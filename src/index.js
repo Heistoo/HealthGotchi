@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
       zIndex: 1,
     },
     pika2:{
-      position: 'absolute',
       bottom: 0,
       height: 400,
       width: 300,
