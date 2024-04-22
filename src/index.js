@@ -184,6 +184,17 @@ const styles = StyleSheet.create({
       // top:"70%",
       // width:"21%",
       // height:"10%",
+    },
+    buttonContainer: {
+      top: 50,
+      alignSelf: 'flex-end',
+    },
+    cameraButton:{
+      right: 50,
+    },
+    menuButton:{
+      position: 'relative',
+      right: 100,
     }
   });
 
