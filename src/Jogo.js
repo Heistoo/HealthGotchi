@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, View, TouchableOpacity, TextInput, ImageBackground, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -11,29 +11,41 @@ import Fundo from './assets/jogo-background.png';
 
 const Jogo = () => {
     const navigation = useNavigation();
-    const [isChecked, setChecked] = React.useState(false);
+    const [isChecked, setChecked] = useState(false);
+    const [buttonPressed, setIfPressed] = useState(false);
     const images = {
         'fundo' : require('./assets/jogo-background.png'),
         'menu' : require('./assets/menu-button.png'),
         'camera' : require('./assets/camera-button.png'),
+        'logo': require('./assets/main-logo.png'),
+        'decorative': require('./assets/decorative-button.png'),
     }
 
     return (
         <SafeAreaView style={styles.container}>
+            <View style={styles.secondBackground}></View>
             <LinearGradient
-            colors={['#FA9943','#F44E58']}
+            colors={['#FA9A43','#F4475A']}
             style={styles.background}
-            locations={[0.1, 0.9]}
+            locations={[0.1, 1]}
             >
-                <View style={styles.cameraContainer}>
-                    <ImageBackground source={images['fundo']} style={styles.fundoContainer}>
-                        <Pika style={styles.pika2}/>
-                    </ImageBackground>
-                </View>
-                <View style={styles.buttonContainer}>
-                    <Image source={images['camera']} style={styles.cameraButton}/>
-                    <Image source={images['menu']} style={styles.menuButton}/>
-                </View>
+                <Image />
+                    <View style={styles.cameraContainer}>
+                        <ImageBackground source={images['fundo']} style={styles.fundoContainer}>
+                            <Pika style={styles.pika2}/>
+                        </ImageBackground>
+                    </View>
+                    <View style={styles.buttonContainer}>
+                        <Image source={images['camera']} style={styles.cameraButton} onPress={() => setIfPressed(!buttonPressed)}/>
+                        <Image source={images['menu']} style={styles.menuButton}/>
+                    </View>
+                    <View style={styles.decorativeButtonContainer}>
+                        <Image source={images['decorative']} style={styles.decorativeButton}/>
+                        <Image source={images['decorative']}/>
+                    </View>
+                    <View>
+                        <Image source={images['logo']} style={styles.logoButton}/>
+                    </View>
             </LinearGradient>
         </SafeAreaView>
     );

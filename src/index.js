@@ -5,13 +5,24 @@ const styles = StyleSheet.create({
   background:{
     left: 0,
     right: 0,
-    top: 0,
-    height: '110%',
+    top: -30,
+    width: '98%',
+    height: '105%',
+    borderRadius: 40,
+  },
+  secondBackground:{
+    position: 'absolute',
+    backgroundColor: '#883967', 
+    top: -11  ,
+    height: '115%',
+    width: '100%',
+    borderRadius: 40,
+    zIndex: -1,
   },
   cameraContainer:{
     // backgroundColor: '#FFFFFF',
     top: 40,
-    width: '88%',
+    width: '90%',
     height:'63%',
     alignSelf: 'center',
     borderRadius: 50,
@@ -26,7 +37,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     right: 10,
     height: '100%',
-    width: '100%',
+    width: '110%',
     justifyContent: 'center',
   },
   // Register Page
@@ -190,11 +201,35 @@ const styles = StyleSheet.create({
       alignSelf: 'flex-end',
     },
     cameraButton:{
-      right: 50,
-    },
+      right: 40,
+      width: 50,
+      height: 50,
+    },  
     menuButton:{
       position: 'relative',
-      right: 100,
+      right: 90,
+      width: 50,
+      height: 50,
+    },
+    logoButton:{
+      left: 20,
+      width: 80,
+      height: 80,
+    },
+    decorativeButtonContainer:{
+      flexDirection: 'row',
+      display: 'flex',
+      alignSelf: 'center',
+      bottom: -80,
+    },
+    decorativeButton:{
+      right: 10,
+    },
+    cameraButton_pressed:{
+      opacity: '70%',
+    },
+    menuButton_pressed:{
+      opacity: '70%',
     }
   });
 
