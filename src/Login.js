@@ -52,7 +52,7 @@ const Login = () => {
     return (
         // to do: linear gradient expo
         <SafeAreaView style={styles.container2}>
-            <ImageBackground source={images['login']}style={styles.container2}>
+            <ImageBackground source={images['login']} style={styles.containerbg}>
                 <View style={styles.titleContainer2}>
                     <Tinka style={styles.tinka}/>
                     <Text style={styles.titulo2}>HealthGotchi</Text>

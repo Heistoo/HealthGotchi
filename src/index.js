@@ -67,6 +67,13 @@ const styles = StyleSheet.create({
       display: 'flex',
       justifyContent: 'center',
     },
+    containerbg: {
+      top: -30,
+      height: '110%',
+      flex: 1,
+      display: 'flex',
+      justifyContent: 'center',
+    },
     mainContainer: {
       flex:1,
     },
