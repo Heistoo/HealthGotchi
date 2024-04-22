@@ -87,6 +87,8 @@ const styles = StyleSheet.create({
     },
     pika2:{
       alignSelf: 'center',
+      bottom: -100,
+      left: 70,
       height: 400,
       width: 200,
       opacity: 2,
