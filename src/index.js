@@ -9,12 +9,12 @@ const styles = StyleSheet.create({
     height: '110%',
   },
   cameraContainer:{
-    backgroundColor: '#FFFFFF',
+    // backgroundColor: '#FFFFFF',
     top: 40,
     width: '88%',
     height:'70%',
     alignSelf: 'center',
-    borderRadius: 20,
+    borderRadius: 50,
     borderColor: 'transparent',
     borderWidth: 1,
     overflow: 'hidden',
@@ -22,6 +22,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
 },
+  fundoContainer: {
+    resizeMode: 'contain',
+    right: 10,
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+  },
   // Register Page
   titleContainer:{
     display: 'flex',
@@ -79,8 +86,10 @@ const styles = StyleSheet.create({
       zIndex: 1,
     },
     pika2:{
+      alignSelf: 'center',
       height: 400,
       width: 200,
+      opacity: 2,
     },
     containerLogin:{
       top:'10%',
