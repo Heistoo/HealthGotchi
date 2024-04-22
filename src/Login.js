@@ -50,52 +50,54 @@ const Login = () => {
 
     return (
         // to do: linear gradient expo
-        <ImageBackground source={images['login']}style={styles.container2}>
-            <View style={styles.titleContainer2}>
-                <Text style={styles.titulo}>HealthGotchi</Text>
-            </View>
-            <View style={styles.mainContainer}>
-                <View style={styles.containerLoginBox}>
-                    <Text style={styles.placeholder}>Email do Usuário</Text>
-                    <TextInput
-                    style={[styles.input2, styles.roundedInput]}
-                    value={email}
-                    onChangeText={(text) => setEmail(text)}/>
-                    <Text style={styles.placeholder2}>Senha</Text>
-                    
-                    <TextInput
-                    style={[styles.input2, styles.roundedInput]}
-                    secureTextEntry={true}
-                    value={password}
-                    onChangeText={(text) => setPassword(text)}/>
-                    <View style={styles.section}>
-                        <CheckBox 
-                            style={styles.checkbox}
-                            value={isChecked}
-                            onValueChange={setChecked}
-                            color={isChecked ? '#4630EB' : undefined}
-                        />
-                        <Text>Lembrar de mim</Text>
-                    </View>
-                    <View style={styles.buttoncontainer}>
-                        <TouchableOpacity onPress={() => signInWithEmail()}>
-                            <Text style={styles.text}>Login</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <TouchableOpacity onPress={() => handleLinkPress('App')}>
-                            <Text style={{color: '#4D73FA'}}>Registrar-se</Text>
-                    </TouchableOpacity>
-                    <View style={styles.containerIcon}>
-                        <FB style={styles.imageLogo}/>
-                        <Social2 style={styles.imageLogo2}/>
-                    </View>
-                    <View>
-                        
-                    </View>
+        <SafeAreaView style={styles.container2}>
+            <ImageBackground source={images['login']}style={styles.container2}>
+                <View style={styles.titleContainer2}>
+                    <Text style={styles.titulo}>HealthGotchi</Text>
                 </View>
-                    
-            </View>
-        </ImageBackground>
+                <View style={styles.mainContainer}>
+                    <View style={styles.containerLoginBox}>
+                        <Text style={styles.placeholder}>Email do Usuário</Text>
+                        <TextInput
+                        style={[styles.input2, styles.roundedInput]}
+                        value={email}
+                        onChangeText={(text) => setEmail(text)}/>
+                        <Text style={styles.placeholder2}>Senha</Text>
+                        
+                        <TextInput
+                        style={[styles.input2, styles.roundedInput]}
+                        secureTextEntry={true}
+                        value={password}
+                        onChangeText={(text) => setPassword(text)}/>
+                        <View style={styles.section}>
+                            <CheckBox 
+                                style={styles.checkbox}
+                                value={isChecked}
+                                onValueChange={setChecked}
+                                color={isChecked ? '#4630EB' : undefined}
+                            />
+                            <Text>Lembrar de mim</Text>
+                        </View>
+                        <View style={styles.buttoncontainer}>
+                            <TouchableOpacity onPress={() => signInWithEmail()}>
+                                <Text style={styles.text}>Login</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <TouchableOpacity onPress={() => handleLinkPress('App')}>
+                                <Text style={{color: '#4D73FA'}}>Registrar-se</Text>
+                        </TouchableOpacity>
+                        <View style={styles.containerIcon}>
+                            <FB style={styles.imageLogo}/>
+                            <Social2 style={styles.imageLogo2}/>
+                        </View>
+                        <View>
+                            
+                        </View>
+                    </View>
+                        
+                </View>
+            </ImageBackground>
+        </SafeAreaView>
     );
 };
 
