@@ -29,7 +29,8 @@ const Jogo = () => {
             style={styles.background}
             locations={[0.1, 1]}
             >
-                <Image />
+                <Image style={styles.verticalLight}/>
+                <Image style={styles.horizontalLight}/>
                     <View style={styles.cameraContainer}>
                         <ImageBackground source={images['fundo']} style={styles.fundoContainer}>
                             <Pika style={styles.pika2}/>

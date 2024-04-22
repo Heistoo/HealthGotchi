@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     top: -30,
     width: '98%',
     height: '105%',
-    borderRadius: 40,
+    borderRadius: 20,
   },
   secondBackground:{
     position: 'absolute',
@@ -224,6 +224,26 @@ const styles = StyleSheet.create({
     },
     decorativeButton:{
       right: 10,
+    },
+    verticalLight:{
+      backgroundColor: '#D9D9D9',
+      position: 'absolute',
+      left: 0,
+      width: 6,
+      top: '5%',
+      height: '95%',
+      borderRadius: 30,
+      zIndex: 1,
+    },
+    horizontalLight: {
+      backgroundColor: '#D9D9D9',
+      position: 'absolute',
+      left: 10,
+      height: 6,
+      top: 19,
+      width: '95%',
+      borderRadius: 30,
+      zIndex: 1,
     },
     cameraButton_pressed:{
       opacity: '70%',
