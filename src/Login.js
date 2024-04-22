@@ -26,8 +26,8 @@ const Login = () => {
         navigation.navigate(screenName);
     };
 
-    async function signInWithEmail(){
-        if (email === '' || password === ''){
+    const signInWithEmail = async () => {
+        if (email === '' || password === '') {
             Alert.alert('Preencha todos os campos!')
             return
         }
@@ -35,19 +35,35 @@ const Login = () => {
             Alert.alert('Email inválido.')
             return
         }
-        setLoading(true)
-        const {error, data} = await supabase.auth.signInWithPassword({
-            email: email,
-            password: password,
-        })
-        if (error){
-            Alert.alert(error.message)
-        } else if (data){
-            Alert.alert('Usuário logado com sucesso!')
-            navigation.navigate('Jogo')
+        setLoading(true);
+
+        try {
+            const response = await fetch('http://IP_DO_PC_RODANDO:5000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: email,
+                    senha: password
+                }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                Alert.alert('Usuário logado com sucesso!')
+                navigation.navigate('Jogo')
+            } else {
+                Alert.alert('Erro ao fazer login', data.error || 'Algo deu errado.')
+            }
+        } catch (error) {
+            Alert.alert('Erro ao fazer login', error.message || 'Algo deu errado.')
         }
-        setLoading(false)
-    }
+
+        setLoading(false);
+    };
+
 
     return (
         // to do: linear gradient expo
