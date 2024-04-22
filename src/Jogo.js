@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, TextInput, ImageBackground } from 'react-native';
+import { Text, View, TouchableOpacity, TextInput, ImageBackground, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from './index.js';
@@ -12,8 +12,10 @@ import Fundo from './assets/jogo-background.png';
 const Jogo = () => {
     const navigation = useNavigation();
     const [isChecked, setChecked] = React.useState(false);
-    const image = {
-        'fundo' : require('./assets/jogo-background.png')
+    const images = {
+        'fundo' : require('./assets/jogo-background.png'),
+        'menu' : require('./assets/menu-button.png'),
+        'camera' : require('./assets/camera-button.png'),
     }
 
     return (
@@ -24,9 +26,13 @@ const Jogo = () => {
             locations={[0.1, 0.9]}
             >
                 <View style={styles.cameraContainer}>
-                    <ImageBackground source={image['fundo']} style={styles.fundoContainer}>
+                    <ImageBackground source={images['fundo']} style={styles.fundoContainer}>
                         <Pika style={styles.pika2}/>
                     </ImageBackground>
+                </View>
+                <View style={styles.buttonContainer}>
+                    <Image source={images['camera']} style={styles.cameraButton}/>
+                    <Image source={images['menu']} style={styles.menuButton}/>
                 </View>
             </LinearGradient>
         </SafeAreaView>
