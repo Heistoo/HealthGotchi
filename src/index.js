@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     // backgroundColor: '#FFFFFF',
     top: 40,
     width: '88%',
-    height:'70%',
+    height:'63%',
     alignSelf: 'center',
     borderRadius: 50,
     borderColor: 'transparent',
