@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     width: '90%',
     height:'63%',
     alignSelf: 'center',
-    borderRadius: 50,
+    borderRadius: 70,
     borderColor: 'transparent',
     borderWidth: 1,
     overflow: 'hidden',
@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
       flex: 1,
       display: 'flex',
       justifyContent: 'center',
-      backgroundColor: '#50FC95',
     },
     mainContainer: {
       flex:1,
@@ -111,11 +110,6 @@ const styles = StyleSheet.create({
     // Login Page
     containerLoginBox:{
       alignItems: 'center',
-      backgroundColor: '#FFF',
-      borderRadius: 30,
-      borderWidth: 1, 
-      borderColor: '#FFF', 
-      marginTop: 80, 
       paddingVertical: 30, 
       paddingBottom: 200,
       },
@@ -176,10 +170,10 @@ const styles = StyleSheet.create({
       margin: 8,
     },
     underline: {
-      height: 1, // This will be the "thickness" of your underline
-      width: '50%', // Adjust this as needed
-      backgroundColor: '#111111', // This will be the color of your underline
-      alignSelf: 'center', // This will center the underline
+      height: 1, 
+      width: '50%', 
+      backgroundColor: '#111111',
+      alignSelf: 'center', 
     },
     imageLogo:{
       position:"relative",

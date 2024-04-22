@@ -69,15 +69,6 @@ function AppScreen({ navigation }) {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  async function signInWithEmail(){
-    setLoading(true)
-    const {error} = await supabase.auth.signIn({
-      email: email,
-      password: password,
-    })
-    if (error) Alert.alert(error.message)
-    setLoading(false)
-  }
   async function signUpWithEmail() {
     if (email === '' || password === '') {
       Alert.alert('Por favor, preencha todos os campos.')

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, TextInput, Alert } from 'react-native';
+import { Text, View, TouchableOpacity, TextInput, Alert, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from './index.js';
@@ -16,6 +16,10 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+
+    const images = {
+        'login': require('./assets/login-screen.jpg')
+    }
 
     const handleLinkPress = (screenName) => {
         navigation.navigate(screenName);
@@ -46,7 +50,7 @@ const Login = () => {
 
     return (
         // to do: linear gradient expo
-        <SafeAreaView style={styles.container2}>
+        <ImageBackground source={images['login']}style={styles.container2}>
             <View style={styles.titleContainer2}>
                 <Text style={styles.titulo}>HealthGotchi</Text>
             </View>
@@ -91,7 +95,7 @@ const Login = () => {
                 </View>
                     
             </View>
-        </SafeAreaView>
+        </ImageBackground>
     );
 };
 
