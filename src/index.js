@@ -87,12 +87,29 @@ const styles = StyleSheet.create({
       position:'relative',
       zIndex: 1,
     },
+    titulo2: {
+      color: 'black',
+      fontFamily: 'Roboto',
+      fontSize: 42,
+      lineHeight: 84,
+      textAlign: 'center',
+      position:'absolute',
+      zIndex: 1,
+    },
     // Pikachu Image for main register screen
     pika:{
       position:'relative',
       left:'55%',
       top:'-2%',
       width: 70,
+      zIndex: 1,
+    },
+    tinka:{
+      width: 70,
+      height: 70,
+      // alignSelf: 'flex-center',
+      // position: 'absolute',
+      right: 120,
       zIndex: 1,
     },
     pika2:{

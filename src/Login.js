@@ -6,6 +6,7 @@ import styles from './index.js';
 import CheckBox from 'expo-checkbox';
 import FB from './assets/facebookicon.svg';
 import Social2 from './assets/social2.svg'
+import Tinka from './assets/tinka-logo.svg'
 
 // Import database
 import { supabase } from './db_service/supabase';
@@ -53,7 +54,8 @@ const Login = () => {
         <SafeAreaView style={styles.container2}>
             <ImageBackground source={images['login']}style={styles.container2}>
                 <View style={styles.titleContainer2}>
-                    <Text style={styles.titulo}>HealthGotchi</Text>
+                    <Tinka style={styles.tinka}/>
+                    <Text style={styles.titulo2}>HealthGotchi</Text>
                 </View>
                 <View style={styles.mainContainer}>
                     <View style={styles.containerLoginBox}>
