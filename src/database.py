@@ -7,9 +7,9 @@ CORS(app)
 
 def conectar_db():
     connection = mysql.connector.connect(
-        host="mysql-hg-pii-db-health.a.aivencloud.com",  # Change it to your MySQL host
-        user="avnadmin",  # Change it to your MySQL username
-        password="AVNS_mrnDIRzqDjjvj9Kre7K",  # Change it to your MySQL password
+        host="mysql-hg-pii-db-health.a.aivencloud.com",
+        user="avnadmin",
+        password="AVNS_mrnDIRzqDjjvj9Kre7K",
         port="10202",
         database="defaultdb"
     )
