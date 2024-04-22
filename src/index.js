@@ -90,9 +90,9 @@ const styles = StyleSheet.create({
     // Pikachu Image for main register screen
     pika:{
       position:'relative',
-      left:'50%',
+      left:'55%',
       top:'-2%',
-      width: 60,
+      width: 70,
       zIndex: 1,
     },
     pika2:{
