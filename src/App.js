@@ -69,32 +69,43 @@ function AppScreen({ navigation }) {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  async function signUpWithEmail() {
+  const signUpWithEmail = async () => {
     if (email === '' || password === '') {
-      Alert.alert('Por favor, preencha todos os campos.')
-      return
+        Alert.alert('Preencha todos os campos!')
+        return
     }
     if (!email.includes('@')) {
-      Alert.alert('Email inválido.')
-      return
+        Alert.alert('Email inválido.')
+        return
     }
-    setLoading(true)
-    const {
-      data: { session },
-      error,
-    } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-    })
+    setLoading(true);
 
-    if (error){
-      Alert.alert(error.message)
-    }else if (session){
-      Alert.alert('Usuário registrado com sucesso!')
-      navigation.navigate('Login')
+    try {
+        const response = await fetch('http://IP_DO_PC_RODANDO:5000/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email,
+                senha: password
+            }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            Alert.alert('Usuário registrado com sucesso!')
+            navigation.navigate('Jogo')
+        } else {
+            Alert.alert('Erro ao registrar usuário', data.error || 'Algo deu errado.')
+        }
+    } catch (error) {
+        Alert.alert('Erro ao registrar usuário', error.message || 'Algo deu errado.')
     }
-    setLoading(false)
-  }
+
+    setLoading(false);
+};
   //checkbox state
   const [isChecked, setChecked] = React.useState(false);
   // on press = goes to Login page
