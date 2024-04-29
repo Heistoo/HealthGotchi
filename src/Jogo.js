@@ -21,6 +21,8 @@ const Jogo = () => {
         'menu' : require('./assets/menu-button.png'),
         'camera' : require('./assets/camera-button.png'),
         'logo': require('./assets/main-logo.png'),
+        'direcional' : require('./assets/direcional.png'),
+        'sticker' : require('./assets/sticker.png'),
         'decorative': require('./assets/decorative-button.png'),
     }
 
@@ -30,6 +32,18 @@ const Jogo = () => {
     const handleCam = () => {
         setCamera(!camera);
     }
+
+    //Menu
+    const handleMenu = () => {
+        console.log('Menu Aberto...');
+        // Adicione aqui o que deseja fazer quando o botão de menu for pressionado
+    }
+
+    //Direcional
+    const handleDir = () => {
+        console.log('Interagindo com o pet...');
+        // Adicione aqui o que deseja fazer quando a imagem for pressionada
+    };
 
     // OpenAI ChatGPT
     const openai = new OpenAI({ apiKey: 'your api key here'});
@@ -132,7 +146,7 @@ const Jogo = () => {
                         </View>
                             
                             {/* OpenAi Checker */}
-                    {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         {photoUri && <Image source={{ uri: photoUri }} style={{ width: 300, height: 300 }} />}
                         {photoUri && <Button title="Analyze" onPress={async () => {
                         console.log(base64.slice(0, 100));
@@ -140,18 +154,23 @@ const Jogo = () => {
                         console.log(response);
                         alert(response);
                         }} />}
-                    </View> */}
+                    </View>
                     
                     <View style={styles.buttonContainer}>
                     <TouchableOpacity onPress={handleCam}>
                         <Image source={images['camera']} style={styles.cameraButton}/>
                     </TouchableOpacity>
+                    <TouchableOpacity onPress={handleMenu}>
                         <Image source={images['menu']} style={styles.menuButton}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handleDir}>
+                        <Image source={images['direcional']} style={styles.dirButton}/>
+                    </TouchableOpacity>
                     </View>
-                    <View style={styles.decorativeButtonContainer}>
-                        <Image source={images['decorative']} style={styles.decorativeButton}/>
-                        <Image source={images['decorative']}/>
-                    </View>
+                        <Image source={images['sticker']} style={styles.sticker}/>
+                        <Image source={images['decorative']} style={styles.decButton}/>
+                        <Image source={images['decorative']} style={styles.decButton1}/>
+
                     <View>
                         <Image source={images['logo']} style={styles.logoButton}/>
                     </View>

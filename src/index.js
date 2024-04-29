@@ -219,29 +219,46 @@ const styles = StyleSheet.create({
       alignSelf: 'flex-end',
     },
     cameraButton:{
-      right: 40,
-      width: 50,
-      height: 50,
-    },  
+      right: -30,
+      bottom: -10,
+    }, 
     menuButton:{
       position: 'relative',
-      right: 90,
-      width: 50,
-      height: 50,
+      right: 20,
+      bottom: -10,
+    },
+    dirButton:{
+      position:'relative',
+      right: 230,
+      bottom: 100,
+      paddingRight: 135,
+      paddingBottom: 130,
+    },
+    sticker:{
+      position:'relative',
+      bottom: 10,
+      right: -20,
     },
     logoButton:{
       left: 20,
       width: 80,
       height: 80,
     },
-    decorativeButtonContainer:{
-      flexDirection: 'row',
-      display: 'flex',
-      alignSelf: 'center',
-      bottom: -80,
+    // decorativeButtonContainer:{
+    //   flexDirection: 'row',
+    //   display: 'flex',
+    //   alignSelf: 'center',
+    //   bottom: -80,
+    // },
+    decButton:{
+      position:'relative',
+      bottom: 100,
+      right: -150,
     },
-    decorativeButton:{
-      right: 10,
+    decButton1:{
+      position:'relative',
+      bottom: 150,
+      right: -210,
     },
     verticalLight:{
       backgroundColor: '#D9D9D9',

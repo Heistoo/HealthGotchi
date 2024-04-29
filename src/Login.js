@@ -5,8 +5,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from './index.js';
 import CheckBox from 'expo-checkbox';
 import FB from './assets/facebookicon.svg';
-import Social2 from './assets/social2.svg'
-import Tinka from './assets/tinka-logo.svg'
+import Social2 from './assets/social2.svg';
+import Tinka from './assets/tinka-logo.svg';
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
 // Import database
 import { supabase } from './db_service/supabase';
@@ -17,6 +18,10 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false); 
+    const toggleShowPassword = () => { 
+        setShowPassword(!showPassword); 
+    };
 
     const images = {
         'login': require('./assets/login-screen.jpg')
@@ -84,9 +89,15 @@ const Login = () => {
                         
                         <TextInput
                         style={[styles.input2, styles.roundedInput]}
-                        secureTextEntry={true}
+                        secureTextEntry={!showPassword}
                         value={password}
                         onChangeText={(text) => setPassword(text)}/>
+                        <MaterialCommunityIcons 
+                        name={showPassword ? 'eye-off' : 'eye'} 
+                        size={24} 
+                        color="#aaa"
+                        style={styles.icon} 
+                        onPress={toggleShowPassword}/> 
                         <View style={styles.section}>
                             <CheckBox 
                                 style={styles.checkbox}
@@ -103,6 +114,9 @@ const Login = () => {
                         </View>
                         <TouchableOpacity onPress={() => handleLinkPress('App')}>
                                 <Text style={{color: '#4D73FA'}}>Registrar-se</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => handleLinkPress('Jogo')}>
+                                <Text style={{color: '#4D73FA'}}>TelaJogo</Text>
                         </TouchableOpacity>
                         <View style={styles.containerIcon}>
                             <FB style={styles.imageLogo}/>
