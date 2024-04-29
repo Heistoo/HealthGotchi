@@ -5,21 +5,22 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from './index.js';
 import CheckBox from 'expo-checkbox';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Camera } from 'expo-camera';  
+import { Camera } from 'expo-camera';
 import OpenAI from 'openai';
 import * as FileSystem from 'expo-file-system';
+import { Modal } from 'react-native';
 
 import Pika from './assets/pikachu.svg';
 import Fundo from './assets/jogo-background.png';
 
 const Jogo = () => {
     const navigation = useNavigation();
-    const [isChecked, setChecked] = useState(false);
-    const [buttonPressed, setIfPressed] = useState(false);
+    const [food, setFood] = useState("");
+    const [foodGroup, setFoodGroup] = useState("");
     const images = {
-        'fundo' : require('./assets/jogo-background.png'),
-        'menu' : require('./assets/menu-button.png'),
-        'camera' : require('./assets/camera-button.png'),
+        'fundo': require('./assets/jogo-background.png'),
+        'menu': require('./assets/menu-button.png'),
+        'camera': require('./assets/camera-button.png'),
         'logo': require('./assets/main-logo.png'),
         'direcional' : require('./assets/direcional.png'),
         'sticker' : require('./assets/sticker.png'),
@@ -33,20 +34,8 @@ const Jogo = () => {
         setCamera(!camera);
     }
 
-    //Menu
-    const handleMenu = () => {
-        console.log('Menu Aberto...');
-        // Adicione aqui o que deseja fazer quando o botão de menu for pressionado
-    }
-
-    //Direcional
-    const handleDir = () => {
-        console.log('Interagindo com o pet...');
-        // Adicione aqui o que deseja fazer quando a imagem for pressionada
-    };
-
     // OpenAI ChatGPT
-    const openai = new OpenAI({ apiKey: 'your api key here'});
+    const openai = new OpenAI({ apiKey: process.env.EXPO_PUBLIC_API_KEY_OPENAI });
 
     const [hasPermission, setHasPermission] = useState(null);
     const [photoUri, setPhotoUri] = useState(null);
@@ -57,50 +46,66 @@ const Jogo = () => {
 
     useEffect(() => {
         (async () => {
-        if (Platform.OS === 'web') {
-            const { status } = await Camera.requestCameraPermissionsAsync();
-            setHasPermission(status === 'granted');
-        } else {
-            const { status } = await Camera.requestCameraPermissionsAsync();
-            setHasPermission(status === 'granted');
-        }
-        })();   
+            if (Platform.OS === 'web') {
+                const { status } = await Camera.requestCameraPermissionsAsync();
+                setHasPermission(status === 'granted');
+            } else {
+                const { status } = await Camera.requestCameraPermissionsAsync();
+                setHasPermission(status === 'granted');
+            }
+        })();
     }, []);
-    
-    const handleVision = async () => {
-    const response = await openai.chat.completions.create({
-        model: 'gpt-4-turbo',
-        messages: [
-        {
-            role: "user",
-            content: [
-            { type: "text", text: "What food is in the image? Respond in this format {food: 'food_name', group: 'food_group'}, if don't have any food, write the value as null, knowing that the groups are: {" + groups.join(", ") + "}." },
-            { type: "image_url", image_url: { url: "data:image/jpeg;base64," + base64 } }
-            ]
+
+    const [ showModal, setShowModal] = useState(false);
+    useEffect(() => {
+        if ((food === "" || food === null) && (foodGroup === "" || foodGroup === null)){
+            setShowModal(true)
+        } else{
+            setShowModal(false)
         }
-        ],
-        max_tokens: 300
-    });
-    return response.choices[0].message.content;
-    }
-    
-    const takePhoto = async () => {
-    if (cameraRef.current) {
-        const photo = await cameraRef.current.takePictureAsync();
-        const base64 = await FileSystem.readAsStringAsync(photo.uri, {
-        encoding: FileSystem.EncodingType.Base64,
+    }, [food, foodGroup])
+
+    const handleVision = async () => {
+        const response = await openai.chat.completions.create({
+            model: 'gpt-4-turbo',
+            messages: [
+                {
+                    role: "user",
+                    content: [
+                        { type: "text", text: "What food is in the image? Respond in this format {food: 'food_name', group: 'food_group'}, if don't have any food, write the value as null, knowing that the groups are: {" + groups.join(", ") + "}." },
+                        { type: "image_url", image_url: { url: "data:image/jpeg;base64," + base64 } }
+                    ]
+                }
+            ],
+            max_tokens: 300
         });
-        setPhotoUri(photo.uri);
-        saveBase64(base64);
+        console.log('Resposta: ', response.choices[0].message.content)
+        const { food, group } = response.choices[0].message.content;
+    
+        // To do: save food and group in "Food" and "FoodGroup" and make Modal to show up only when food/foodgroup is null
+        if (food !== undefined && group !== undefined) {
+            setFood(food);
+            setFoodGroup(group);
+        }
     }
+
+    const takePhoto = async () => {
+        if (cameraRef.current) {
+            const photo = await cameraRef.current.takePictureAsync();
+            const base64 = await FileSystem.readAsStringAsync(photo.uri, {
+                encoding: FileSystem.EncodingType.Base64,
+            });
+            setPhotoUri(photo.uri);
+            saveBase64(base64);
+        }
     };
 
     if (hasPermission === null) {
-    return <View />;
+        return <View />;
     }
 
     if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+        return <Text>No access to camera</Text>;
     }
 
     return (
