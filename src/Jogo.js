@@ -38,6 +38,18 @@ const Jogo = () => {
         setCamera(!camera);
     }
 
+    //Menu
+    const handleMenu = () => {
+        console.log('Menu Aberto...');
+        // Adicione aqui o que deseja fazer quando o botão de menu for pressionado
+    }
+
+    //Direcional
+    const handleDir = () => {
+        console.log('Interagindo com o pet...');
+        // Adicione aqui o que deseja fazer quando a imagem for pressionada
+    };
+
     // OpenAI ChatGPT handler
     const openai = new OpenAI({ apiKey: process.env.EXPO_PUBLIC_API_KEY_OPENAI });
 
@@ -172,7 +184,8 @@ const Jogo = () => {
                     <TouchableOpacity onPress={handleMenu}>
                         <Image source={images['menu']} style={styles.menuButton}/>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={handleDir}>
+                    <TouchableOpacity onPress={takePhoto}>
+                        {/*OBS: takePhoto não é a constante certa, a certa é handleDir, só foi usada takePhoto para testar a câmera*/}
                         <Image source={images['direcional']} style={styles.dirButton}/>
                     </TouchableOpacity>
                     </View>
