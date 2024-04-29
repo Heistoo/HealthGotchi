@@ -1,34 +1,21 @@
-//main imports
-import { StatusBar } from 'expo-status-bar';
+//Library Imports
 import { registerRootComponent } from 'expo';
-import CheckBox from 'expo-checkbox';
 import { Text, View, Image, SafeAreaView, ImageBackground, TextInput, TouchableOpacity, Linking, AppState, Alert } from 'react-native';
 import React, { useState, useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-// Import database
-import { supabase } from './db_service/supabase';
-
-// import stylesheet from index file
+// StyleSheet import
 import styles from '../src/index.js';
 
-// package for svg images
-import {SVG} from 'react-native-svg';
+// Image imports
 import FB from './assets/facebookicon.svg';
 import Social2 from './assets/social2.svg'
 import Pika from './assets/pikachu.svg';
+
+// Navigator Imports (For each screen file, add it here)
 import Login from './Login.js';
 import Jogo from './Jogo.js';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { screensEnabled } from 'react-native-screens';
-
-AppState.addEventListener('change', (state) => {
-  if (state === 'active') {
-    supabase.auth.startAutoRefresh()
-  } else {
-    supabase.auth.stopAutoRefresh()
-  }
-})
 
 const Stack = createStackNavigator();
 //Image assets

@@ -1,15 +1,17 @@
+// Library Imports
 import React, { useState, useRef, useEffect } from 'react';
 import { Text, Button, View, TouchableOpacity, TextInput, ImageBackground, Image, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import styles from './index.js';
-import CheckBox from 'expo-checkbox';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Camera } from 'expo-camera';
 import OpenAI from 'openai';
 import * as FileSystem from 'expo-file-system';
-import { Modal } from 'react-native';
 
+// Stylesheet
+import styles from './index.js';
+
+// Image Imports
 import Pika from './assets/pikachu.svg';
 import Fundo from './assets/jogo-background.png';
 
@@ -17,6 +19,8 @@ const Jogo = () => {
     const navigation = useNavigation();
     const [food, setFood] = useState("");
     const [foodGroup, setFoodGroup] = useState("");
+
+    // Image Usage
     const images = {
         'fundo': require('./assets/jogo-background.png'),
         'menu': require('./assets/menu-button.png'),
@@ -34,7 +38,7 @@ const Jogo = () => {
         setCamera(!camera);
     }
 
-    // OpenAI ChatGPT
+    // OpenAI ChatGPT handler
     const openai = new OpenAI({ apiKey: process.env.EXPO_PUBLIC_API_KEY_OPENAI });
 
     const [hasPermission, setHasPermission] = useState(null);

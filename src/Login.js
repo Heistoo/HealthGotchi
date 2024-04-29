@@ -1,16 +1,19 @@
+
+// Library Imports
 import React, { useState } from 'react';
 import { Text, View, TouchableOpacity, TextInput, Alert, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import styles from './index.js';
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import CheckBox from 'expo-checkbox';
+
+// StyleSheet
+import styles from './index.js';
+
+// Image Imports
 import FB from './assets/facebookicon.svg';
 import Social2 from './assets/social2.svg';
 import Tinka from './assets/tinka-logo.svg';
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-
-// Import database
-import { supabase } from './db_service/supabase';
 
 const Login = () => {
     const navigation = useNavigation();
