@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     height: '105%',
     borderRadius: 20,
   },
+  // Second backgrund for jogo.js
   secondBackground:{
     position: 'absolute',
     backgroundColor: '#883967', 
@@ -19,6 +20,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     zIndex: -1,
   },
+  // Camera box
   cameraContainer:{
     // backgroundColor: '#FFFFFF',
     top: 40,
@@ -214,30 +216,30 @@ const styles = StyleSheet.create({
       // width:"21%",
       // height:"10%",
     },
-    buttonContainer: {
+    // Container for menu/camera and dir buttons
+    gameContainer: {
       top: 50,
-      alignSelf: 'flex-end',
+      right: 40,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
     },
     cameraButton:{
-      right: -30,
-      bottom: -10,
     }, 
     menuButton:{
-      position: 'relative',
-      right: 20,
-      bottom: -10,
+      marginTop: 10,
+      right: 55,
+      position: 'absolute',
     },
     dirButton:{
-      position:'relative',
-      right: 230,
-      bottom: 100,
-      paddingRight: 135,
-      paddingBottom: 130,
+      left: 50,
+    },
+    stickerContainer: {
+      display: 'flex',
+      bottom: -70,
+      left: 20,
     },
     sticker:{
       position:'relative',
-      bottom: 10,
-      right: -20,
     },
     logoButton:{
       left: 20,
@@ -251,14 +253,12 @@ const styles = StyleSheet.create({
     //   bottom: -80,
     // },
     decButton:{
-      position:'relative',
-      bottom: 100,
-      right: -150,
+      bottom: 70,
+      right: -130,
     },
     decButton1:{
-      position:'relative',
-      bottom: 150,
-      right: -210,
+      bottom: 120,
+      right: -175,
     },
     verticalLight:{
       backgroundColor: '#D9D9D9',
@@ -280,12 +280,6 @@ const styles = StyleSheet.create({
       borderRadius: 30,
       zIndex: 1,
     },
-    cameraButton_pressed:{
-      opacity: '70%',
-    },
-    menuButton_pressed:{
-      opacity: '70%',
-    }
   });
 
   export default styles;

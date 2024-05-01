@@ -96,9 +96,10 @@ const Jogo = () => {
             max_tokens: 300
         });
         console.log('Resposta: ', response.choices[0].message.content)
-        const { food, group } = response.choices[0].message.content;
-    
-        // To do: save food and group in "Food" and "FoodGroup" and make Modal to show up only when food/foodgroup is null
+
+        const JSONresponse = JSON.parse(response.choices[0].message.content)
+        const { food, group } = JSONresponse;
+
         if (food !== undefined && group !== undefined) {
             setFood(food);
             setFoodGroup(group);
@@ -147,54 +148,42 @@ const Jogo = () => {
                         </ImageBackground>
                     )}
                     </View>
-                    <View
-                        style={{
-                            flex: 1,
-                            backgroundColor: 'transparent',
-                            flexDirection: 'row',
-                        }}
-                        >
-                        <TouchableOpacity
-                            style={{
-                            flex: 0.1,
-                            alignSelf: 'flex-end',
-                            alignItems: 'center',
-                            }}
-                            onPress={takePhoto}
-                        >
+                {/* <View>
+                        <TouchableOpacity onPress={takePhoto}>
                             <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Take Photo </Text>
                         </TouchableOpacity>
-                        </View>
-                            
+                    </View>    */}
+
                             {/* OpenAi Checker */}
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         {photoUri && <Image source={{ uri: photoUri }} style={{ width: 300, height: 300 }} />}
                         {photoUri && <Button title="Analyze" onPress={async () => {
                         console.log(base64.slice(0, 100));
                         const response = await handleVision();
-                        console.log(response);
+                        console.log(JSONresponse);
                         alert(response);
                         }} />}
-                    </View>
+                    </View> */}
                     
-                    <View style={styles.buttonContainer}>
-                    <TouchableOpacity onPress={handleCam}>
-                        <Image source={images['camera']} style={styles.cameraButton}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={handleMenu}>
-                        <Image source={images['menu']} style={styles.menuButton}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={takePhoto}>
-                        {/*OBS: takePhoto não é a constante certa, a certa é handleDir, só foi usada takePhoto para testar a câmera*/}
-                        <Image source={images['direcional']} style={styles.dirButton}/>
-                    </TouchableOpacity>
+                    <View style={styles.gameContainer}>
+                        <TouchableOpacity onPress={takePhoto}>
+                            <Image source={images['direcional']} style={styles.dirButton}/>
+                        </TouchableOpacity>
+                        <View >
+                            <TouchableOpacity onPress={handleCam}>
+                                <Image source={images['camera']} style={styles.cameraButton}/>
+                            </TouchableOpacity>
+                            <View>
+                                <TouchableOpacity onPress={handleMenu}>
+                                    <Image source={images['menu']} style={styles.menuButton}/>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
                     </View>
+                    <View style={styles.stickerContainer}>
                         <Image source={images['sticker']} style={styles.sticker}/>
                         <Image source={images['decorative']} style={styles.decButton}/>
                         <Image source={images['decorative']} style={styles.decButton1}/>
-
-                    <View>
-                        <Image source={images['logo']} style={styles.logoButton}/>
                     </View>
             </LinearGradient>
         </SafeAreaView>
