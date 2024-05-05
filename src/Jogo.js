@@ -88,23 +88,35 @@ const Jogo = () => {
                 {
                     role: "user",
                     content: [
-                        { type: "text", text: "What food is in the image? Respond in this format {food: 'food_name', group: 'food_group'}, if don't have any food, write the value as null, knowing that the groups are: {" + groups.join(", ") + "}." },
+                        { type: "text", text: "What food is in the image? Respond in this format {\"food\": \"food_name\", \"group\": \"food_group\"}, if don't have any food, write the value as null, knowing that the groups are: {" + groups.join(", ") + "}." },
                         { type: "image_url", image_url: { url: "data:image/jpeg;base64," + base64 } }
                     ]
                 }
             ],
             max_tokens: 300
         });
-        console.log('Resposta: ', response.choices[0].message.content)
+        console.log('Resposta: ', response.choices[0].message.content);
+    
+        let parsedResponse;
 
-        const JSONresponse = JSON.parse(response.choices[0].message.content)
-        const { food, group } = JSONresponse;
-
-        if (food !== undefined && group !== undefined) {
-            setFood(food);
-            setFoodGroup(group);
+        // Checa se a resposta é uma string
+        if (typeof response.choices[0].message.content === 'string') {
+            // Parse em um objeto
+            parsedResponse = JSON.parse(response.choices[0].message.content);
+        } else {
+            // Se a resposta já for um objeto, converte numa const e ela passa para food & group
+            parsedResponse = response.choices[0].message.content;
         }
+
+    const { food, group } = parsedResponse;
+    
+    if (food !== undefined && group !== undefined) {
+        setFood(food);
+        setFoodGroup(group);
     }
+        return parsedResponse;
+    }
+    
 
     const takePhoto = async () => {
         if (cameraRef.current) {
@@ -148,24 +160,24 @@ const Jogo = () => {
                         </ImageBackground>
                     )}
                     </View>
-                {/* <View>
-                        <TouchableOpacity onPress={takePhoto}>
-                            <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Take Photo </Text>
-                        </TouchableOpacity>
-                    </View>    */}
+                    <View>
+                            <TouchableOpacity onPress={takePhoto}>
+                                <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Take Photo </Text>
+                            </TouchableOpacity>
+                        </View>   
 
                             {/* OpenAi Checker */}
-                    {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        {photoUri && <Image source={{ uri: photoUri }} style={{ width: 300, height: 300 }} />}
+                    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                        {photoUri && <Image source={{ uri: photoUri }} />}
                         {photoUri && <Button title="Analyze" onPress={async () => {
                         console.log(base64.slice(0, 100));
                         const response = await handleVision();
-                        console.log(JSONresponse);
-                        alert(response);
+                        console.log(response);
+                        alert(`Food: ${food}, Group: ${foodGroup}`);
                         }} />}
-                    </View> */}
+                    </View>
                     
-                    <View style={styles.gameContainer}>
+                    {/* <View style={styles.gameContainer}>
                         <TouchableOpacity onPress={takePhoto}>
                             <Image source={images['direcional']} style={styles.dirButton}/>
                         </TouchableOpacity>
@@ -179,12 +191,12 @@ const Jogo = () => {
                                 </TouchableOpacity>
                             </View>
                         </View>
-                    </View>
-                    <View style={styles.stickerContainer}>
+                    </View> */}
+                    {/* <View style={styles.stickerContainer}>
                         <Image source={images['sticker']} style={styles.sticker}/>
                         <Image source={images['decorative']} style={styles.decButton}/>
                         <Image source={images['decorative']} style={styles.decButton1}/>
-                    </View>
+                    </View> */}
             </LinearGradient>
         </SafeAreaView>
     );
