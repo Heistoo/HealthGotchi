@@ -14,6 +14,7 @@ import styles from './index.js';
 // Image Imports
 import Pika from './assets/pikachu.svg';
 import Fundo from './assets/jogo-background.png';
+import { parse } from 'expo-linking';
 
 const Jogo = () => {
     const navigation = useNavigation();
@@ -71,15 +72,14 @@ const Jogo = () => {
             }
         })();
     }, []);
-
-    const [ showModal, setShowModal] = useState(false);
+    
     useEffect(() => {
-        if ((food === "" || food === null) && (foodGroup === "" || foodGroup === null)){
-            setShowModal(true)
-        } else{
-            setShowModal(false)
+        if (food === null && foodGroup === null) {
+            alert('Comida não detectada, tente novamente.');
+        } else if (food && foodGroup) {
+            alert(`Comida: ${food}, Grupo: ${foodGroup}`);
         }
-    }, [food, foodGroup])
+    }, [food, foodGroup]);
 
     const handleVision = async () => {
         const response = await openai.chat.completions.create({
@@ -109,12 +109,13 @@ const Jogo = () => {
         }
 
     const { food, group } = parsedResponse;
-    
+
     if (food !== undefined && group !== undefined) {
         setFood(food);
         setFoodGroup(group);
     }
-        return parsedResponse;
+
+    return parsedResponse;
     }
     
 
@@ -171,9 +172,7 @@ const Jogo = () => {
                                 {photoUri && <Image source={{ uri: photoUri }} />}
                                 {photoUri && <Button title="Analyze" onPress={async () => {
                                 console.log(base64.slice(0, 100));
-                                const response = await handleVision();
-                                console.log(response);
-                                alert(`Food: ${food}, Group: ${foodGroup}`);
+                                await handleVision();
                                 }} />}
                             </View>
                         <View style={styles.gameContainer}>
