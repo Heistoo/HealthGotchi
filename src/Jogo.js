@@ -48,7 +48,7 @@ const Jogo = () => {
     //Direcional
     const handleDir = () => {
         console.log('Interagindo com o pet...');
-        // Adicione aqui o que deseja fazer quando a imagem for pressionada
+        
     };
 
     // OpenAI ChatGPT handler
@@ -72,7 +72,7 @@ const Jogo = () => {
             }
         })();
     }, []);
-    
+
     useEffect(() => {
         if (food === null && foodGroup === null) {
             alert('Comida não detectada, tente novamente.');
@@ -151,7 +151,7 @@ const Jogo = () => {
                     <View style={styles.cameraContainer}>
                         {camera ? (
                         <Camera
-                            style={{ flex: 1, width: '100%', height: '100%' }} // Adjust this style as needed
+                            style={{ flex: 1, width: '100%', height: '100%' }}
                             type={Camera.Constants.Type.back}
                             ref={cameraRef}
                         />
@@ -160,12 +160,7 @@ const Jogo = () => {
                             <Pika style={styles.pika2}/>
                         </ImageBackground>
                     )}
-                    </View>
-                    {/* <View>
-                            <TouchableOpacity onPress={takePhoto}>
-                                <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Take Photo </Text>
-                            </TouchableOpacity>
-                        </View>    */}     
+                    </View>  
                     <View >
                          {/* OpenAi Checker */}
                             <View style={{ justifyContent: 'center', alignItems: 'center', height: 35}}>
