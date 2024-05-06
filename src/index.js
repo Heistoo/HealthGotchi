@@ -1,6 +1,7 @@
 import { StyleSheet, Platform } from "react-native";
 
 const styles = StyleSheet.create({
+  
   // Background for Jogo gradient
   background:{
     left: 0,
@@ -76,6 +77,21 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       backgroundColor: '#26295E',
     },
+    // Container for status bar
+    statusContainer: {
+      alignSelf: 'center', 
+      width: '100%', 
+      height: '50%', 
+      backgroundColor: '#26295E', 
+      top: 0,
+      opacity: 0.8,
+      position: 'absolute',
+    },
+    statusTitle: {
+      fontSize: 30,
+      color: 'white',
+      fontFamily: 'Roboto',
+    },
     containerbg: {
       top: -30,
       height: '110%',
@@ -139,12 +155,13 @@ const styles = StyleSheet.create({
       zIndex: 1,
     },
     pika2:{
-      alignSelf: 'center',
-      bottom: -100,
-      left: 70,
-      height: 400,
-      width: 200,
+      alignSelf: 'flex-end',
+      bottom: -200,
+      right: 30,
+      height: 150,
+      width: 150,
       opacity: 2,
+      position: 'absolute'
     },
     containerLogin:{
       top:'10%',

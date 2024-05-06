@@ -12,14 +12,14 @@ import * as FileSystem from 'expo-file-system';
 import styles from './index.js';
 
 // Image Imports
-import Pika from './assets/pikachu.svg';
-import Fundo from './assets/jogo-background.png';
-import { parse } from 'expo-linking';
+import Energy from './assets/menu/energy.svg'
 
 const Jogo = () => {
     const navigation = useNavigation();
     const [food, setFood] = useState("");
     const [foodGroup, setFoodGroup] = useState("");
+    const [pressed, setPressed] = useState(false);
+    const [visibility, setVisibility] = useState(false);
 
     // Image Usage
     const images = {
@@ -45,12 +45,17 @@ const Jogo = () => {
         // Adicione aqui o que deseja fazer quando o botão de menu for pressionado
     }
 
+    useEffect(() => {
+        setVisibility(pressed);
+    }, [pressed]);
+    
     //Direcional
     const handleDir = () => {
         console.log('Interagindo com o pet...');
+        setPressed(!pressed)
         
     };
-
+    
     // OpenAI ChatGPT handler
     const openai = new OpenAI({ apiKey: process.env.EXPO_PUBLIC_API_KEY_OPENAI });
 
@@ -156,9 +161,20 @@ const Jogo = () => {
                             ref={cameraRef}
                         />
                     ): (
-                        <ImageBackground source={images['fundo']} style={styles.fundoContainer}>
-                            <Pika style={styles.pika2}/>
-                        </ImageBackground>
+                        
+                    <ImageBackground source={images['fundo']} style={styles.fundoContainer}>
+                        {visibility &&  (
+                            <View style={styles.statusContainer}>
+                                <View style={{flex: 1, alignItems: 'center'}}>
+                                    <Text style={styles.statusTitle}>Status</Text>
+                                    <Energy style={{height: '25%', width:'25%'}}/>
+                                </View>
+                            </View>
+                        ) }
+                        <TouchableOpacity onPress={handleDir}>
+                            <Image source={require('./assets/inicial-template.png')}style={styles.pika2}/>
+                        </TouchableOpacity>
+                    </ImageBackground>
                     )}
                     </View>  
                     <View >
