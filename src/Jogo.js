@@ -160,43 +160,43 @@ const Jogo = () => {
                         </ImageBackground>
                     )}
                     </View>
-                    <View>
+                    {/* <View>
                             <TouchableOpacity onPress={takePhoto}>
                                 <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}> Take Photo </Text>
                             </TouchableOpacity>
-                        </View>   
-
-                            {/* OpenAi Checker */}
-                    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                        {photoUri && <Image source={{ uri: photoUri }} />}
-                        {photoUri && <Button title="Analyze" onPress={async () => {
-                        console.log(base64.slice(0, 100));
-                        const response = await handleVision();
-                        console.log(response);
-                        alert(`Food: ${food}, Group: ${foodGroup}`);
-                        }} />}
-                    </View>
-                    
-                    {/* <View style={styles.gameContainer}>
-                        <TouchableOpacity onPress={takePhoto}>
-                            <Image source={images['direcional']} style={styles.dirButton}/>
-                        </TouchableOpacity>
-                        <View >
-                            <TouchableOpacity onPress={handleCam}>
-                                <Image source={images['camera']} style={styles.cameraButton}/>
+                        </View>    */}     
+                    <View >
+                         {/* OpenAi Checker */}
+                            <View style={{ justifyContent: 'center', alignItems: 'center', height: 35}}>
+                                {photoUri && <Image source={{ uri: photoUri }} />}
+                                {photoUri && <Button title="Analyze" onPress={async () => {
+                                console.log(base64.slice(0, 100));
+                                const response = await handleVision();
+                                console.log(response);
+                                alert(`Food: ${food}, Group: ${foodGroup}`);
+                                }} />}
+                            </View>
+                        <View style={styles.gameContainer}>
+                            <TouchableOpacity onPress={takePhoto}>
+                                <Image source={images['direcional']} style={styles.dirButton}/>
                             </TouchableOpacity>
-                            <View>
-                                <TouchableOpacity onPress={handleMenu}>
-                                    <Image source={images['menu']} style={styles.menuButton}/>
+                            <View >
+                                <TouchableOpacity onPress={handleCam}>
+                                    <Image source={images['camera']} style={styles.cameraButton}/>
                                 </TouchableOpacity>
+                                <View>
+                                    <TouchableOpacity onPress={handleMenu}>
+                                        <Image source={images['menu']} style={styles.menuButton}/>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
                         </View>
-                    </View> */}
-                    {/* <View style={styles.stickerContainer}>
-                        <Image source={images['sticker']} style={styles.sticker}/>
-                        <Image source={images['decorative']} style={styles.decButton}/>
-                        <Image source={images['decorative']} style={styles.decButton1}/>
-                    </View> */}
+                        <View style={styles.stickerContainer}>
+                            <Image source={images['sticker']} style={styles.sticker}/>
+                            <Image source={images['decorative']} style={styles.decButton}/>
+                            <Image source={images['decorative']} style={styles.decButton1}/>
+                        </View>
+                    </View>
             </LinearGradient>
         </SafeAreaView>
     );
