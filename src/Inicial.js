@@ -7,10 +7,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Text, Modal, Button, View, Alert, Animated, TouchableOpacity, TextInput, ImageBackground, Image, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Camera } from 'expo-camera';
-import OpenAI from 'openai';
-import * as FileSystem from 'expo-file-system';
+
 
 // StyleSheet import
 import styles from '../src/index.js';
