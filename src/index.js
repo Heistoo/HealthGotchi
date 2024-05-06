@@ -218,10 +218,11 @@ const styles = StyleSheet.create({
     },
     // Container for menu/camera and dir buttons
     gameContainer: {
-      top: 50,
+      top: 20,
       right: 40,
       flexDirection: 'row',
       justifyContent: 'space-between',
+      zIndex: 1,
     },
     cameraButton:{
     }, 
@@ -235,7 +236,7 @@ const styles = StyleSheet.create({
     },
     stickerContainer: {
       display: 'flex',
-      bottom: -70,
+      bottom: -30,
       left: 20,
     },
     sticker:{
@@ -246,12 +247,6 @@ const styles = StyleSheet.create({
       width: 80,
       height: 80,
     },
-    // decorativeButtonContainer:{
-    //   flexDirection: 'row',
-    //   display: 'flex',
-    //   alignSelf: 'center',
-    //   bottom: -80,
-    // },
     decButton:{
       bottom: 70,
       right: -130,
