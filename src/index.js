@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 
 const styles = StyleSheet.create({
   
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   // Second backgrund for jogo.js
   secondBackground:{
     position: 'absolute',
-    backgroundColor: '#883967', 
+    backgroundColor: '#26295E', 
     top: -11  ,
     height: '115%',
     width: '100%',
@@ -69,6 +69,13 @@ const styles = StyleSheet.create({
       flex: 1,
       display: 'flex',
       justifyContent: 'center',
+      backgroundColor: '#FFF7E8',
+    },
+    containerInicial: {
+      flex: 1,
+      display: 'flex',
+      justifyContent: 'center',
+      backgroundColor: '#26295E',
     },
     // Container for status bar
     statusContainer: {
@@ -119,6 +126,16 @@ const styles = StyleSheet.create({
       lineHeight: 84,
       textAlign: 'center',
       position:'absolute',
+      zIndex: 1,
+    },
+    titulo3: {
+      color: 'white',
+      fontFamily: 'Roboto',
+      fontSize: 42,
+      lineHeight: 84,
+      textAlign: 'center',
+      position:'relative',
+      top:'-30%',
       zIndex: 1,
     },
     // Pikachu Image for main register screen
@@ -291,6 +308,57 @@ const styles = StyleSheet.create({
       width: '95%',
       borderRadius: 30,
       zIndex: 1,
+    },
+    modalBackground: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#26295E', 
+    },
+    modalContent: {
+      backgroundColor: '#26295E',
+      padding: 20,
+      borderRadius: 10,
+      paddingTop: 100,
+      paddingBottom: 100,
+    },
+    modalText: {
+      color: 'white',
+      fontSize: 18,
+      marginBottom: 20,
+    },
+    ini1: {
+      position: "relative",
+      width: 120,
+      height: 120,
+      left: "4%",
+      top: "-100%",
+    },
+    ini2: {
+      position: "relative",
+      width: 120,
+      height: 120,
+      left: "36%",
+      top: "-200%",
+      
+    },
+    ini3: {
+      position: "relative",
+      width: 120,
+      height: 120,
+      left: "66%",
+      top: "-300%",
+    },
+    buttoncontainer2:{
+      backgroundColor:'#31415F',
+      borderRadius:10,
+      alignItems:"center",
+      justifyContent: 'center',
+      width:200,
+      height:40,
+      marginTop: 20,
+      left:"25%",
+      top:"-20%",
     },
   });
 

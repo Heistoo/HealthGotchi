@@ -121,6 +121,9 @@ const Login = () => {
                         <TouchableOpacity onPress={() => handleLinkPress('Jogo')}>
                                 <Text style={{color: '#4D73FA'}}>TelaJogo</Text>
                         </TouchableOpacity>
+                        <TouchableOpacity onPress={() => handleLinkPress('Inicial')}>
+                                <Text style={{color: '#4D73FA'}}>Escolhe Inicial</Text>
+                        </TouchableOpacity>
                         <View style={styles.containerIcon}>
                             <FB style={styles.imageLogo}/>
                             <Social2 style={styles.imageLogo2}/>
