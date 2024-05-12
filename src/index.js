@@ -93,8 +93,8 @@ const styles = StyleSheet.create({
       fontFamily: 'Roboto',
     },
     statusButtons: {
-      height: '200%', 
-      width:'5%'
+      height: 50, 
+      width: 50
     },
     containerbg: {
       top: -30,

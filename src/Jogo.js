@@ -171,7 +171,7 @@ const Jogo = () => {
                             <View style={styles.statusContainer}>
                                 <View style={{flex: 1, alignItems: 'center'}}>
                                     <Text style={styles.statusTitle}>Status</Text>
-                                    <View style={{height: '100%', width: 500, alignItems: 'center'}}>
+                                    <View style={{ alignItems: 'center'}}>
                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                             <Energy style={styles.statusButtons}/>
                                             <ProgressBarAndroid styleAttr="Horizontal" indeterminate={false} progress={0.5} />
