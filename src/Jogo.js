@@ -1,6 +1,6 @@
 // Library Imports
 import React, { useState, useRef, useEffect } from 'react';
-import { Text, Button, View, TouchableOpacity, TextInput, ImageBackground, Image, Platform } from 'react-native';
+import { Text, Button, View, TouchableOpacity, TextInput, ImageBackground, Image, Platform, ProgressBarAndroid } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -12,6 +12,10 @@ import * as FileSystem from 'expo-file-system';
 import styles from './index.js';
 
 // Image Imports
+import Strength from './assets/menu/strength.svg'
+import Resistance from './assets/menu/resistance.svg'
+import Health from './assets/menu/health.svg'
+import Happy from './assets/menu/happiness.svg' 
 import Energy from './assets/menu/energy.svg'
 
 const Jogo = () => {
@@ -162,15 +166,32 @@ const Jogo = () => {
                         />
                     ): (
                         
-                    <ImageBackground source={images['fundo']} style={styles.fundoContainer}>
+                        <ImageBackground source={images['fundo']} style={styles.fundoContainer}>
                         {visibility &&  (
                             <View style={styles.statusContainer}>
                                 <View style={{flex: 1, alignItems: 'center'}}>
                                     <Text style={styles.statusTitle}>Status</Text>
-                                    <Energy style={{height: '25%', width:'25%'}}/>
+                                    <View style={{height: '100%', width: 500, alignItems: 'center'}}>
+                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                            <Energy style={styles.statusButtons}/>
+                                            <ProgressBarAndroid styleAttr="Horizontal" indeterminate={false} progress={0.5} />
+                                        </View>
+                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                            <Happy style={styles.statusButtons}/>
+                                            <ProgressBarAndroid styleAttr="Horizontal" indeterminate={false} progress={0.5} />
+                                        </View>
+                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                            <Health style={styles.statusButtons}/>
+                                            <ProgressBarAndroid styleAttr="Horizontal" indeterminate={false} progress={0.5} />
+                                        </View>
+                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                            <Resistance style={styles.statusButtons}/>
+                                            <ProgressBarAndroid styleAttr="Horizontal" indeterminate={false} progress={0.5} />
+                                        </View>
+                                    </View>
                                 </View>
                             </View>
-                        ) }
+                        )}
                         <TouchableOpacity onPress={handleDir}>
                             <Image source={require('./assets/inicial-template.png')}style={styles.pika2}/>
                         </TouchableOpacity>

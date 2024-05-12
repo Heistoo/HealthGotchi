@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     statusContainer: {
       alignSelf: 'center', 
       width: '100%', 
-      height: '50%', 
+      height: '60%', 
       backgroundColor: '#26295E', 
       top: 0,
       opacity: 0.8,
@@ -91,6 +91,10 @@ const styles = StyleSheet.create({
       fontSize: 30,
       color: 'white',
       fontFamily: 'Roboto',
+    },
+    statusButtons: {
+      height: '200%', 
+      width:'5%'
     },
     containerbg: {
       top: -30,
