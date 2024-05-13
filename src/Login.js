@@ -46,7 +46,7 @@ const Login = () => {
         setLoading(true);
 
         try {
-            const response = await fetch('http://IP_DO_PC_RODANDO:5000/login', {
+            const response = await fetch('http://54.167.89.222:5000/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
