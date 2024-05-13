@@ -4,7 +4,7 @@ import { Text, Button, View, TouchableOpacity, TextInput, ImageBackground, Image
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Camera } from 'expo-camera';
+import { Camera } from 'expo-camera/legacy';
 import OpenAI from 'openai';
 import * as FileSystem from 'expo-file-system';
 
