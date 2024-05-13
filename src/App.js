@@ -16,7 +16,6 @@ import Pika from './assets/pikachu.svg';
 // Navigator Imports (For each screen file, add it here)
 import Login from './Login.js';
 import Jogo from './Jogo.js';
-import Inicial from './Inicial.js';
 
 const Stack = createStackNavigator();
 //Image assets
@@ -46,7 +45,6 @@ export default function Main() {
         <Stack.Screen name="App" component={AppScreen} options={{headerShown: false}}/>
         <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
         <Stack.Screen name="Jogo" component={Jogo} options={{headerShown: false}}/>
-        <Stack.Screen name="Inicial" component={Inicial} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -70,7 +68,7 @@ function AppScreen({ navigation }) {
     setLoading(true);
 
     try {
-        const response = await fetch('http://IP_DO_PC_RODANDO:5000/register', {
+      const response = await fetch('http://54.167.89.222:5000/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
