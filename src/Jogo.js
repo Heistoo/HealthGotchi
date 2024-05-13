@@ -293,6 +293,7 @@ const Jogo = () => {
                         {/*A partir daqui, criar cada uma das telas */}
                         {visDia &&  (
                             <View style={styles.statusContainer}>
+                                {/*Implementar as missões*/}
                                     <TouchableOpacity onPress={handleDia}>
                                         <Back style={styles.backButton}/>
                                     </TouchableOpacity>
@@ -303,6 +304,7 @@ const Jogo = () => {
                         )}
                         {visSem &&  (
                             <View style={styles.statusContainer}>
+                                {/*Implementar as missões*/}
                                     <TouchableOpacity onPress={handleSem}>
                                         <Back style={styles.backButton}/>
                                     </TouchableOpacity>
@@ -331,6 +333,7 @@ const Jogo = () => {
                                 <View style={{flex: 1, alignItems: 'center'}}>
                                     <Text style={styles.statusTitle}>Desbloqueáveis</Text>
                                     <View style={{flex: 1, alignItems: 'left'}}>
+                                        {/*Arrumar a posição*/}
                                         <Image source={images['asphalt']} style={styles.petIcons}/>
                                         <Image source={images['banabat']} style={styles.petIcons}/>
                                         <Image source={images['brekorb']} style={styles.petIcons}/>
