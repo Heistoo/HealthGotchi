@@ -16,7 +16,6 @@ import Pika from './assets/pikachu.svg';
 // Navigator Imports (For each screen file, add it here)
 import Login from './Login.js';
 import Jogo from './Jogo.js';
-import Inicial from './Inicial.js';
 
 const Stack = createStackNavigator();
 //Image assets
@@ -46,7 +45,6 @@ export default function Main() {
         <Stack.Screen name="App" component={AppScreen} options={{headerShown: false}}/>
         <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
         <Stack.Screen name="Jogo" component={Jogo} options={{headerShown: false}}/>
-        <Stack.Screen name="Inicial" component={Inicial} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

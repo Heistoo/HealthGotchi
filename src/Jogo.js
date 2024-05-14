@@ -4,7 +4,8 @@ import { Text, Button, View, TouchableOpacity, TextInput, ImageBackground, Image
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Camera } from 'expo-camera';
+import ProgressBar from 'react-native-progress/Bar';
+import { Camera } from 'expo-camera/legacy';
 import OpenAI from 'openai';
 import * as FileSystem from 'expo-file-system';
 // import { Accelerometer } from 'react-native-sensors';
@@ -272,7 +273,7 @@ const Jogo = () => {
                                         </View>
                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                             <Energy style={styles.statusButtons}/>
-                                            <ProgressBarAndroid styleAttr="Horizontal" indeterminate={false} progress={0.5} />
+                                            <ProgressBar width={100} height={20} animated={true} color={'red'} progress={0.9} borderColor={'transparent'}/>
                                         </View>
                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                             <Happy style={styles.statusButtons}/>
@@ -284,6 +285,10 @@ const Jogo = () => {
                                         </View>
                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                             <Resistance style={styles.statusButtons}/>
+                                            <ProgressBarAndroid styleAttr="Horizontal" indeterminate={false} progress={0.5} />
+                                        </View>
+                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                            <Strength style={styles.statusButtons}/>
                                             <ProgressBarAndroid styleAttr="Horizontal" indeterminate={false} progress={0.5} />
                                         </View>
                                     </View>
