@@ -1,6 +1,6 @@
 // Library Imports
 import React, { useState, useRef, useEffect } from 'react';
-import { Text, Button, View, TouchableOpacity, TextInput, ImageBackground, Image, Platform, ProgressBarAndroid } from 'react-native';
+import { Text, Button, View, TouchableOpacity, TextInput, ImageBackground, Image, Platform, ProgressBarAndroid, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -219,6 +219,50 @@ const Jogo = () => {
     return parsedResponse;
     }
     
+    // If food and foodgroup are detected, he will give points to progressBar
+    const [points, setPoints] = useState(0);
+    const handlePhoto = async () => {
+        if (food !== null && foodGroup !== null){
+            console.log('Comida detectada...')
+            switch (foodGroup) {
+                case "Frutas":
+                    console.log('Fruta detectada')
+                    setPoints(10);
+                    break;
+                case "Legumes e verduras":
+                    console.log('Legume / Verdura detectada')
+                    setPoints(20);
+                    break;
+                case "Carnes e ovos":
+                    console.log('Carne / Ovo detectada')
+                    setPoints(30);
+                    break;
+                case "Cereais, tubérculos, pães e raízes":
+                    console.log('Cereal / Tubérculo / Pão / Raiz detectada')
+                    setPoints(40);
+                    break;
+                case "Leguminosas":
+                    console.log('Leguminosa detectada')
+                    setPoints(50);
+                    break;
+                case "Leites e derivados":
+                    console.log('Leite / Derivado detectada')
+                    setPoints(60);
+                    break;
+                case "Doces, guloseimas e salgadinhos":
+                    console.log('Doce / Guloseima / Salgadinho detectada')
+                    setPoints(70);
+                    break;
+                default:
+                    console.log('Fruta nao detectada')
+                    setPoints(0);
+                    break;
+            }
+        }
+    }
+    useEffect(() => {
+        console.log('Pontos ganhos: ', points);
+    }, [points]);
 
     const takePhoto = async () => {
         if (cameraRef.current) {
@@ -408,6 +452,7 @@ const Jogo = () => {
                                 {photoUri && <Button title="Analyze" onPress={async () => {
                                 console.log(base64.slice(0, 100));
                                 await handleVision();
+                                await handlePhoto();
                                 }} />}
                             </View>
                         <View style={styles.gameContainer}>
