@@ -94,7 +94,24 @@ const styles = StyleSheet.create({
     },
     statusButtons: {
       height: 50, 
-      width: 50
+      width: 50,
+    },
+    backButton: {
+      height: '10%', 
+      width: '10%',
+      position: 'absolute',
+      left: '15%',
+    },
+    passosIcon: {
+      height: '60%', 
+      width: '60%',
+    },
+    petIcons: {
+      height: '10%', 
+      width: '10%',
+      display: 'flex',
+      flexWrap: "nowrap",
+      flex: 1,
     },
     containerbg: {
       top: -30,
@@ -330,6 +347,10 @@ const styles = StyleSheet.create({
       color: 'white',
       fontSize: 18,
       marginBottom: 20,
+    },
+    modalText2: {
+      color: 'white',
+      fontSize: 30,
     },
     ini1: {
       position: "relative",

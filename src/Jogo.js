@@ -8,6 +8,7 @@ import ProgressBar from 'react-native-progress/Bar';
 import { Camera } from 'expo-camera/legacy';
 import OpenAI from 'openai';
 import * as FileSystem from 'expo-file-system';
+// import { Accelerometer } from 'react-native-sensors';
 
 // Stylesheet
 import styles from './index.js';
@@ -18,6 +19,12 @@ import Resistance from './assets/menu/resistance.svg'
 import Health from './assets/menu/health.svg'
 import Happy from './assets/menu/happiness.svg' 
 import Energy from './assets/menu/energy.svg'
+import Passos from './assets/menu/passos.svg'
+import Status from './assets/menu/status.svg'
+import Tarefas from './assets/menu/tarefas.svg'
+import Shop from './assets/menu/shop.svg'
+import Menu from './assets/menu/menu.svg'
+import Back from './assets/menu/back.svg'
 
 const Jogo = () => {
     const navigation = useNavigation();
@@ -25,6 +32,12 @@ const Jogo = () => {
     const [foodGroup, setFoodGroup] = useState("");
     const [pressed, setPressed] = useState(false);
     const [visibility, setVisibility] = useState(false);
+    const [visMenu, setVisMenu] = useState(false);
+    const [visDia, setVisDia] = useState(false);
+    const [visSem, setVisSem] = useState(false);
+    const [visPass, setVisPass] = useState(false);
+    const [visShop, setVisShop] = useState(false);
+    // const [stepCount, setStepCount] = useState(0);
 
     // Image Usage
     const images = {
@@ -35,7 +48,21 @@ const Jogo = () => {
         'direcional' : require('./assets/direcional.png'),
         'sticker' : require('./assets/sticker.png'),
         'decorative': require('./assets/decorative-button.png'),
+        'passos2': require('./assets/menu/passos2.png'),
+        'asphalt': require('./assets/pets/asphalt.png'),
+        'banabat': require('./assets/pets/banabat.png'),
+        'brekorb': require('./assets/pets/brekorb.png'),
+        'bugwheel': require('./assets/pets/bugwheel.png'),
+        'carnivalt': require('./assets/pets/carnivalt.png'),
+        'charcopala': require('./assets/pets/charcopala.png'),
+        'cromirin': require('./assets/pets/cromirin.png'),
+        'feveroar': require('./assets/pets/feveroar.png'),
+        'hydraqua': require('./assets/pets/hydraqua.png'),
+        'minde': require('./assets/pets/minde.png'),
+        'toxtoad': require('./assets/pets/toxtoad.png'),
+        'wickiked': require('./assets/pets/wickiked.png'),
     }
+
 
     //Camera
     const [camera, setCamera] = useState(null)
@@ -47,17 +74,81 @@ const Jogo = () => {
     //Menu
     const handleMenu = () => {
         console.log('Menu Aberto...');
-        // Adicione aqui o que deseja fazer quando o botão de menu for pressionado
+        setVisibility(!visibility);
     }
 
     useEffect(() => {
         setVisibility(pressed);
     }, [pressed]);
+    useEffect(() => {
+        setVisMenu(pressed);
+    }, [pressed]);
+    useEffect(() => {
+        setVisDia(pressed);
+    }, [pressed]);
+    useEffect(() => {
+        setVisSem(pressed);
+    }, [pressed]);
+    useEffect(() => {
+        setVisPass(pressed);
+    }, [pressed]);
+    useEffect(() => {
+        setVisShop(pressed);
+    }, [pressed]);
+    // useEffect(() => {
+    //     const subscription = new Accelerometer({
+    //       updateInterval: 1000, // Intervalo de atualização em milissegundos
+    //     }).subscribe(({ x, y, z }) => {
+    //       // Lógica para estimar os passos com base nos dados do acelerômetro
+    //       const accelerationMagnitude = Math.sqrt(x * x + y * y + z * z);
+    //       if (accelerationMagnitude > 10) {
+    //         // Valor de aceleração arbitrário para detectar um passo
+    //         setStepCount((prevStepCount) => prevStepCount + 1);
+    //       }
+    //     });
     
+    //     return () => {
+    //       subscription.unsubscribe(); // Cancela a assinatura quando o componente é desmontado
+    //     };
+    //   }, []);
+
     //Direcional
     const handleDir = () => {
         console.log('Interagindo com o pet...');
-        setPressed(!pressed)
+    };
+
+    //Status
+    const handleStatus = () => {
+        setVisibility(!visibility);
+        setVisMenu(!visMenu);
+        
+    };
+
+    //Missao Diaria
+    const handleDia = () => {
+        setVisibility(!visibility);
+        setVisDia(!visDia);
+        
+    };
+
+    //Missao semanal
+    const handleSem = () => {
+        setVisibility(!visibility);
+        setVisSem(!visSem);
+        
+    };
+
+    //Passos
+    const handlePass = () => {
+        setVisibility(!visibility);
+        setVisPass(!visPass);
+        
+    };
+
+    //Shop
+    const handleShop = () => {
+        setVisibility(!visibility);
+        setVisShop(!visShop);
         
     };
     
@@ -168,11 +259,18 @@ const Jogo = () => {
                     ): (
                         
                         <ImageBackground source={images['fundo']} style={styles.fundoContainer}>
-                        {visibility &&  (
+                        {visMenu &&  (
                             <View style={styles.statusContainer}>
+                                    <TouchableOpacity onPress={handleStatus}>
+                                        <Back style={styles.backButton}/>
+                                    </TouchableOpacity>
                                 <View style={{flex: 1, alignItems: 'center'}}>
                                     <Text style={styles.statusTitle}>Status</Text>
                                     <View style={{ alignItems: 'center'}}>
+                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                            <Health style={styles.statusButtons}/>
+                                            <ProgressBarAndroid styleAttr="Horizontal" indeterminate={false} progress={0.5} />
+                                        </View>
                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                             <Energy style={styles.statusButtons}/>
                                             <ProgressBar width={100} height={20} animated={true} color={'red'} progress={0.9} borderColor={'transparent'}/>
@@ -182,7 +280,7 @@ const Jogo = () => {
                                             <ProgressBarAndroid styleAttr="Horizontal" indeterminate={false} progress={0.5} />
                                         </View>
                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                            <Health style={styles.statusButtons}/>
+                                            <Strength style={styles.statusButtons}/>
                                             <ProgressBarAndroid styleAttr="Horizontal" indeterminate={false} progress={0.5} />
                                         </View>
                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -193,6 +291,106 @@ const Jogo = () => {
                                             <Strength style={styles.statusButtons}/>
                                             <ProgressBarAndroid styleAttr="Horizontal" indeterminate={false} progress={0.5} />
                                         </View>
+                                    </View>
+                                </View>
+                            </View>
+                        )}
+                        {/*A partir daqui, criar cada uma das telas */}
+                        {visDia &&  (
+                            <View style={styles.statusContainer}>
+                                {/*Implementar as missões*/}
+                                    <TouchableOpacity onPress={handleDia}>
+                                        <Back style={styles.backButton}/>
+                                    </TouchableOpacity>
+                                <View style={{flex: 1, alignItems: 'center'}}>
+                                    <Text style={styles.statusTitle}>Tarefas Diárias</Text>
+                                </View>
+                            </View>
+                        )}
+                        {visSem &&  (
+                            <View style={styles.statusContainer}>
+                                {/*Implementar as missões*/}
+                                    <TouchableOpacity onPress={handleSem}>
+                                        <Back style={styles.backButton}/>
+                                    </TouchableOpacity>
+                                <View style={{flex: 1, alignItems: 'center'}}>
+                                    <Text style={styles.statusTitle}>Tarefas Semanais</Text>
+                                </View>
+                            </View>
+                        )}
+                        {visPass &&  (
+                            <View style={styles.statusContainer}>
+                                    <TouchableOpacity onPress={handlePass}>
+                                        <Back style={styles.backButton}/>
+                                    </TouchableOpacity>
+                                <View style={{flex: 1, alignItems: 'center'}}>
+                                    <Text style={styles.statusTitle}>Contagem de Passos</Text>
+                                    <Image source={images['passos2']} style={styles.passosIcon}/>
+                                    <Text style={styles.statusTitle}>Passos: {/*Vai ter que colocar aqui a contagem de passos*/}</Text>
+                                </View>
+                            </View>
+                        )}
+                        {visShop &&  (
+                            <View style={styles.statusContainer}>
+                                    <TouchableOpacity onPress={handleShop}>
+                                        <Back style={styles.backButton}/>
+                                    </TouchableOpacity>
+                                <View style={{flex: 1, alignItems: 'center'}}>
+                                    <Text style={styles.statusTitle}>Desbloqueáveis</Text>
+                                    <View style={{flex: 1, alignItems: 'left'}}>
+                                        {/*Arrumar a posição*/}
+                                        <Image source={images['asphalt']} style={styles.petIcons}/>
+                                        <Image source={images['banabat']} style={styles.petIcons}/>
+                                        <Image source={images['brekorb']} style={styles.petIcons}/>
+                                        <Image source={images['bugwheel']} style={styles.petIcons}/>
+                                        <Image source={images['carnivalt']} style={styles.petIcons}/>
+                                        <Image source={images['charcopala']} style={styles.petIcons}/>
+                                        <Image source={images['cromirin']} style={styles.petIcons}/>
+                                        <Image source={images['feveroar']} style={styles.petIcons}/>
+                                        <Image source={images['hydraqua']} style={styles.petIcons}/>
+                                        <Image source={images['minde']} style={styles.petIcons}/>
+                                        <Image source={images['toxtoad']} style={styles.petIcons}/>
+                                        <Image source={images['wickiked']} style={styles.petIcons}/>
+                                    </View>
+                                </View>
+                            </View>
+                        )}
+                        {visibility &&  (
+                            <View style={styles.statusContainer}>
+                                <View style={{flex: 1, alignItems: 'center'}}>
+                                    {/* <Menu style={styles.statusButtons}/> */}
+                                    <Text style={styles.statusTitle}>Menu</Text>
+                                    <View style={{ alignItems: 'left'}}>
+                                        <TouchableOpacity onPress={handleStatus}>
+                                            <View style={{flexDirection: 'row', alignItems: 'left'}}>
+                                                <Status style={styles.statusButtons}/>
+                                                <Text style={styles.modalText2}>Status do Pet</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={handleDia}>
+                                            <View style={{flexDirection: 'row', alignItems: 'left'}}>
+                                                <Tarefas style={styles.statusButtons}/>
+                                                <Text style={styles.modalText2}>Tarefas Diárias</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={handleSem}>
+                                            <View style={{flexDirection: 'row', alignItems: 'left'}}>
+                                                <Tarefas style={styles.statusButtons}/>
+                                                <Text style={styles.modalText2}>Tarefas Semanais</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={handlePass}>
+                                            <View style={{flexDirection: 'row', alignItems: 'left'}}>
+                                                <Passos style={styles.statusButtons}/>
+                                                <Text style={styles.modalText2}>Contador de Passos</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={handleShop}>
+                                            <View style={{flexDirection: 'row', alignItems: 'left'}}>
+                                                <Shop style={styles.statusButtons}/>
+                                                <Text style={styles.modalText2}>Mais Pets</Text>
+                                            </View>
+                                        </TouchableOpacity>
                                     </View>
                                 </View>
                             </View>
