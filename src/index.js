@@ -283,17 +283,20 @@ const styles = StyleSheet.create({
       right: 40,
       flexDirection: 'row',
       justifyContent: 'space-between',
-      zIndex: 1,
+      // zIndex: 1,
     },
     cameraButton:{
+      top: 175,
+      right: -100,
+      position: 'absolute',
     }, 
     menuButton:{
-      marginTop: 10,
-      right: 55,
+      top: 40,
+      right: 65,
       position: 'absolute',
     },
     dirButton:{
-      left: 80,
+      left: 70,
     },
     stickerContainer: {
       display: 'flex',

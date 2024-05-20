@@ -520,9 +520,11 @@ const Jogo = () => {
                                 <Image source={images['direcional']} style={styles.dirButton}/>
                             </TouchableOpacity>
                             <View >
+                                <View style={styles.petSelectionContainer}>
                                 <TouchableOpacity onPress={handleCam}>
                                     <Image source={images['camera']} style={styles.cameraButton}/>
                                 </TouchableOpacity>
+                                </View>
                                 <View>
                                     <TouchableOpacity onPress={handleMenu}>
                                         <Image source={images['menu']} style={styles.menuButton}/>
