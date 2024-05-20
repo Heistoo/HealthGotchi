@@ -53,7 +53,7 @@ const Inicial = () => {
         return
       
     };
-    //Tinkazilla
+    //Rocked
     const handleRock = () => {
       Alert.alert('Rocked');
       setNomePet('Rocked');
@@ -61,7 +61,7 @@ const Inicial = () => {
         return
       
     };
-    //Tinkazilla
+    //Heradummy
     const handleHera = () => {
       Alert.alert('Heradummy');
       setNomePet('Heradummy');
