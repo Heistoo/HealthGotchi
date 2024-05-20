@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   // Second backgrund for jogo.js
   secondBackground:{
     position: 'absolute',
-    backgroundColor: '#26295E', 
+    backgroundColor: '#883939', 
     top: -11  ,
     height: '115%',
     width: '100%',
@@ -91,27 +91,33 @@ const styles = StyleSheet.create({
       fontSize: 30,
       color: 'white',
       fontFamily: 'Roboto',
+      textAlign: "center"
     },
     statusButtons: {
       height: 50, 
       width: 50,
     },
-    backButton: {
-      height: '10%', 
-      width: '10%',
-      position: 'absolute',
-      left: '15%',
-    },
+    // backButton: {
+    //   height: '5%', 
+    //   width: '5%',
+    //   position: 'absolute',
+    //   left: 40,
+    //   bottom: -400,
+    // },
     passosIcon: {
       height: '60%', 
       width: '60%',
     },
     petIcons: {
-      height: '10%', 
-      width: '10%',
-      display: 'flex',
-      flexWrap: "nowrap",
       flex: 1,
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: "left",
+      paddingLeft: 50,
+    },
+    pets:{
+      height: 80, 
+      width: 80,
     },
     containerbg: {
       top: -30,
@@ -384,6 +390,21 @@ const styles = StyleSheet.create({
       marginTop: 20,
       left:"25%",
       top:"-20%",
+    },
+    mission:{
+      color: "white",
+      fontSize: 20,
+      textAlign: "left",
+      marginBottom: 40,
+    },
+    condition:{
+      color: "white",
+      fontSize: 20,
+      textAlign: "right",
+      alignItems: "right",
+    },
+    clockButton:{
+      marginLeft: 30,
     },
   });
 

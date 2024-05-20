@@ -1,6 +1,6 @@
 // Library Imports
 import React, { useState, useRef, useEffect } from 'react';
-import { Text, Button, View, TouchableOpacity, TextInput, ImageBackground, Image, Platform, ProgressBarAndroid, Alert } from 'react-native';
+import { Text, Button, View, TouchableOpacity, TextInput, ImageBackground, Image, Platform, ProgressBarAndroid } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -25,6 +25,7 @@ import Tarefas from './assets/menu/tarefas.svg'
 import Shop from './assets/menu/shop.svg'
 import Menu from './assets/menu/menu.svg'
 import Back from './assets/menu/back.svg'
+import Clock from './assets/menu/clock.svg'
 
 const Jogo = () => {
     const navigation = useNavigation();
@@ -69,12 +70,18 @@ const Jogo = () => {
 
     const handleCam = () => {
         setCamera(!camera);
+        setVisibility(false);
     }
 
     //Menu
     const handleMenu = () => {
         console.log('Menu Aberto...');
         setVisibility(!visibility);
+        setVisMenu(false);
+        setVisDia(false);
+        setVisSem(false);
+        setVisShop(false);
+        setVisPass(false);
     }
 
     useEffect(() => {
@@ -219,50 +226,6 @@ const Jogo = () => {
     return parsedResponse;
     }
     
-    // If food and foodgroup are detected, he will give points to progressBar
-    const [points, setPoints] = useState(0);
-    const handlePhoto = async () => {
-        if (food !== null && foodGroup !== null){
-            console.log('Comida detectada...')
-            switch (foodGroup) {
-                case "Frutas":
-                    console.log('Fruta detectada')
-                    setPoints(10);
-                    break;
-                case "Legumes e verduras":
-                    console.log('Legume / Verdura detectada')
-                    setPoints(20);
-                    break;
-                case "Carnes e ovos":
-                    console.log('Carne / Ovo detectada')
-                    setPoints(30);
-                    break;
-                case "Cereais, tubérculos, pães e raízes":
-                    console.log('Cereal / Tubérculo / Pão / Raiz detectada')
-                    setPoints(40);
-                    break;
-                case "Leguminosas":
-                    console.log('Leguminosa detectada')
-                    setPoints(50);
-                    break;
-                case "Leites e derivados":
-                    console.log('Leite / Derivado detectada')
-                    setPoints(60);
-                    break;
-                case "Doces, guloseimas e salgadinhos":
-                    console.log('Doce / Guloseima / Salgadinho detectada')
-                    setPoints(70);
-                    break;
-                default:
-                    console.log('Fruta nao detectada')
-                    setPoints(0);
-                    break;
-            }
-        }
-    }
-    useEffect(() => {
-        console.log('Pontos ganhos: ', points);
-    }, [points]);
 
     const takePhoto = async () => {
         if (cameraRef.current) {
@@ -305,9 +268,9 @@ const Jogo = () => {
                         <ImageBackground source={images['fundo']} style={styles.fundoContainer}>
                         {visMenu &&  (
                             <View style={styles.statusContainer}>
-                                    <TouchableOpacity onPress={handleStatus}>
+                                    {/* <TouchableOpacity onPress={handleStatus}>
                                         <Back style={styles.backButton}/>
-                                    </TouchableOpacity>
+                                    </TouchableOpacity> */}
                                 <View style={{flex: 1, alignItems: 'center'}}>
                                     <Text style={styles.statusTitle}>Status</Text>
                                     <View style={{ alignItems: 'center'}}>
@@ -331,10 +294,6 @@ const Jogo = () => {
                                             <Resistance style={styles.statusButtons}/>
                                             <ProgressBarAndroid styleAttr="Horizontal" indeterminate={false} progress={0.5} />
                                         </View>
-                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                            <Strength style={styles.statusButtons}/>
-                                            <ProgressBarAndroid styleAttr="Horizontal" indeterminate={false} progress={0.5} />
-                                        </View>
                                     </View>
                                 </View>
                             </View>
@@ -343,30 +302,77 @@ const Jogo = () => {
                         {visDia &&  (
                             <View style={styles.statusContainer}>
                                 {/*Implementar as missões*/}
-                                    <TouchableOpacity onPress={handleDia}>
+                                    {/* <TouchableOpacity onPress={handleDia}>
                                         <Back style={styles.backButton}/>
-                                    </TouchableOpacity>
-                                <View style={{flex: 1, alignItems: 'center'}}>
+                                    </TouchableOpacity> */}
+                                <View style={{flex: 1, alignItems: ''}}>
                                     <Text style={styles.statusTitle}>Tarefas Diárias</Text>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Clock style={styles.clockButton}/>
+                                        {/* Atenção, essas duas linhas (e todos os outros desafios) tem que ser substituidos por desafios do banco de dados, no caso
+                                        é separado em texto, ou seja, a descrição da missão, e a condição, que vai ser o x/x, por exemplo: "alimente o bichinho
+                                        3 vezes", "2/3". Tecnicamente falando, as tarefas semanais são as exatas mesmas das diárias, só que mais longas */}
+                                        <Text style={styles.mission}>Missão 1 </Text>
+                                        <Text style={styles.condition}>Condição</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Clock style={styles.clockButton}/>
+                                        <Text style={styles.mission}>Missão 2 </Text>
+                                        <Text style={styles.condition}>Condição</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Clock style={styles.clockButton}/>
+                                        <Text style={styles.mission}>Missão 3 </Text>
+                                        <Text style={styles.condition}>Condição</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Clock style={styles.clockButton}/>
+                                        <Text style={styles.mission}>Missão 4 </Text>
+                                        <Text style={styles.condition}>Condição</Text>
+                                        
+                                    </View>
                                 </View>
                             </View>
                         )}
                         {visSem &&  (
                             <View style={styles.statusContainer}>
                                 {/*Implementar as missões*/}
-                                    <TouchableOpacity onPress={handleSem}>
+                                    {/* <TouchableOpacity onPress={handleSem}>
                                         <Back style={styles.backButton}/>
-                                    </TouchableOpacity>
-                                <View style={{flex: 1, alignItems: 'center'}}>
+                                    </TouchableOpacity> */}
+                                <View style={{flex: 1, alignItems: ''}}>
                                     <Text style={styles.statusTitle}>Tarefas Semanais</Text>
+                                    <View style={{flexDirection: 'row', alignItems: 'left'}}>
+                                        <Clock style={styles.clockButton}/>
+                                        {/* Atenção, essas duas linhas (e todos os outros desafios) tem que ser substituidos por desafios do banco de dados, no caso
+                                        é separado em texto, ou seja, a descrição da missão, e a condição, que vai ser o x/x, por exemplo: "alimente o bichinho
+                                        3 vezes", "2/3". Tecnicamente falando, as tarefas semanais são as exatas mesmas das diárias, só que mais longas */}
+                                        <Text style={styles.mission}>Missão 1 </Text>
+                                        <Text style={styles.condition}>Condição</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Clock style={styles.clockButton}/>
+                                        <Text style={styles.mission}>Missão 2 </Text>
+                                        <Text style={styles.condition}>Condição</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Clock style={styles.clockButton}/>
+                                        <Text style={styles.mission}>Missão 3 </Text>
+                                        <Text style={styles.condition}>Condição</Text>
+                                    </View>
+                                    <View style={{flexDirection: 'row'}}>
+                                        <Clock style={styles.clockButton}/>
+                                        <Text style={styles.mission}>Missão 4 </Text>
+                                        <Text style={styles.condition}>Condição</Text>                                        
+                                    </View>
                                 </View>
                             </View>
                         )}
                         {visPass &&  (
                             <View style={styles.statusContainer}>
-                                    <TouchableOpacity onPress={handlePass}>
+                                    {/* <TouchableOpacity onPress={handlePass}>
                                         <Back style={styles.backButton}/>
-                                    </TouchableOpacity>
+                                    </TouchableOpacity> */}
                                 <View style={{flex: 1, alignItems: 'center'}}>
                                     <Text style={styles.statusTitle}>Contagem de Passos</Text>
                                     <Image source={images['passos2']} style={styles.passosIcon}/>
@@ -376,25 +382,53 @@ const Jogo = () => {
                         )}
                         {visShop &&  (
                             <View style={styles.statusContainer}>
-                                    <TouchableOpacity onPress={handleShop}>
-                                        <Back style={styles.backButton}/>
-                                    </TouchableOpacity>
-                                <View style={{flex: 1, alignItems: 'center'}}>
+                                    {/* <TouchableOpacity onPress={handleShop}>
+                                        {/* <Back style={styles.backButton}/> */}
+                                    {/* </TouchableOpacity> */}
+                                <View style={{flex: 1}}>
                                     <Text style={styles.statusTitle}>Desbloqueáveis</Text>
-                                    <View style={{flex: 1, alignItems: 'left'}}>
-                                        {/*Arrumar a posição*/}
-                                        <Image source={images['asphalt']} style={styles.petIcons}/>
-                                        <Image source={images['banabat']} style={styles.petIcons}/>
-                                        <Image source={images['brekorb']} style={styles.petIcons}/>
-                                        <Image source={images['bugwheel']} style={styles.petIcons}/>
-                                        <Image source={images['carnivalt']} style={styles.petIcons}/>
-                                        <Image source={images['charcopala']} style={styles.petIcons}/>
-                                        <Image source={images['cromirin']} style={styles.petIcons}/>
-                                        <Image source={images['feveroar']} style={styles.petIcons}/>
-                                        <Image source={images['hydraqua']} style={styles.petIcons}/>
-                                        <Image source={images['minde']} style={styles.petIcons}/>
-                                        <Image source={images['toxtoad']} style={styles.petIcons}/>
-                                        <Image source={images['wickiked']} style={styles.petIcons}/>
+                                    <View style={styles.petIcons}>
+                                        {/*Observação: vai ser necessário criar um método de desbloquear eles e implementar no jogo*/}
+                                        <TouchableOpacity>                                            
+                                            <Image source={images['asphalt']} style={styles.pets}/>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity>                                            
+                                            <Image source={images['bugwheel']} style={styles.pets}/>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity>                                            
+                                            <Image source={images['wickiked']} style={styles.pets}/>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity>                                            
+                                            <Image source={images['cromirin']} style={styles.pets}/>
+                                        </TouchableOpacity>
+                                    </View>
+                                    <View style={styles.petIcons}>
+                                        <TouchableOpacity>
+                                            <Image source={images['carnivalt']} style={styles.pets}/>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity>                                            
+                                            <Image source={images['banabat']} style={styles.pets}/>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity>                                            
+                                            <Image source={images['hydraqua']} style={styles.pets}/>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity>                                            
+                                            <Image source={images['charcopala']} style={styles.pets}/>
+                                        </TouchableOpacity>
+                                    </View>
+                                    <View style={styles.petIcons}>
+                                        <TouchableOpacity>
+                                            <Image source={images['brekorb']} style={styles.pets}/>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity>                                            
+                                            <Image source={images['feveroar']} style={styles.pets}/>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity>                                            
+                                            <Image source={images['toxtoad']} style={styles.pets}/>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity>                                            
+                                            <Image source={images['minde']} style={styles.pets}/>
+                                        </TouchableOpacity>
                                     </View>
                                 </View>
                             </View>
@@ -452,7 +486,6 @@ const Jogo = () => {
                                 {photoUri && <Button title="Analyze" onPress={async () => {
                                 console.log(base64.slice(0, 100));
                                 await handleVision();
-                                await handlePhoto();
                                 }} />}
                             </View>
                         <View style={styles.gameContainer}>
