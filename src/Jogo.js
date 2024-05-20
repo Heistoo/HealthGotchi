@@ -196,7 +196,7 @@ const Jogo = () => {
                 {
                     role: "user",
                     content: [
-                        { type: "text", text: "What food is in the image? Respond in this format {\"food\": \"food_name\", \"group\": \"food_group\"}, if don't have any food, write the value as null, knowing that the groups are: {" + groups.join(", ") + "}." },
+                        { type: "text", text: "What food is in the image? Respond in this format {\"food\": \"food_name\", \"group\": \"food_group\"}, if don't have any food, write the value as null, if the food is a fast-food type classify it as Guloseima, knowing that the groups are: {" + groups.join(", ") + "}." },
                         { type: "image_url", image_url: { url: "data:image/jpeg;base64," + base64 } }
                     ]
                 }
