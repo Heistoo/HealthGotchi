@@ -25,6 +25,9 @@ def register():
     email = data['email']
     senha = data['senha']
 
+    if data['email'] == "" or data['senha'] == "":
+        return jsonify({"error": f"Erro ao registrar usuário: Email e/ou senha não enviados na requisição."}), 400
+
     connection = conectar_db()
     cursor = connection.cursor()
     try:
@@ -34,7 +37,10 @@ def register():
         return jsonify({"message": "Usuário registrado com sucesso!"}), 201
     except Exception as e:
         connection.rollback()
-        return jsonify({"error": f"Erro ao registrar usuário: {e}"}), 500
+        if "Duplicate entry" in f"{e}":
+            return jsonify({"error": f"Erro ao registrar usuário: {e}"}), 409
+        else:
+            return jsonify({"error": f"Erro ao registrar usuário: {e}"}), 500
     finally:
         cursor.close()
         connection.close()
