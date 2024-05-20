@@ -1,3 +1,9 @@
+#pytest gitignores
+venv
+__init__.py
+__pycache__
+.pytest_cache
+
 # Logs
 logs
 *.log
