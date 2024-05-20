@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
       lineHeight: 84,
       textAlign: 'center',
       position:'relative',
-      top:'-30%',
+      top:'-50%',
       zIndex: 1,
     },
     // Pikachu Image for main register screen
@@ -293,7 +293,7 @@ const styles = StyleSheet.create({
       position: 'absolute',
     },
     dirButton:{
-      left: 50,
+      left: 80,
     },
     stickerContainer: {
       display: 'flex',
@@ -358,27 +358,21 @@ const styles = StyleSheet.create({
       color: 'white',
       fontSize: 30,
     },
-    ini1: {
-      position: "relative",
-      width: 120,
-      height: 120,
-      left: "4%",
-      top: "-100%",
+    petSelectionContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      width: '100%',
+      marginBottom: 20,
+      top: "-85%",
     },
-    ini2: {
-      position: "relative",
-      width: 120,
-      height: 120,
-      left: "36%",
-      top: "-200%",
-      
+    petTouchable: {
+      alignItems: 'center',
+      justifyContent: 'center',
     },
-    ini3: {
-      position: "relative",
-      width: 120,
-      height: 120,
-      left: "66%",
-      top: "-300%",
+    petImage: {
+      width: 110,
+      height: 110,
+      resizeMode: 'contain',
     },
     buttoncontainer2:{
       backgroundColor:'#31415F',
