@@ -391,6 +391,25 @@ const styles = StyleSheet.create({
       left:"25%",
       top:"-20%",
     },
+    button: {
+      backgroundColor: '#31415F', // Cor padrão do botão
+      padding: 10,
+      borderRadius: 5,
+      alignItems: 'center',
+      borderRadius:10,
+    },
+    buttonSelected: {
+      backgroundColor: '#FF5733', // Cor quando um inicial é selecionado
+      padding: 10,
+      borderRadius: 5,
+      alignItems: 'center',
+      borderRadius:10,
+      width:200,
+      height:40,
+    },
+    text: {
+      color: '#fff',
+    },
     mission:{
       color: "white",
       fontSize: 20,

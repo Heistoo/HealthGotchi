@@ -70,6 +70,8 @@ const Inicial = () => {
       
     };
   
+    const buttonStyle = escolha === 0 ? styles.button : styles.buttonSelected;
+
     return (
       <SafeAreaView style={styles.containerInicial}>
       <View style={styles.modalBackground}></View>
@@ -101,11 +103,11 @@ const Inicial = () => {
         <Image source={images['heradummy']} style={styles.ini3}/>
       </TouchableOpacity>
 
-        <View style={styles.buttoncontainer2}>
-          <TouchableOpacity onPress={() => selected("Jogo")}>
-            <Text style={styles.text}>Escolha</Text>
-          </TouchableOpacity>
-        </View>
+      <View style={styles.buttoncontainer2}>
+        <TouchableOpacity onPress={() => selected("Jogo")} style={buttonStyle}>
+          <Text style={styles.text}>Escolha</Text>
+        </TouchableOpacity>
+      </View>
       </SafeAreaView>
     );
   };
