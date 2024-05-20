@@ -287,12 +287,14 @@ const styles = StyleSheet.create({
     },
     cameraButton:{
       top: 175,
-      right: -100,
+      right: -110,
+      margin: 0,
       position: 'absolute',
     }, 
     menuButton:{
       top: 40,
       right: 65,
+      margin: 0,
       position: 'absolute',
     },
     dirButton:{
