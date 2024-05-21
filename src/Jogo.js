@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import ProgressBar from 'react-native-progress/Bar';
 import { Camera } from 'expo-camera/legacy';
+import { Pedometer } from 'expo-sensors';
 import OpenAI from 'openai';
 import * as FileSystem from 'expo-file-system';
 // import { Accelerometer } from 'react-native-sensors';
@@ -38,7 +39,9 @@ const Jogo = () => {
     const [visSem, setVisSem] = useState(false);
     const [visPass, setVisPass] = useState(false);
     const [visShop, setVisShop] = useState(false);
-    // const [stepCount, setStepCount] = useState(0);
+    const [isPedometerAvailable, setIsPedometerAvailable] = useState("checking");
+    const [pastStepCount, setPastStepCount] = useState(0);
+    const [currentStepCount, setCurrentStepCount] = useState(0);
 
     // Image Usage
     const images = {
@@ -71,6 +74,11 @@ const Jogo = () => {
     const handleCam = () => {
         setCamera(!camera);
         setVisibility(false);
+        setVisMenu(false);
+        setVisDia(false);
+        setVisSem(false);
+        setVisShop(false);
+        setVisPass(false);
     }
 
     //Menu
@@ -102,22 +110,41 @@ const Jogo = () => {
     useEffect(() => {
         setVisShop(pressed);
     }, [pressed]);
-    // useEffect(() => {
-    //     const subscription = new Accelerometer({
-    //       updateInterval: 1000, // Intervalo de atualização em milissegundos
-    //     }).subscribe(({ x, y, z }) => {
-    //       // Lógica para estimar os passos com base nos dados do acelerômetro
-    //       const accelerationMagnitude = Math.sqrt(x * x + y * y + z * z);
-    //       if (accelerationMagnitude > 10) {
-    //         // Valor de aceleração arbitrário para detectar um passo
-    //         setStepCount((prevStepCount) => prevStepCount + 1);
-    //       }
-    //     });
-    
-    //     return () => {
-    //       subscription.unsubscribe(); // Cancela a assinatura quando o componente é desmontado
-    //     };
-    //   }, []);
+
+    //Pedômetro
+    useEffect(() => {
+        // Verifica se o Pedometer está disponível
+        Pedometer.isAvailableAsync().then(
+            result => {
+                setIsPedometerAvailable(String(result));
+            },
+            error => {
+                setIsPedometerAvailable("Could not get isPedometerAvailable: " + error);
+            }
+        );
+
+        // Inscreve-se para contar os passos atuais
+        const subscription = Pedometer.watchStepCount(result => {
+            setCurrentStepCount(result.steps);
+        });
+
+        // Obtém a contagem de passos das últimas 24 horas
+        const end = new Date();
+        const start = new Date();
+        start.setDate(end.getDate() - 1);
+
+        Pedometer.getStepCountAsync(start, end).then(
+            result => {
+                setPastStepCount(result.steps);
+            },
+            error => {
+                setPastStepCount("Could not get stepCount: " + error);
+            }
+        );
+
+        // Limpeza na desmontagem do componente
+        return () => subscription && subscription.remove();
+    }, []);
 
     //Direcional
     const handleDir = () => {
@@ -376,7 +403,7 @@ const Jogo = () => {
                                 <View style={{flex: 1, alignItems: 'center'}}>
                                     <Text style={styles.statusTitle}>Contagem de Passos</Text>
                                     <Image source={images['passos2']} style={styles.passosIcon}/>
-                                    <Text style={styles.statusTitle}>Passos: {/*Vai ter que colocar aqui a contagem de passos*/}</Text>
+                                    <Text style={styles.statusTitle}>Passos: {currentStepCount}</Text>
                                 </View>
                             </View>
                         )}
@@ -493,9 +520,11 @@ const Jogo = () => {
                                 <Image source={images['direcional']} style={styles.dirButton}/>
                             </TouchableOpacity>
                             <View >
+                                <View style={styles.petSelectionContainer}>
                                 <TouchableOpacity onPress={handleCam}>
                                     <Image source={images['camera']} style={styles.cameraButton}/>
                                 </TouchableOpacity>
+                                </View>
                                 <View>
                                     <TouchableOpacity onPress={handleMenu}>
                                         <Image source={images['menu']} style={styles.menuButton}/>

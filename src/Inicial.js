@@ -53,23 +53,25 @@ const Inicial = () => {
         return
       
     };
-    //Tinkazilla
+    //Rocked
     const handleRock = () => {
       Alert.alert('Rocked');
       setNomePet('Rocked');
-      setEscolha(1);
+      setEscolha(2);
         return
       
     };
-    //Tinkazilla
+    //Heradummy
     const handleHera = () => {
       Alert.alert('Heradummy');
       setNomePet('Heradummy');
-      setEscolha(1);
+      setEscolha(3);
         return
       
     };
   
+    const buttonStyle = escolha === 0 ? styles.button : styles.buttonSelected;
+
     return (
       <SafeAreaView style={styles.containerInicial}>
       <View style={styles.modalBackground}></View>
@@ -91,21 +93,23 @@ const Inicial = () => {
 
       <Text style={styles.titulo3}>Escolha seu Inicial</Text>
 
-      <TouchableOpacity onPress={handleTink}>
-        <Image source={images['tinkazilla']} style={styles.ini1}/>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={handleRock}>
-        <Image source={images['rocked']} style={styles.ini2}/>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={handleHera}> 
-        <Image source={images['heradummy']} style={styles.ini3}/>
-      </TouchableOpacity>
+      <View style={styles.petSelectionContainer}>
+        <TouchableOpacity onPress={handleTink} style={styles.petTouchable}>
+          <Image source={images['tinkazilla']} style={styles.petImage}/>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleRock} style={styles.petTouchable}>
+          <Image source={images['rocked']} style={styles.petImage}/>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleHera} style={styles.petTouchable}> 
+          <Image source={images['heradummy']} style={styles.petImage}/>
+        </TouchableOpacity>
+      </View>
 
-        <View style={styles.buttoncontainer2}>
-          <TouchableOpacity onPress={() => selected("Jogo")}>
-            <Text style={styles.text}>Escolha</Text>
-          </TouchableOpacity>
-        </View>
+      <View style={styles.buttoncontainer2}>
+        <TouchableOpacity onPress={() => selected("Jogo")} style={buttonStyle}>
+          <Text style={styles.text}>Escolha</Text>
+        </TouchableOpacity>
+      </View>
       </SafeAreaView>
     );
   };

@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
       lineHeight: 84,
       textAlign: 'center',
       position:'relative',
-      top:'-30%',
+      top:'-50%',
       zIndex: 1,
     },
     // Pikachu Image for main register screen
@@ -283,17 +283,22 @@ const styles = StyleSheet.create({
       right: 40,
       flexDirection: 'row',
       justifyContent: 'space-between',
-      zIndex: 1,
+      // zIndex: 1,
     },
     cameraButton:{
+      top: 175,
+      right: -110,
+      margin: 0,
+      position: 'absolute',
     }, 
     menuButton:{
-      marginTop: 10,
-      right: 55,
+      top: 40,
+      right: 65,
+      margin: 0,
       position: 'absolute',
     },
     dirButton:{
-      left: 50,
+      left: 70,
     },
     stickerContainer: {
       display: 'flex',
@@ -358,27 +363,21 @@ const styles = StyleSheet.create({
       color: 'white',
       fontSize: 30,
     },
-    ini1: {
-      position: "relative",
-      width: 120,
-      height: 120,
-      left: "4%",
-      top: "-100%",
+    petSelectionContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      width: '100%',
+      marginBottom: 20,
+      top: "-85%",
     },
-    ini2: {
-      position: "relative",
-      width: 120,
-      height: 120,
-      left: "36%",
-      top: "-200%",
-      
+    petTouchable: {
+      alignItems: 'center',
+      justifyContent: 'center',
     },
-    ini3: {
-      position: "relative",
-      width: 120,
-      height: 120,
-      left: "66%",
-      top: "-300%",
+    petImage: {
+      width: 110,
+      height: 110,
+      resizeMode: 'contain',
     },
     buttoncontainer2:{
       backgroundColor:'#31415F',
@@ -390,6 +389,25 @@ const styles = StyleSheet.create({
       marginTop: 20,
       left:"25%",
       top:"-20%",
+    },
+    button: {
+      backgroundColor: '#31415F', // Cor padrão do botão
+      padding: 10,
+      borderRadius: 5,
+      alignItems: 'center',
+      borderRadius:10,
+    },
+    buttonSelected: {
+      backgroundColor: '#FF5733', // Cor quando um inicial é selecionado
+      padding: 10,
+      borderRadius: 5,
+      alignItems: 'center',
+      borderRadius:10,
+      width:200,
+      height:40,
+    },
+    text: {
+      color: '#fff',
     },
     mission:{
       color: "white",
