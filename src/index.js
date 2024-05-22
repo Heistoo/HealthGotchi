@@ -435,6 +435,7 @@ const styles = StyleSheet.create({
     },
     clockButton:{
       marginLeft: 30,
+      bottom: 4
     },
   });
 

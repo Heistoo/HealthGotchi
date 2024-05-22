@@ -332,9 +332,9 @@ const Jogo = () => {
                                     {/* <TouchableOpacity onPress={handleDia}>
                                         <Back style={styles.backButton}/>
                                     </TouchableOpacity> */}
-                                <View style={{flex: 1, alignItems: ''}}>
+                                <View style={{flex: 1, transform: [{scale: 0.9}]}}>
                                     <Text style={styles.statusTitle}>Tarefas Diárias</Text>
-                                    <View style={{flexDirection: 'row'}}>
+                                    <View style={{flexDirection: 'row', top: 10}}>
                                         <Clock style={styles.clockButton}/>
                                         {/* Atenção, essas duas linhas (e todos os outros desafios) tem que ser substituidos por desafios do banco de dados, no caso
                                         é separado em texto, ou seja, a descrição da missão, e a condição, que vai ser o x/x, por exemplo: "alimente o bichinho
@@ -367,9 +367,9 @@ const Jogo = () => {
                                     {/* <TouchableOpacity onPress={handleSem}>
                                         <Back style={styles.backButton}/>
                                     </TouchableOpacity> */}
-                                <View style={{flex: 1, alignItems: ''}}>
+                                <View style={{flex: 1, transform: [{scale: 0.9}]}}>
                                     <Text style={styles.statusTitle}>Tarefas Semanais</Text>
-                                    <View style={{flexDirection: 'row', alignItems: 'left'}}>
+                                    <View style={{flexDirection: 'row', top: 10}}>
                                         <Clock style={styles.clockButton}/>
                                         {/* Atenção, essas duas linhas (e todos os outros desafios) tem que ser substituidos por desafios do banco de dados, no caso
                                         é separado em texto, ou seja, a descrição da missão, e a condição, que vai ser o x/x, por exemplo: "alimente o bichinho
@@ -412,7 +412,7 @@ const Jogo = () => {
                                     {/* <TouchableOpacity onPress={handleShop}>
                                         {/* <Back style={styles.backButton}/> */}
                                     {/* </TouchableOpacity> */}
-                                <View style={{flex: 1}}>
+                                <View style={{flex: 1, left: 10}}>
                                     <Text style={styles.statusTitle}>Desbloqueáveis</Text>
                                     <View style={styles.petIcons}>
                                         {/*Observação: vai ser necessário criar um método de desbloquear eles e implementar no jogo*/}
