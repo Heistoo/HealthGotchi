@@ -93,6 +93,14 @@ const styles = StyleSheet.create({
       fontFamily: 'Roboto',
       textAlign: "center"
     },
+    statusPassosTitle:{
+      fontSize: 20,
+      top: 5,
+      color: 'white',
+      fontFamily: 'Roboto',
+      textAlign: "center",
+      left: 7,
+    },
     statusButtons: {
       height: 50, 
       width: 50,
@@ -362,6 +370,10 @@ const styles = StyleSheet.create({
     modalText2: {
       color: 'white',
       fontSize: 30,
+    },
+    modalPassosText: {
+      fontSize: 15,
+
     },
     petSelectionContainer: {
       flexDirection: 'row',

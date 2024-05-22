@@ -303,23 +303,23 @@ const Jogo = () => {
                                     <View style={{ alignItems: 'center'}}>
                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                             <Health style={styles.statusButtons}/>
-                                            <ProgressBarAndroid styleAttr="Horizontal" indeterminate={false} progress={0.5} />
+                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={0.9} borderColor={'transparent'}/>
                                         </View>
                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                             <Energy style={styles.statusButtons}/>
-                                            <ProgressBar width={100} height={20} animated={true} color={'red'} progress={0.9} borderColor={'transparent'}/>
+                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={0.9} borderColor={'transparent'}/>
                                         </View>
                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                             <Happy style={styles.statusButtons}/>
-                                            <ProgressBarAndroid styleAttr="Horizontal" indeterminate={false} progress={0.5} />
+                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={0.9} borderColor={'transparent'}/>
                                         </View>
                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                             <Strength style={styles.statusButtons}/>
-                                            <ProgressBarAndroid styleAttr="Horizontal" indeterminate={false} progress={0.5} />
+                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={0.9} borderColor={'transparent'}/>
                                         </View>
                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                             <Resistance style={styles.statusButtons}/>
-                                            <ProgressBarAndroid styleAttr="Horizontal" indeterminate={false} progress={0.5} />
+                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={0.9} borderColor={'transparent'}/>
                                         </View>
                                     </View>
                                 </View>
@@ -401,7 +401,7 @@ const Jogo = () => {
                                         <Back style={styles.backButton}/>
                                     </TouchableOpacity> */}
                                 <View style={{flex: 1, alignItems: 'center'}}>
-                                    <Text style={styles.statusTitle}>Contagem de Passos</Text>
+                                    <Text style={styles.statusPassosTitle}>Contagem de Passos</Text>
                                     <Image source={images['passos2']} style={styles.passosIcon}/>
                                     <Text style={styles.statusTitle}>Passos: {currentStepCount}</Text>
                                 </View>
@@ -462,7 +462,7 @@ const Jogo = () => {
                         )}
                         {visibility &&  (
                             <View style={styles.statusContainer}>
-                                <View style={{flex: 1, alignItems: 'center'}}>
+                                <View style={{flex: 1, alignItems: 'center', transform: [{scale: 0.9}]}}>
                                     {/* <Menu style={styles.statusButtons}/> */}
                                     <Text style={styles.statusTitle}>Menu</Text>
                                     <View style={{ alignItems: 'left'}}>
