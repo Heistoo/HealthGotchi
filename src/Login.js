@@ -74,7 +74,6 @@ const Login = () => {
 
 
     return (
-        // to do: linear gradient expo
         <SafeAreaView style={styles.container2}>
             <ImageBackground source={images['login']} style={styles.containerbg}>
                 <View style={styles.titleContainer2}>
@@ -89,7 +88,6 @@ const Login = () => {
                         value={email}
                         onChangeText={(text) => setEmail(text)}/>
                         <Text style={styles.placeholder2}>Senha</Text>
-                        
                         <TextInput
                         style={[styles.input2, styles.roundedInput]}
                         secureTextEntry={!showPassword}
