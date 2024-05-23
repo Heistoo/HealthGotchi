@@ -295,22 +295,34 @@ const styles = StyleSheet.create({
     },
     cameraButton:{
       top: 175,
-      right: -110,
+      right: -120,
       margin: 0,
+      width: 100,
+      height: 100,
       position: 'absolute',
     }, 
     menuButton:{
-      top: 40,
-      right: 65,
+      top: -20,
+      left: -120,
       margin: 0,
+      width: 120,
+      height: 120,
       position: 'absolute',
     },
-    dirButton:{
-      left: 70,
+    photoButton:{
+      top: 110,
+      right: -420,
+      margin: 0,
+      width: 100,
+      height: 100,
+      position: 'absolute',
     },
+    // dirButton:{
+    //   left: 70,
+    // },
     stickerContainer: {
       display: 'flex',
-      bottom: -30,
+      bottom: -150,
       left: 20,
     },
     sticker:{
@@ -327,7 +339,7 @@ const styles = StyleSheet.create({
     },
     decButton1:{
       bottom: 120,
-      right: -175,
+      right: -185,
     },
     verticalLight:{
       backgroundColor: '#D9D9D9',
