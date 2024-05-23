@@ -7,10 +7,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Text, Modal, Button, View, Alert, Animated, TouchableOpacity, TextInput, ImageBackground, Image, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 // StyleSheet import
 import styles from '../src/index.js';
+import axios from 'axios';
 
 // Image Imports
 
@@ -21,6 +23,25 @@ const Inicial = () => {
     const [modalVisible, setModalVisible] = useState(true); // Definindo modalVisible como true para que o pop-up apareça automaticamente
     const [escolha, setEscolha] = useState(0);
     const [nomePet, setNomePet] = useState('');
+    const [usuarioId, setUsuarioId] = useState(null);
+
+    //função que busca o id do usuário no AsyncStorage
+    useEffect(() => {
+      const fetchUsuarioId = async () => {
+        try {
+          const id = await AsyncStorage.getItem('usuario_id');
+          if (id) {
+            setUsuarioId(id);
+          } else {
+            Alert.alert('Erro', 'Não foi possível obter o ID do usuário');
+          }
+        } catch (error) {
+          console.error('Erro ao buscar o ID do usuário:', error);
+          Alert.alert('Erro ao buscar o ID do usuário:', error.message);
+        }
+      };
+      fetchUsuarioId();
+    }, []);
 
     const popUp = () => {
       Alert.alert('Pop-up fechado');
@@ -33,17 +54,27 @@ const Inicial = () => {
       'heradummy': require('./assets/pets/heradummy.png'),
     }
 
-    const selected = (screenName) => {
+    const selected = async (screenName) => {
       if (escolha == 0){
         Alert.alert('Por favor, selecione um dos pets antes de avançar.')
         return
-      }
-      else{
+      }else{
         Alert.alert("Pet selecionado: " + nomePet);
-        navigation.navigate(screenName);
-      }
-    };
+        const especies = ['Tinkazilla', 'Rocked', 'Heradummy'];
+        const especie = especies[escolha - 1];
 
+        // Chame a função para criar o bichinho no backend
+        try {
+          const resultado = await criarBichinho(especie, usuarioId);
+          if (resultado) {
+            navigation.navigate('Jogo');
+          }
+        } catch (error) {
+          console.error('Erro ao criar bichinho:', error);
+          Alert.alert('Erro ao criar bichinho:', error.message);
+        }
+      };
+    }
 
     //Tinkazilla
     const handleTink = () => {
@@ -71,6 +102,31 @@ const Inicial = () => {
     };
   
     const buttonStyle = escolha === 0 ? styles.button : styles.buttonSelected;
+
+    const criarBichinho = async (nome, usuarioId) => {
+      const url = 'http://3.87.98.44:5000/create_pet';  // Substitua 'seu-backend-url' pelo URL real do seu backend
+    
+      const data = {
+        nome: nome,
+        usuario_id: usuarioId
+      };
+    
+      try {
+        const response = await axios.post(url, data);
+        if (response.status === 201) {
+          console.log('Bichinho criado com sucesso:', response.data);
+          return response.data; // Você pode retornar os dados para fazer algo mais se precisar
+        } else {
+          console.error('Erro ao criar bichinho:', response.data);
+          Alert.alert('Erro ao criar bichinho:', response.data.error);
+          return null;
+        }
+      } catch (error) {
+        console.error('Erro na solicitação:', error);
+        Alert.alert('Erro na solicitação:', error.message);
+        return null;
+      }
+    };
 
     return (
       <SafeAreaView style={styles.containerInicial}>
@@ -112,6 +168,5 @@ const Inicial = () => {
       </View>
       </SafeAreaView>
     );
-  };
-  
+}; 
   export default Inicial;

@@ -9,6 +9,7 @@ import { Camera } from 'expo-camera/legacy';
 import { Pedometer } from 'expo-sensors';
 import OpenAI from 'openai';
 import * as FileSystem from 'expo-file-system';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { Accelerometer } from 'react-native-sensors';
 
 // Stylesheet
@@ -194,7 +195,7 @@ const Jogo = () => {
     const [base64, saveBase64] = useState(null);
     const cameraRef = useRef(null);
 
-    const groups = ["Frutas", "Legumes e verduras", "Carnes e ovos", "Cereais, tubérculos, pães e raízes", "Leguminosas", "Leites e derivados", "Doces, guloseimas e salgadinhos"]
+    const groups = ["Frutas", "Legumes e Verduras", "Carnes e Ovos", "Cereais, tuberculos, paes e raizes", "Leguminosas", "Leites e Derivados", "Doces, guloseimas e salgadinhos"]
 
     useEffect(() => {
         (async () => {
@@ -216,6 +217,10 @@ const Jogo = () => {
         }
     }, [food, foodGroup]);
 
+    const getUsuarioId = () => {
+        return AsyncStorage.getItem('usuario_id');
+    };
+
     const handleVision = async () => {
         const response = await openai.chat.completions.create({
             model: 'gpt-4-turbo',
@@ -233,7 +238,7 @@ const Jogo = () => {
         console.log('Resposta: ', response.choices[0].message.content);
     
         let parsedResponse;
-
+    
         // Checa se a resposta é uma string
         if (typeof response.choices[0].message.content === 'string') {
             // Parse em um objeto
@@ -242,16 +247,41 @@ const Jogo = () => {
             // Se a resposta já for um objeto, converte numa const e ela passa para food & group
             parsedResponse = response.choices[0].message.content;
         }
-
-    const { food, group } = parsedResponse;
-
-    if (food !== undefined && group !== undefined) {
-        setFood(food);
-        setFoodGroup(group);
-    }
-
-    return parsedResponse;
-    }
+    
+        const { food, group } = parsedResponse;
+    
+        if (food !== undefined && group !== undefined) {
+            setFood(food);
+            setFoodGroup(group);
+            
+            //Faz requisição para o backend, passando o id do usuário e o grupo de alimento e muda os status do pet
+            try {
+                
+                const usuarioId = await getUsuarioId();
+    
+                const res = await fetch('http://3.87.98.44:5000/edit_status_and_assign_points', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ usuarioId: parseInt(usuarioId), grupo: group})
+                });
+                
+                //Apenas para testes
+                // if (res.ok) {
+                //     const data = await res.json();
+                //     alert(data.message);
+                // } else {
+                //     const errorData = await res.json();
+                //     alert(`Erro: ${errorData.error}`);
+                // }
+            } catch (error) {
+                alert(`Erro na requisição: ${error.message}`);
+            }
+        }
+    
+        return parsedResponse;
+    };
     
 
     const takePhoto = async () => {

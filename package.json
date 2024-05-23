@@ -10,11 +10,12 @@
   },
   "dependencies": {
     "@expo-google-fonts/orelega-one": "^0.2.3",
-    "@react-native-async-storage/async-storage": "1.23.1",
+    "@react-native-async-storage/async-storage": "^1.23.1",
     "@react-native-community/checkbox": "^0.5.17",
     "@react-navigation/stack": "^6.3.29",
     "@supabase/supabase-js": "^2.42.0",
     "@types/react": "~18.2.45",
+    "axios": "^1.7.2",
     "expo": "~51.0.4",
     "expo-camera": "~15.0.7",
     "expo-checkbox": "~3.0.0",

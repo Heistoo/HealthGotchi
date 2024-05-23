@@ -4,6 +4,7 @@ import { Text, View, Image, SafeAreaView, ImageBackground, TextInput, TouchableO
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // StyleSheet import
 import styles from '../src/index.js';
@@ -23,6 +24,30 @@ const Stack = createStackNavigator();
 const images = {
   'oip1': require('./assets/oip1.png'),
 }
+
+const fetchUserId = async (email, senha) => {
+  try {
+    const response = await fetch('http://3.87.98.44:5000/get_user_id', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, senha }),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      return data.usuario_id;
+    } else {
+      Alert.alert('Erro ao obter ID do usuário', data.error || 'Algo deu errado.');
+      return null;
+    }
+  } catch (error) {
+    Alert.alert('Erro ao obter ID do usuário', error.message || 'Algo deu errado.');
+    return null;
+  }
+};
+
 // Preload image cache
 function loadImage(images){
   return Promise.all(Object.keys(images).map((i) => {
@@ -60,41 +85,46 @@ function AppScreen({ navigation }) {
 
   const signUpWithEmail = async () => {
     if (email === '' || password === '') {
-        Alert.alert('Preencha todos os campos!')
-        return
+      Alert.alert('Preencha todos os campos!');
+      return;
     }
     if (!email.includes('@')) {
-        Alert.alert('Email inválido.')
-        return
+      Alert.alert('Email inválido.');
+      return;
     }
     setLoading(true);
 
     try {
-      const response = await fetch('http://54.167.89.222:5000/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: email,
-                senha: password
-            }),
-        });
+      const response = await fetch('http://3.87.98.44:5000/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          senha: password,
+        }),
+      });
 
-        const data = await response.json();
+      const data = await response.json();
 
-        if (response.ok) {
-            Alert.alert('Usuário registrado com sucesso!')
-            navigation.navigate('Jogo')
-        } else {
-            Alert.alert('Erro ao registrar usuário', data.error || 'Algo deu errado.')
+      if (response.ok) {
+        // Obter o ID do usuário após o registro bem-sucedido
+        const usuarioId = await fetchUserId(email, password);
+        if (usuarioId) {
+          await AsyncStorage.setItem('usuario_id', usuarioId.toString());
+          Alert.alert('Usuário registrado com sucesso!');
+          navigation.navigate('Inicial');
         }
+      } else {
+        Alert.alert('Erro ao registrar usuário', data.error || 'Algo deu errado.');
+      }
     } catch (error) {
-        Alert.alert('Erro ao registrar usuário', error.message || 'Algo deu errado.')
+      Alert.alert('Erro ao registrar usuário', error.message || 'Algo deu errado.');
     }
 
     setLoading(false);
-};
+  };
   //checkbox state
   const [isChecked, setChecked] = React.useState(false);
   // on press = goes to Login page
