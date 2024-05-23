@@ -1,6 +1,6 @@
 // Library Imports
 import React, { useState, useRef, useEffect } from 'react';
-import { Text, Button, View, TouchableOpacity, TextInput, ImageBackground, Image, Platform, ProgressBarAndroid } from 'react-native';
+import { Text, Button, View, Animated, TouchableOpacity, TextInput, ImageBackground, Image, Platform, ProgressBarAndroid } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -50,6 +50,7 @@ const Jogo = () => {
         'camera': require('./assets/camera-button.png'),
         'logo': require('./assets/main-logo.png'),
         'direcional' : require('./assets/direcional.png'),
+        'photo' : require('./assets/photo-button.png'),
         'sticker' : require('./assets/sticker.png'),
         'decorative': require('./assets/decorative-button.png'),
         'passos2': require('./assets/menu/passos2.png'),
@@ -79,6 +80,8 @@ const Jogo = () => {
         setVisSem(false);
         setVisShop(false);
         setVisPass(false);
+        setPhotoUri(null); // Adicionado para redefinir o estado da foto
+        saveBase64(null);  // Adicionado para redefinir o estado da base64
     }
 
     //Menu
@@ -185,6 +188,26 @@ const Jogo = () => {
         setVisShop(!visShop);
         
     };
+
+    //Animação do inicial
+    const moveAnim = useRef(new Animated.Value(0)).current;
+    useEffect(() => {
+        const animation = Animated.loop(
+            Animated.sequence([
+                Animated.timing(moveAnim, {
+                    toValue: -10, // Move up by 10 units
+                    duration: 1000, // Duration for moving up
+                    useNativeDriver: true,
+                }),
+                Animated.timing(moveAnim, {
+                    toValue: 10, // Move down by 10 units
+                    duration: 1000, // Duration for moving down
+                    useNativeDriver: true,
+                }),
+            ])
+        );
+        animation.start();
+    }, [moveAnim]);
     
     // OpenAI ChatGPT handler
     const openai = new OpenAI({ apiKey: process.env.EXPO_PUBLIC_API_KEY_OPENAI });
@@ -255,6 +278,7 @@ const Jogo = () => {
     
 
     const takePhoto = async () => {
+        console.log("Foto tirada...");
         if (cameraRef.current) {
             const photo = await cameraRef.current.takePictureAsync();
             const base64 = await FileSystem.readAsStringAsync(photo.uri, {
@@ -501,7 +525,7 @@ const Jogo = () => {
                             </View>
                         )}
                         <TouchableOpacity onPress={handleDir}>
-                            <Image source={require('./assets/inicial-template.png')}style={styles.pika2}/>
+                            <Animated.Image source={require('./assets/inicial-template.png')}style={[styles.pika2,{transform: [{translateY: moveAnim,},],},]}/>
                         </TouchableOpacity>
                     </ImageBackground>
                     )}
@@ -517,7 +541,7 @@ const Jogo = () => {
                             </View>
                         <View style={styles.gameContainer}>
                             <TouchableOpacity onPress={takePhoto}>
-                                <Image source={images['direcional']} style={styles.dirButton}/>
+                                <Image source={images['photo']} style={styles.photoButton}/>
                             </TouchableOpacity>
                             <View >
                                 <View style={styles.petSelectionContainer}>
