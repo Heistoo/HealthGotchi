@@ -209,7 +209,6 @@ const Jogo = () => {
         );
         animation.start();
     }, [moveAnim]);
-    
     // OpenAI ChatGPT handler
     const openai = new OpenAI({ apiKey: process.env.EXPO_PUBLIC_API_KEY_OPENAI });
 
