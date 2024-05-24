@@ -24,6 +24,3 @@ jobs:
 
       - name: Install dependencies
         run: yarn install
-
-      - name: Test npx
-        run: npx expo start
