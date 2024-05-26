@@ -33,7 +33,7 @@ const Login = () => {
 
     const fetchUserId = async (email, senha) => {
         try {
-            const response = await axios.post('http://3.87.98.44:5000/get_user_id', { email, senha });
+            const response = await axios.post('http://3.83.231.127:5000/get_user_id', { email, senha });
             if (response.status === 200) {
                 return response.data.usuario_id;
             } else {

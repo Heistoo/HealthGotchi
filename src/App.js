@@ -27,7 +27,7 @@ const images = {
 
 const fetchUserId = async (email, senha) => {
   try {
-    const response = await fetch('http://3.87.98.44:5000/get_user_id', {
+    const response = await fetch('http://3.83.231.127:5000/get_user_id', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ function AppScreen({ navigation }) {
     setLoading(true);
 
     try {
-      const response = await fetch('http://3.87.98.44:5000/register', {
+      const response = await fetch('http://3.83.231.127:5000/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
