@@ -282,7 +282,7 @@ const Jogo = () => {
                 
                 const usuarioId = await getUsuarioId();
     
-                const res = await fetch('http://3.87.98.44:5000/edit_status_and_assign_points', {
+                const res = await fetch('http://3.83.231.127:5000/edit_status_and_assign_points', {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'

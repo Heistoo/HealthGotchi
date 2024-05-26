@@ -2,29 +2,30 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import mysql.connector
 from fila_missoes import Missao, FilaMissoes
+import os
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 CORS(app)
+load_dotenv()
 
-missoes_semanais = {
-    Missao(1, "Complete 10,000 passos.", 1),
-    Missao(2, "Alimente o bichinho com um alimento dessas categorias: Frutas, Legumes e Verduras, Leguminosas", 1),
-    Missao(3, "Alimente o bichinho com 10 frutas.", 1),
-    Missao(4, "Alimente o bichinho com um alimento dessas categorias: Frutas, Carnes e Ovos, Cereais, tuberculos, paes e raizes, Leguminosas, Leites e Derivados", 1),
-    Missao(5, "Evite alimentar o bichinho com Doces, guloseimas e salgadinhos")
-}
+# missoes_semanais = {
+#     Missao(1, "Complete 10,000 passos.", 1),
+#     Missao(2, "Alimente o bichinho com um alimento dessas categorias: Frutas, Legumes e Verduras, Leguminosas", 1),
+#     Missao(3, "Alimente o bichinho com 10 frutas.", 1),
+#     Missao(4, "Alimente o bichinho com um alimento dessas categorias: Frutas, Carnes e Ovos, Cereais, tuberculos, paes e raizes, Leguminosas, Leites e Derivados", 1),
+#     Missao(5, "Evite alimentar o bichinho com Doces, guloseimas e salgadinhos",1)
+# }
 
-missoes_diarias = {
-    
-}
-fila_missoes_semanais = FilaMissoes(missoes_semanais)
-fila_missoes_diarias = FilaMissoes(missoes_diarias)
+
+# fila_missoes_semanais = FilaMissoes(missoes_semanais)
+
 
 def conectar_db():
     connection = mysql.connector.connect(
         host="mysql-hg-pii-db-health.a.aivencloud.com",
         user="avnadmin",
-        password="AVNS_xzC_D9TXoIH6RLYEPvw",
+        password=os.environ.get("SENHAKEY"),
         port="10202",
         database="defaultdb"
     )
@@ -256,20 +257,20 @@ def get_user_id():
         cursor.close()
         connection.close()
         
-@app.route('/proxima_missao', methods=['GET'])
-def proxima_missao():
-    resultado = fila_missoes.proxima_missao()
-    return jsonify({"message": resultado})
+# @app.route('/proxima_missao', methods=['GET'])
+# def proxima_missao():
+#     resultado = fila_missoes_semanais.proxima_missao()
+#     return jsonify({"message": resultado})
 
-@app.route('/posicao_atual', methods=['GET'])
-def posicao_atual():
-    posicao = fila_missoes.posicao_atual()
-    return jsonify({"posicao": posicao})
+# @app.route('/posicao_atual', methods=['GET'])
+# def posicao_atual():
+#     posicao = fila_missoes_semanais.posicao_atual()
+#     return jsonify({"posicao": posicao})
 
-@app.route('/missao_atual', methods=['GET'])
-def missao_atual():
-    missao = fila_missoes.missao_atual()
-    return jsonify({"message": missao})
+# @app.route('/missao_atual', methods=['GET'])
+# def missao_atual():
+#     missao = fila_missoes_semanais.missao_atual()
+#     return jsonify({"message": missao})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

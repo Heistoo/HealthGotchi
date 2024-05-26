@@ -103,12 +103,12 @@ const Inicial = () => {
   
     const buttonStyle = escolha === 0 ? styles.button : styles.buttonSelected;
 
-    const criarBichinho = async (nome, usuarioId) => {
-      const url = 'http://3.87.98.44:5000/create_pet';  // Substitua 'seu-backend-url' pelo URL real do seu backend
+    const criarBichinho = async (nome, usuario_id) => {
+      const url = 'http://3.83.231.127:5000/create_pet';  // Substitua 'seu-backend-url' pelo URL real do seu backend
     
       const data = {
         nome: nome,
-        usuario_id: usuarioId
+        usuarioId: usuario_id
       };
     
       try {
