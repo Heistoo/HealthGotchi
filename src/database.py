@@ -23,11 +23,11 @@ load_dotenv()
 
 def conectar_db():
     connection = mysql.connector.connect(
-        host="mysql-hg-pii-db-health.a.aivencloud.com",
-        user="avnadmin",
+        host=os.environ.get("HOSTKEY"),
+        user=os.environ.get("USERKEY"),
         password=os.environ.get("SENHAKEY"),
-        port="10202",
-        database="defaultdb"
+        port=os.environ.get("PORTKEY"),
+        database=os.environ.get("DATABASEKEY")
     )
     return connection
 
