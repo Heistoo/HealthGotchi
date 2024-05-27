@@ -580,7 +580,7 @@ const Jogo = () => {
                                             <View style={{flexDirection: 'row', alignItems: 'left'}}>
                                                 <Shop style={styles.statusButtons}/>
                                                 <Text style={styles.modalText2}>Mais Pets</Text>
-                                                <Text>Nome do Pet: {escolha}</Text>
+                                                {/* <Text>Nome do Pet: {escolha}</Text> */}
                                             </View>
                                         </TouchableOpacity>
                                     </View>

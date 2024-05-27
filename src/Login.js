@@ -101,20 +101,22 @@ const Login = () => {
                             value={email}
                             onChangeText={(text) => setEmail(text)}
                         />
-                        <Text style={styles.placeholder2}>Senha</Text>
-                        <TextInput
-                            style={[styles.input2, styles.roundedInput]}
-                            secureTextEntry={!showPassword}
-                            value={senha}
-                            onChangeText={(text) => setSenha(text)}
-                        />
-                        <MaterialCommunityIcons 
-                            name={showPassword ? 'eye-off' : 'eye'} 
-                            size={24} 
-                            color="#aaa"
-                            style={styles.icon} 
-                            onPress={toggleShowPassword}
-                        /> 
+                        <View style={styles.passwordContainer}>
+                            <TextInput
+                                style={[styles.input2, styles.roundedInput, styles.passwordInput]}
+                                secureTextEntry={!showPassword}
+                                value={senha}
+                                onChangeText={(text) => setSenha(text)}
+                            />
+                            <TouchableOpacity onPress={toggleShowPassword} style={styles.iconContainer}>
+                                <MaterialCommunityIcons 
+                                    name={showPassword ? 'eye-off' : 'eye'} 
+                                    size={24} 
+                                    color="#aaa"
+                                    style={styles.icon} 
+                                />
+                            </TouchableOpacity>
+                        </View>
                         <View style={styles.section}>
                             <CheckBox 
                                 style={styles.checkbox}

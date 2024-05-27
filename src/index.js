@@ -209,6 +209,14 @@ const styles = StyleSheet.create({
       paddingVertical: 30, 
       paddingBottom: 200,
       },
+      passwordContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+      },
+      icon: {
+        marginLeft: -40,
+        marginBottom: 15,
+      },
     input: {
       height: 30,
       width: 310,
