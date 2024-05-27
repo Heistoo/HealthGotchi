@@ -571,13 +571,18 @@ const Jogo = () => {
                     </View>  
                     <View >
                          {/* OpenAi Checker */}
-                            <View style={{ justifyContent: 'center', alignItems: 'center', height: 35}}>
-                                {photoUri && <Image source={{ uri: photoUri }} />}
-                                {photoUri && <Button title="Analyze" onPress={async () => {
-                                console.log(base64.slice(0, 100));
-                                await handleVision();
-                                }} />}
-                            </View>
+                         <View style={{ justifyContent: 'center', alignItems: 'center', height: 35}}>
+                                {camera && photoUri && <Image source={{ uri: photoUri }} />}
+                                {camera && photoUri && (
+                                    <Button
+                                        title="Analyze"
+                                        onPress={async () => {
+                                            console.log(base64.slice(0, 100));
+                                            await handleVision();
+                                        }}
+                                    />
+                                )}
+                        </View>
                         <View style={styles.gameContainer}>
                             <TouchableOpacity onPress={takePhoto}>
                                 <Image source={images['photo']} style={styles.photoButton}/>
