@@ -10,7 +10,6 @@ import { Pedometer } from 'expo-sensors';
 import OpenAI from 'openai';
 import * as FileSystem from 'expo-file-system';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import { Accelerometer } from 'react-native-sensors';
 
 // Stylesheet
 import styles from './index.js';
@@ -25,8 +24,6 @@ import Passos from './assets/menu/passos.svg'
 import Status from './assets/menu/status.svg'
 import Tarefas from './assets/menu/tarefas.svg'
 import Shop from './assets/menu/shop.svg'
-import Menu from './assets/menu/menu.svg'
-import Back from './assets/menu/back.svg'
 import Clock from './assets/menu/clock.svg'
 
 const Jogo = () => {
@@ -43,6 +40,8 @@ const Jogo = () => {
     const [isPedometerAvailable, setIsPedometerAvailable] = useState("checking");
     const [pastStepCount, setPastStepCount] = useState(0);
     const [currentStepCount, setCurrentStepCount] = useState(0);
+    //Camera
+    const [camera, setCamera] = useState(null)
 
     // Image Usage
     const images = {
@@ -79,8 +78,6 @@ const Jogo = () => {
         setCamera(false);
     };
 
-    //Camera
-    const [camera, setCamera] = useState(null)
 
     const handleCam = () => {
         setCamera(!camera);
