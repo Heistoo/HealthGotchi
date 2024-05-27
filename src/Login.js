@@ -33,7 +33,7 @@ const Login = () => {
 
     const fetchUserId = async (email, senha) => {
         try {
-            const response = await axios.post('http://3.83.231.127:5000/get_user_id', { email, senha });
+            const response = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/get_user_id`, { email, senha });
             if (response.status === 200) {
                 return response.data.usuario_id;
             } else {
@@ -56,6 +56,17 @@ const Login = () => {
             return;
         }
         setLoading(true);
+
+        const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email,
+                senha: senha,
+            }),
+        });
 
         try {
             //busca o id do usuário após o login bem-sucedido
