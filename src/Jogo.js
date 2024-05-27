@@ -1,6 +1,6 @@
 // Library Imports
 import React, { useState, useRef, useEffect } from 'react';
-import { Text, Button, View, Animated, TouchableOpacity, TextInput, ImageBackground, Image, Platform, ProgressBarAndroid } from 'react-native';
+import { Text, Button, View, Animated, TouchableOpacity, TextInput, ImageBackground, Image, Platform, ProgressBarAndroid, TouchableWithoutFeedback } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -69,6 +69,15 @@ const Jogo = () => {
         'wickiked': require('./assets/pets/wickiked.png'),
     }
 
+    const closeMenuAndCamera = () => {
+        setVisibility(false);
+        setVisMenu(false);
+        setVisDia(false);
+        setVisSem(false);
+        setVisPass(false);
+        setVisShop(false);
+        setCamera(false);
+    };
 
     //Camera
     const [camera, setCamera] = useState(null)
@@ -329,6 +338,7 @@ const Jogo = () => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.secondBackground}></View>
+            <TouchableWithoutFeedback onPress={closeMenuAndCamera}>
             <LinearGradient
             colors={['#FA9A43','#F4475A']}
             style={styles.background}
@@ -592,6 +602,7 @@ const Jogo = () => {
                         </View>
                     </View>
             </LinearGradient>
+            </TouchableWithoutFeedback>
         </SafeAreaView>
     );
 };
