@@ -28,6 +28,7 @@ import Clock from './assets/menu/clock.svg'
 
 const Jogo = () => {
     const navigation = useNavigation();
+    const [escolha, setEscolha] = useState(0);
     const [food, setFood] = useState("");
     const [foodGroup, setFoodGroup] = useState("");
     const [pressed, setPressed] = useState(false);
@@ -245,9 +246,31 @@ const Jogo = () => {
         }
     }, [food, foodGroup]);
 
+    //Usa pra mostrar o inicial na tela
+    useEffect(() => {
+        const fetchEscolhaPet = async () => {
+          try {
+            const escolha = await AsyncStorage.getItem('escolha');
+            if (escolha) {
+              setEscolha(escolha);
+            }
+          } catch (error) {
+            console.error('Erro ao buscar o pet:', error);
+            Alert.alert('Erro ao buscar o pet:', error.message);
+          }
+        };
+        fetchEscolhaPet();
+      }, []);
+
     const getUsuarioId = () => {
         return AsyncStorage.getItem('usuario_id');
     };
+
+    const petImages = {
+        1: require('./assets/pets/tinkazilla.png'),
+        2: require('./assets/pets/rocked.png'),
+        3: require('./assets/pets/heradummy.png'),
+      };
 
     const handleVision = async () => {
         const response = await openai.chat.completions.create({
@@ -554,6 +577,7 @@ const Jogo = () => {
                                             <View style={{flexDirection: 'row', alignItems: 'left'}}>
                                                 <Shop style={styles.statusButtons}/>
                                                 <Text style={styles.modalText2}>Mais Pets</Text>
+                                                {/* <Text>Nome do Pet: {escolha}</Text> */}
                                             </View>
                                         </TouchableOpacity>
                                     </View>
@@ -561,7 +585,7 @@ const Jogo = () => {
                             </View>
                         )}
                         <TouchableOpacity onPress={handleDir}>
-                            <Animated.Image source={require('./assets/inicial-template.png')}style={[styles.pika2,{transform: [{translateY: moveAnim,},],},]}/>
+                            {escolha !== 0 && (<Animated.Image source={petImages[escolha]}style={[styles.pika2,{transform: [{translateY: moveAnim,},],},]}/>)}
                         </TouchableOpacity>
                     </ImageBackground>
                     )}
