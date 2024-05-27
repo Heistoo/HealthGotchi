@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
       display: 'flex',
       flexDirection: 'row',
       alignItems: "left",
-      paddingLeft: 50,
+      paddingLeft: "10%",
     },
     pets:{
       height: 80, 
@@ -190,13 +190,14 @@ const styles = StyleSheet.create({
       zIndex: 1,
     },
     pika2:{
-      alignSelf: 'flex-end',
+      alignSelf: 'center', // Centraliza a imagem horizontalmente
       bottom: -200,
       right: 30,
       height: 150,
       width: 150,
-      opacity: 2,
-      position: 'absolute'
+      opacity: 1, // Corrige o valor de opacidade (máximo é 1)
+      resizeMode: 'contain', // Garante que a imagem seja redimensionada para caber no contêiner
+      position: 'absolute',
     },
     containerLogin:{
       top:'10%',
@@ -297,8 +298,8 @@ const styles = StyleSheet.create({
       top: 175,
       right: -90,
       margin: 0,
-      width: 50,
-      height: 50,
+      width: 55,
+      height: 55,
       position: 'absolute',
     }, 
     menuButton:{
@@ -310,11 +311,11 @@ const styles = StyleSheet.create({
       position: 'absolute',
     },
     photoButton:{
-      top: 90,
+      top: "400%",
       right: -356,
       margin: 0,
-      width: 50,
-      height: 50,
+      width: 55,
+      height: 55,
       position: 'absolute',
     },
     // dirButton:{
