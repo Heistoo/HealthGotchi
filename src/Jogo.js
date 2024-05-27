@@ -571,7 +571,7 @@ const Jogo = () => {
                     </View>  
                     <View >
                          {/* OpenAi Checker */}
-                         <View style={{ justifyContent: 'center', alignItems: 'center', height: 35}}>
+                        <View style={{ justifyContent: 'center', alignItems: 'center', height: 35}}>
                                 {camera && photoUri && <Image source={{ uri: photoUri }} />}
                                 {camera && photoUri && (
                                     <Button
