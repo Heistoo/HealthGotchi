@@ -27,7 +27,7 @@ const images = {
 
 const fetchUserId = async (email, senha) => {
   try {
-    const response = await fetch('http://3.83.231.127:5000/get_user_id', {
+    const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/get_user_id`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -80,11 +80,11 @@ export default function Main() {
 
 function AppScreen({ navigation }) {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [senha, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
   const signUpWithEmail = async () => {
-    if (email === '' || password === '') {
+    if (email === '' || senha === '') {
       Alert.alert('Preencha todos os campos!');
       return;
     }
@@ -94,15 +94,16 @@ function AppScreen({ navigation }) {
     }
     setLoading(true);
 
+    console.log("URL do backend:", process.env.EXPO_PUBLIC_API_URL);
     try {
-      const response = await fetch('http://3.83.231.127:5000/register', {
+      const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           email: email,
-          senha: password,
+          senha: senha,
         }),
       });
 
@@ -110,7 +111,7 @@ function AppScreen({ navigation }) {
 
       if (response.ok) {
         // Obter o ID do usuário após o registro bem-sucedido
-        const usuarioId = await fetchUserId(email, password);
+        const usuarioId = await fetchUserId(email, senha);
         if (usuarioId) {
           await AsyncStorage.setItem('usuario_id', usuarioId.toString());
           Alert.alert('Usuário registrado com sucesso!');
@@ -120,7 +121,7 @@ function AppScreen({ navigation }) {
         Alert.alert('Erro ao registrar usuário', data.error || 'Algo deu errado.');
       }
     } catch (error) {
-      Alert.alert('Erro ao registrar usuário', error.message || 'Algo deu errado.');
+      Alert.alert('Erro ao registrar usuário aqui', error.message || 'Algo deu errado.');
     }
 
     setLoading(false);
@@ -146,7 +147,7 @@ function AppScreen({ navigation }) {
             <Text style={styles.placeholder2}>Senha</Text>
             
             <TextInput
-            style={styles.input} value={password} onChangeText={(text) => setPassword(text)}
+            style={styles.input} value={senha} onChangeText={(text) => setPassword(text)}
             secureTextEntry={true}/>
             <View style={styles.buttoncontainer}>
               <TouchableOpacity onPress={() => signUpWithEmail()}>
