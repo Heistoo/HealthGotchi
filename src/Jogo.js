@@ -69,58 +69,33 @@ const Jogo = () => {
         'wickiked': require('./assets/pets/wickiked.png'),
     }
 
+    const setAllStates = (value) => {
+        setVisibility(value);
+        setVisMenu(value);
+        setVisDia(value);
+        setVisSem(value);
+        setVisPass(value);
+        setVisShop(value);
+        setCamera(value);
+    }
+    
     const closeMenuAndCamera = () => {
-        setVisibility(false);
-        setVisMenu(false);
-        setVisDia(false);
-        setVisSem(false);
-        setVisPass(false);
-        setVisShop(false);
-        setCamera(false);
+        setAllStates(false);
     };
-
-
+    
     const handleCam = () => {
+        setAllStates(false);
         setCamera(!camera);
-        setVisibility(false);
-        setVisMenu(false);
-        setVisDia(false);
-        setVisSem(false);
-        setVisShop(false);
-        setVisPass(false);
         setPhotoUri(null); // Adicionado para redefinir o estado da foto
         saveBase64(null);  // Adicionado para redefinir o estado da base64
     }
-
+    
     //Menu
     const handleMenu = () => {
         console.log('Menu Aberto...');
+        setAllStates(false);
         setVisibility(!visibility);
-        setVisMenu(false);
-        setVisDia(false);
-        setVisSem(false);
-        setVisShop(false);
-        setVisPass(false);
     }
-
-    useEffect(() => {
-        setVisibility(pressed);
-    }, [pressed]);
-    useEffect(() => {
-        setVisMenu(pressed);
-    }, [pressed]);
-    useEffect(() => {
-        setVisDia(pressed);
-    }, [pressed]);
-    useEffect(() => {
-        setVisSem(pressed);
-    }, [pressed]);
-    useEffect(() => {
-        setVisPass(pressed);
-    }, [pressed]);
-    useEffect(() => {
-        setVisShop(pressed);
-    }, [pressed]);
 
     //Pedômetro
     useEffect(() => {
