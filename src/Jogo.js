@@ -137,40 +137,16 @@ const Jogo = () => {
         console.log('Interagindo com o pet...');
     };
 
-    //Status
-    const handleStatus = () => {
+    const handleVisibility = (setter) => {
         setVisibility(!visibility);
-        setVisMenu(!visMenu);
-        
+        setter((currentValue) => !currentValue);
     };
-
-    //Missao Diaria
-    const handleDia = () => {
-        setVisibility(!visibility);
-        setVisDia(!visDia);
-        
-    };
-
-    //Missao semanal
-    const handleSem = () => {
-        setVisibility(!visibility);
-        setVisSem(!visSem);
-        
-    };
-
-    //Passos
-    const handlePass = () => {
-        setVisibility(!visibility);
-        setVisPass(!visPass);
-        
-    };
-
-    //Shop
-    const handleShop = () => {
-        setVisibility(!visibility);
-        setVisShop(!visShop);
-        
-    };
+    
+    const handleStatus = () => handleVisibility(setVisMenu);
+    const handleDia = () => handleVisibility(setVisDia);
+    const handleSem = () => handleVisibility(setVisSem);
+    const handlePass = () => handleVisibility(setVisPass);
+    const handleShop = () => handleVisibility(setVisShop);
 
     //Animação do inicial
     const moveAnim = useRef(new Animated.Value(0)).current;
