@@ -154,13 +154,14 @@ function AppScreen({ navigation }) {
                 <Text style={styles.text}>Registrar</Text>
               </TouchableOpacity>
             </View>
+            <Text>{'\n'}</Text>
             <TouchableOpacity onPress={() => handleLinkPress('Login')}>
               <Text style={{color: '#4D73FA'}}>Ir para a tela de login</Text>
             </TouchableOpacity>
-            <View style={styles.containerIcon}>
+            {/* <View style={styles.containerIcon}>
               <FB style={styles.imageLogo}/>
               <Social2 style={styles.imageLogo2}/>
-            </View>
+            </View> */}
           </View>
         </View>
       </ImageBackground>      
