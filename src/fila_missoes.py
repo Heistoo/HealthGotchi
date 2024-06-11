@@ -10,16 +10,20 @@ class Missao:
 
 class FilaMissoes:
     #Construtor da Fila
-    def __init__(self):
-        self.fila = []
+    def __init__(self, missoes):
+        self.fila = missoes
         self.posicao_usuario = 0  # Inicia na primeira missão
+        self.usuario_id = 0 #Apenas o inicializa
+    
+    def set_usuario_id(self, usuario_id):
+        self.usuario_id = usuario_id
 
     def proxima_missao(self):
-        if self.posicao_usuario < len(self.fila):
-            missao = self.fila[self.posicao_usuario]
-            return f"Próxima missão: {missao.descricao}"
+        if (self.posicao_usuario+1) % len(self.fila) == 0:
+            self.posicao_usuario += 1
         else:
-            return "Não há mais missões na fila."
+            self.posicao_usuario = 0
+        return f"Número da próxima missão: {self.posicao_usuario + 1}"
 
     #Não sei se é preciso
     def avancar_missao(self):
@@ -38,8 +42,7 @@ class FilaMissoes:
         
     #Retorna a missão atual
     def missao_atual(self):
-        if self.missoes:
-            missao = self.missoes[self.posicao_usuario]
-            return f"Missão atual: {missao.descricao}"
+        if self.fila:
+            return self.fila[self.posicao_usuario]
         else:
             return "A fila de missões está vazia."
