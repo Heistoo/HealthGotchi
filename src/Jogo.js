@@ -39,8 +39,16 @@ const Jogo = () => {
     const [isPedometerAvailable, setIsPedometerAvailable] = useState("checking");
     const [pastStepCount, setPastStepCount] = useState(0);
     const [currentStepCount, setCurrentStepCount] = useState(0);
+    const [progresso, setProgresso] = useState({
+        health: 0.9, 
+        energy: 0.9,
+        happy: 0.9,
+        strength: 0.9,
+        resistance: 0.9,
+      });
     //Camera
     const [camera, setCamera] = useState(null)
+    const [escolhaInicial, setEscolhaInicial] = useState(0);
 
     // Image Usage
     const images = {
@@ -53,18 +61,18 @@ const Jogo = () => {
         'sticker' : require('./assets/sticker.png'),
         'decorative': require('./assets/decorative-button.png'),
         'passos2': require('./assets/menu/passos2.png'),
-        'asphalt': require('./assets/pets/asphalt.png'),
-        'banabat': require('./assets/pets/banabat.png'),
-        'brekorb': require('./assets/pets/brekorb.png'),
-        'bugwheel': require('./assets/pets/bugwheel.png'),
-        'carnivalt': require('./assets/pets/carnivalt.png'),
-        'charcopala': require('./assets/pets/charcopala.png'),
-        'cromirin': require('./assets/pets/cromirin.png'),
-        'feveroar': require('./assets/pets/feveroar.png'),
-        'hydraqua': require('./assets/pets/hydraqua.png'),
-        'minde': require('./assets/pets/minde.png'),
-        'toxtoad': require('./assets/pets/toxtoad.png'),
-        'wickiked': require('./assets/pets/wickiked.png'),
+        // 'asphalt':    require('./assets/pets/asphalt.png'),
+        // 'banabat':    require('./assets/pets/banabat.png'),
+        // 'brekorb':    require('./assets/pets/brekorb.png'),
+        // 'bugwheel':   require('./assets/pets/bugwheel.png'),
+        // 'heradummy':  require('./assets/pets/heradummy.png'),
+        // 'charcopala': require('./assets/pets/charcopala.png'),
+        // 'cromirin':   require('./assets/pets/cromirin.png'),
+        // 'feveroar':   require('./assets/pets/feveroar.png'),
+        // 'hydraqua':   require('./assets/pets/hydraqua.png'),
+        // 'minde':      require('./assets/pets/minde.png'),
+        // 'toxtoad':    require('./assets/pets/toxtoad.png'),
+        // 'wickiked':   require('./assets/pets/wickiked.png'),
     }
 
     const setAllStates = (value) => {
@@ -90,7 +98,7 @@ const Jogo = () => {
     
     //Menu
     const handleMenu = () => {
-        console.log('Menu Aberto...');
+        console.log(escolha);
         setAllStates(false);
         setVisibility(!visibility);
     }
@@ -152,12 +160,12 @@ const Jogo = () => {
         const animation = Animated.loop(
             Animated.sequence([
                 Animated.timing(moveAnim, {
-                    toValue: -10, // Move up by 10 units
+                    toValue: -20, // Move up by 10 units
                     duration: 1000, // Duration for moving up
                     useNativeDriver: true,
                 }),
                 Animated.timing(moveAnim, {
-                    toValue: 10, // Move down by 10 units
+                    toValue: 0, // Move down by 10 units
                     duration: 1000, // Duration for moving down
                     useNativeDriver: true,
                 }),
@@ -197,8 +205,9 @@ const Jogo = () => {
         const fetchEscolhaPet = async () => {
           try {
             const escolha = await AsyncStorage.getItem('escolha');
-            if (escolha) {
-              setEscolha(escolha);
+            if (escolha !== null) {
+              setEscolha(Number(escolha));
+              console.log('Escolha carregada:', escolha);
             }
           } catch (error) {
             console.error('Erro ao buscar o pet:', error);
@@ -212,10 +221,131 @@ const Jogo = () => {
         return AsyncStorage.getItem('usuario_id');
     };
 
+    const fetchEscolhaPet = async () => {
+        try {
+          const escolhaStored = await AsyncStorage.getItem('escolha');
+          if (escolhaStored !== null) {
+            setEscolha(Number(escolhaStored));
+            setEscolhaInicial(Number(escolhaStored));
+            console.log('Escolha carregada:', escolhaStored);
+            verificarProgresso(Number(escolhaStored)); // Movendo a lógica de verificação de progresso aqui
+          }
+        } catch (error) {
+          console.error('Erro ao buscar o pet:', error);
+          Alert.alert('Erro ao buscar o pet:', error.message);
+        }
+      };
+
+      
+      
+      useEffect(() => {
+        console.log("Chamando fetchEscolhaPet...");
+        fetchEscolhaPet();
+      }, []);
+      
+      const verificarProgresso = (escolhaAtual) => { // Passando o valor atual de escolha como parâmetro
+        const valoresProgresso = Object.values(progresso);
+        console.log('Verificando progresso:', valoresProgresso);
+        if (valoresProgresso.every(valor => valor > 0.3 && valor <= 0.6)) {
+          console.log('Progresso entre 0.3 e 0.6');
+          
+          incrementarEscolha();
+        } else if (valoresProgresso.every(valor => valor > 0.6 && valor <= 1)) {
+          console.log('Progresso entre 0.6 e 1');
+          incrementarEscolha();
+        }
+      };
+      
+      const incrementarEscolha = async () => {
+        try {
+          await AsyncStorage.getItem('escolha', (err, result) => {
+            if (err) {
+              console.error('Erro ao buscar o pet:', error);
+              Alert.alert('Erro ao buscar o pet:', error.message);
+              return;
+            }
+            console.log(escolhaInicial);
+            // if(novaEscolha > escolhaInicial+2){ 
+                const novaEscolha = Number(result) + 1;
+                console.log(novaEscolha);
+                setEscolha(prevEscolha => {
+              console.log('Valor anterior de escolha:', prevEscolha);
+              console.log('Escolha incrementada para:', novaEscolha);
+              AsyncStorage.setItem('escolha', novaEscolha.toString());
+              return novaEscolha;
+            });
+        // }
+          });
+        } catch (error) {
+          console.error('Erro ao atualizar o pet:', error);
+          Alert.alert('Erro ao atualizar o pet:', error.message);
+        }
+      }; 
+
+      //Nada ali em cima funciona como deve
+
     const petImages = {
         1: require('./assets/pets/tinkazilla.png'),
-        2: require('./assets/pets/rocked.png'),
-        3: require('./assets/pets/heradummy.png'),
+        2: require('./assets/pets/tinkazilla1.png'),
+        3: require('./assets/pets/tinkazilla2.png'),
+
+
+        4: require('./assets/pets/rocked.png'),
+        5: require('./assets/pets/rocked1.png'),
+        6: require('./assets/pets/rocked2.png'),
+        
+        7: require('./assets/pets/carnivalt.png'),
+        8: require('./assets/pets/carnivalt1.png'),
+        9: require('./assets/pets/carnivalt2.png'),
+        
+        10: require('./assets/pets/asphalt.png'),
+        11: require('./assets/pets/asphalt1.png'),
+        12: require('./assets/pets/asphalt1.png'),
+
+        13: require('./assets/pets/banabat.png'),
+        14: require('./assets/pets/banabat1.png'),
+        15: require('./assets/pets/banabat1.png'),
+        
+        16: require('./assets/pets/brekorb.png'),
+        17: require('./assets/pets/brekorb1.png'),
+        18: require('./assets/pets/brekorb1.png'),
+        
+        19: require('./assets/pets/bugwheel.png'),
+        20: require('./assets/pets/bugwheel1.png'),
+        21: require('./assets/pets/bugwheel1.png'),
+        
+        22: require('./assets/pets/heradummy.png'),
+        23: require('./assets/pets/heradummy1.png'),
+        24: require('./assets/pets/heradummy1.png'),
+
+        25: require('./assets/pets/charcopala.png'),
+        26: require('./assets/pets/charcopala1.png'),
+        27: require('./assets/pets/charcopala1.png'),
+
+        28: require('./assets/pets/cromirin.png'),
+        29: require('./assets/pets/cromirin1.png'),
+        30: require('./assets/pets/cromirin2.png'),
+
+        31: require('./assets/pets/feveroar.png'),
+        32: require('./assets/pets/feveroar1.png'),
+        33: require('./assets/pets/feveroar1.png'),
+        
+        34: require('./assets/pets/hydraqua.png'),
+        35: require('./assets/pets/hydraqua.png'),
+        36: require('./assets/pets/hydraqua.png'),
+
+        37: require('./assets/pets/minde.png'),
+        38: require('./assets/pets/minde1.png'),
+        39: require('./assets/pets/minde1.png'),
+
+        40: require('./assets/pets/toxtoad.png'),
+        41: require('./assets/pets/toxtoad1.png'),
+        42: require('./assets/pets/toxtoad1.png'),
+
+        43: require('./assets/pets/wickiked.png'),
+        44: require('./assets/pets/wickiked1.png'),
+        45: require('./assets/pets/wickiked1.png'),
+
       };
 
     if (hasPermission === null) {
@@ -257,23 +387,23 @@ const Jogo = () => {
                                     <View style={{ alignItems: 'center'}}>
                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                             <Health style={styles.statusButtons}/>
-                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={0.9} borderColor={'transparent'}/>
+                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.health} borderColor={'transparent'}/>
                                         </View>
                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                             <Energy style={styles.statusButtons}/>
-                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={0.9} borderColor={'transparent'}/>
+                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.energy} borderColor={'transparent'}/>
                                         </View>
                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                             <Happy style={styles.statusButtons}/>
-                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={0.9} borderColor={'transparent'}/>
+                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.happy} borderColor={'transparent'}/>
                                         </View>
                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                             <Strength style={styles.statusButtons}/>
-                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={0.9} borderColor={'transparent'}/>
+                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.strength} borderColor={'transparent'}/>
                                         </View>
                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
                                             <Resistance style={styles.statusButtons}/>
-                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={0.9} borderColor={'transparent'}/>
+                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.resistance} borderColor={'transparent'}/>
                                         </View>
                                     </View>
                                 </View>
@@ -385,7 +515,7 @@ const Jogo = () => {
                                     </View>
                                     <View style={styles.petIcons}>
                                         <TouchableOpacity>
-                                            <Image source={images['carnivalt']} style={styles.pets}/>
+                                            <Image source={images['heradummy']} style={styles.pets}/>
                                         </TouchableOpacity>
                                         <TouchableOpacity>                                            
                                             <Image source={images['banabat']} style={styles.pets}/>
@@ -456,7 +586,8 @@ const Jogo = () => {
                             </View>
                         )}
                         <TouchableOpacity onPress={handleDir}>
-                            {escolha !== 0 && (<Animated.Image source={petImages[escolha]}style={[styles.pika2,{transform: [{translateY: moveAnim,},],},]}/>)}
+                            {/* {escolha !== 0 && (<Animated.Image source={petImages[escolha]}style={[styles.pika2,{transform: [{translateY: moveAnim,},],},]}/>)} */}
+                            {escolha !== 0 && (<Animated.Image source={petImages[escolha]}style={[styles.pika2,{transform: [{translateX: moveAnim,},],},]}/>)}
                         </TouchableOpacity>
                     </ImageBackground>
                     )}
