@@ -51,7 +51,7 @@ const Inicial = () => {
     const images = {
       'tinkazilla': require('./assets/pets/tinkazilla.png'),
       'rocked': require('./assets/pets/rocked.png'),
-      'heradummy': require('./assets/pets/heradummy.png'),
+      'carnivalt': require('./assets/pets/carnivalt.png'),
     }
 
     const selected = async (screenName) => {
@@ -89,15 +89,15 @@ const Inicial = () => {
     const handleRock = () => {
       Alert.alert('Rocked');
       setNomePet('Rocked');
-      setEscolha(2);
+      setEscolha(4);
         return
       
     };
     //Heradummy
-    const handleHera = () => {
-      Alert.alert('Heradummy');
-      setNomePet('Heradummy');
-      setEscolha(3);
+    const handleCarni = () => {
+      Alert.alert('Carnivalt');
+      setNomePet('Carnivalt');
+      setEscolha(7);
         return
       
     };
@@ -157,8 +157,8 @@ const Inicial = () => {
         <TouchableOpacity onPress={handleRock} style={styles.petTouchable}>
           <Image source={images['rocked']} style={styles.petImage}/>
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleHera} style={styles.petTouchable}> 
-          <Image source={images['heradummy']} style={styles.petImage}/>
+        <TouchableOpacity onPress={handleCarni} style={styles.petTouchable}> 
+          <Image source={images['carnivalt']} style={styles.petImage}/>
         </TouchableOpacity>
       </View>
 

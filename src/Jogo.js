@@ -39,6 +39,13 @@ const Jogo = () => {
     const [isPedometerAvailable, setIsPedometerAvailable] = useState("checking");
     const [pastStepCount, setPastStepCount] = useState(0);
     const [currentStepCount, setCurrentStepCount] = useState(0);
+    const [progresso, setProgresso] = useState({
+        health: 0.7, 
+        energy: 0.7,
+        happy: 0.7,
+        strength: 0.7,
+        resistance: 0.7,
+    });
     const [status, setStatus] = useState(null);
     const [missoes, setMissoes] = useState([]);
     const [pontos, setPontos] = useState(0);
@@ -47,6 +54,7 @@ const Jogo = () => {
     const [error, setError] = useState(null);
     //Camera
     const [camera, setCamera] = useState(null)
+
 
     // Image Usage
     const images = {
@@ -59,18 +67,18 @@ const Jogo = () => {
         'sticker' : require('./assets/sticker.png'),
         'decorative': require('./assets/decorative-button.png'),
         'passos2': require('./assets/menu/passos2.png'),
-        'asphalt': require('./assets/pets/asphalt.png'),
-        'banabat': require('./assets/pets/banabat.png'),
-        'brekorb': require('./assets/pets/brekorb.png'),
-        'bugwheel': require('./assets/pets/bugwheel.png'),
-        'carnivalt': require('./assets/pets/carnivalt.png'),
+        'asphalt':    require('./assets/pets/asphalt.png'),
+        'banabat':    require('./assets/pets/banabat.png'),
+        'brekorb':    require('./assets/pets/brekorb.png'),
+        'bugwheel':   require('./assets/pets/bugwheel.png'),
+        'heradummy':  require('./assets/pets/heradummy.png'),
         'charcopala': require('./assets/pets/charcopala.png'),
-        'cromirin': require('./assets/pets/cromirin.png'),
-        'feveroar': require('./assets/pets/feveroar.png'),
-        'hydraqua': require('./assets/pets/hydraqua.png'),
-        'minde': require('./assets/pets/minde.png'),
-        'toxtoad': require('./assets/pets/toxtoad.png'),
-        'wickiked': require('./assets/pets/wickiked.png'),
+        'cromirin':   require('./assets/pets/cromirin.png'),
+        'feveroar':   require('./assets/pets/feveroar.png'),
+        'hydraqua':   require('./assets/pets/hydraqua.png'),
+        'minde':      require('./assets/pets/minde.png'),
+        'toxtoad':    require('./assets/pets/toxtoad.png'),
+        'wickiked':   require('./assets/pets/wickiked.png'),
     }
 
     const setAllStates = (value) => {
@@ -92,11 +100,12 @@ const Jogo = () => {
         setCamera(!camera);
         setPhotoUri(null); // Adicionado para redefinir o estado da foto
         saveBase64(null);  // Adicionado para redefinir o estado da base64
+        verificarProgresso();
     }
     
     //Menu
     const handleMenu = () => {
-        console.log('Menu Aberto...');
+        console.log(escolha);
         setAllStates(false);
         setVisibility(!visibility);
     }
@@ -139,11 +148,18 @@ const Jogo = () => {
     //Direcional
     const handleDir = () => {
         console.log('Interagindo com o pet...');
+        verificarProgresso();
     };
 
     const handleVisibility = (setter) => {
         setVisibility(!visibility);
         setter((currentValue) => !currentValue);
+    };
+
+    const handleStatus = () => {
+        // Qualquer outra lógica que você tenha para quando "Status do Pet" for selecionado
+        handleVisibility(setVisMenu);
+        fetchStatus(); // Chama a função para buscar os status atualizados
     };
     
     const handleStatus = () => {
@@ -159,7 +175,16 @@ const Jogo = () => {
         handleVisibility(setVisSem);
     }
     const handlePass = () => handleVisibility(setVisPass);
+//     const handleDia = () => handleVisibility(setVisDia);
+//     const handleSem = () => handleVisibility(setVisSem);
+//     // const handlePass = () => handleVisibility(setVisPass);
+
     const handleShop = () => handleVisibility(setVisShop);
+
+    const handleIncremento = () => {
+        AsyncStorage.setItem('incrementeBaixo', 'false');
+        AsyncStorage.setItem('incrementeAlto', 'false');
+    }
 
     //Animação do inicial
     const moveAnim = useRef(new Animated.Value(0)).current;
@@ -167,12 +192,12 @@ const Jogo = () => {
         const animation = Animated.loop(
             Animated.sequence([
                 Animated.timing(moveAnim, {
-                    toValue: -10, // Move up by 10 units
+                    toValue: -20, // Move up by 10 units
                     duration: 1000, // Duration for moving up
                     useNativeDriver: true,
                 }),
                 Animated.timing(moveAnim, {
-                    toValue: 10, // Move down by 10 units
+                    toValue: 0, // Move down by 10 units
                     duration: 1000, // Duration for moving down
                     useNativeDriver: true,
                 }),
@@ -210,28 +235,124 @@ const Jogo = () => {
     //Usa pra mostrar o inicial na tela
     useEffect(() => {
         const fetchEscolhaPet = async () => {
-          try {
-            const escolha = await AsyncStorage.getItem('escolha');
-            if (escolha) {
-              setEscolha(escolha);
+            try {
+                const escolha = await AsyncStorage.getItem('escolha');
+                if (escolha !== null) {
+                    setEscolha(Number(escolha));
+                    console.log('Escolha carregada:', escolha);
+                }
+            } catch (error) {
+                console.error('Erro ao buscar o pet:', error);
+                Alert.alert('Erro ao buscar o pet:', error.message);
             }
-          } catch (error) {
-            console.error('Erro ao buscar o pet:', error);
-            Alert.alert('Erro ao buscar o pet:', error.message);
-          }
         };
         fetchEscolhaPet();
-      }, []);
+    }, []);
 
     const getUsuarioId = () => {
         return AsyncStorage.getItem('usuario_id');
     };
 
+    useEffect(() => {
+        const fetchEscolhaPet = async () => {
+            try {
+                const escolha = await AsyncStorage.getItem('escolha');
+                if (escolha !== null) {
+                    setEscolha(Number(escolha));
+                    console.log('Escolha carregada:', escolha);
+                }
+            } catch (error) {
+                console.error('Erro ao buscar o pet:', error);
+                Alert.alert('Erro ao buscar o pet:', error.message);
+            }
+        };
+
+        fetchEscolhaPet();
+    }, []);
+
+    
+    const verificarProgresso = async (escolhaAtual) => { // Passando o valor atual de escolha como parâmetro
+        const valoresProgresso = Object.values(progresso);
+        console.log('Verificando progresso:', valoresProgresso);
+        const incrementeBaixo = await AsyncStorage.getItem('incrementeBaixo');
+        const incrementeAlto = await AsyncStorage.getItem('incrementeAlto');
+        console.log(incrementeBaixo);
+        console.log(incrementeAlto);
+
+        if (valoresProgresso.every(valor => valor > 0.3 && valor <= 0.6) && incrementeBaixo !== 'true') {
+            console.log('Progresso entre 0.3 e 0.6');
+            incrementarEscolha('incrementeBaixo');
+        } else if (valoresProgresso.every(valor => valor > 0.6 && valor <= 1) && incrementeAlto !== 'true') {
+            console.log('Progresso entre 0.6 e 1');
+            incrementarEscolha('incrementeAlto');
+        }
+    };
+
+    const incrementarEscolha = async (tipoIncremento) => {
+        try {
+            const result = await AsyncStorage.getItem('escolha');
+            const novaEscolha = Number(result) + 1;
+            console.log(novaEscolha);
+            setEscolha(prevEscolha => {
+                console.log('Valor anterior de escolha:', prevEscolha);
+                console.log('Escolha incrementada para:', novaEscolha);
+                AsyncStorage.setItem('escolha', novaEscolha.toString());
+                AsyncStorage.setItem(tipoIncremento, 'true'); // Marcar incremento como verdadeiro
+                return novaEscolha;
+            });
+        } catch (error) {
+            console.error('Erro ao atualizar o pet:', error);
+            Alert.alert('Erro ao atualizar o pet:', error.message);
+        }
+    };
+
     const petImages = {
         1: require('./assets/pets/tinkazilla.png'),
-        2: require('./assets/pets/rocked.png'),
-        3: require('./assets/pets/heradummy.png'),
-      };
+        2: require('./assets/pets/tinkazilla1.png'),
+        3: require('./assets/pets/tinkazilla2.png'),
+        4: require('./assets/pets/rocked.png'),
+        5: require('./assets/pets/rocked1.png'),
+        6: require('./assets/pets/rocked2.png'),
+        7: require('./assets/pets/carnivalt.png'),
+        8: require('./assets/pets/carnivalt1.png'),
+        9: require('./assets/pets/carnivalt2.png'),
+        10: require('./assets/pets/asphalt.png'),
+        11: require('./assets/pets/asphalt1.png'),
+        12: require('./assets/pets/asphalt1.png'),
+        13: require('./assets/pets/banabat.png'),
+        14: require('./assets/pets/banabat1.png'),
+        15: require('./assets/pets/banabat1.png'),
+        16: require('./assets/pets/brekorb.png'),
+        17: require('./assets/pets/brekorb1.png'),
+        18: require('./assets/pets/brekorb1.png'),
+        19: require('./assets/pets/bugwheel.png'),
+        20: require('./assets/pets/bugwheel1.png'),
+        21: require('./assets/pets/bugwheel1.png'),
+        22: require('./assets/pets/heradummy.png'),
+        23: require('./assets/pets/heradummy1.png'),
+        24: require('./assets/pets/heradummy1.png'),
+        25: require('./assets/pets/charcopala.png'),
+        26: require('./assets/pets/charcopala1.png'),
+        27: require('./assets/pets/charcopala1.png'),
+        28: require('./assets/pets/cromirin.png'),
+        29: require('./assets/pets/cromirin1.png'),
+        30: require('./assets/pets/cromirin2.png'),
+        31: require('./assets/pets/feveroar.png'),
+        32: require('./assets/pets/feveroar1.png'),
+        33: require('./assets/pets/feveroar1.png'),
+        34: require('./assets/pets/hydraqua.png'),
+        35: require('./assets/pets/hydraqua.png'),
+        36: require('./assets/pets/hydraqua.png'),
+        37: require('./assets/pets/minde.png'),
+        38: require('./assets/pets/minde1.png'),
+        39: require('./assets/pets/minde1.png'),
+        40: require('./assets/pets/toxtoad.png'),
+        41: require('./assets/pets/toxtoad1.png'),
+        42: require('./assets/pets/toxtoad1.png'),
+        43: require('./assets/pets/wickiked.png'),
+        44: require('./assets/pets/wickiked1.png'),
+        45: require('./assets/pets/wickiked1.png'),
+    };
 
     if (hasPermission === null) {
         return <View />;
@@ -334,6 +455,29 @@ const Jogo = () => {
                                         <Back style={styles.backButton}/>
                                     </TouchableOpacity> */}
                                 <View style={{flex: 1, alignItems: 'center'}}>
+
+//                                     <Text style={styles.statusTitle}>Status</Text>
+//                                     <View style={{ alignItems: 'center'}}>
+//                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
+//                                             <Health style={styles.statusButtons}/>
+//                                             <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.health} borderColor={'transparent'}/>
+//                                         </View>
+//                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
+//                                             <Energy style={styles.statusButtons}/>
+//                                             <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.energy} borderColor={'transparent'}/>
+//                                         </View>
+//                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
+//                                             <Happy style={styles.statusButtons}/>
+//                                             <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.happy} borderColor={'transparent'}/>
+//                                         </View>
+//                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
+//                                             <Strength style={styles.statusButtons}/>
+//                                             <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.strength} borderColor={'transparent'}/>
+//                                         </View>
+//                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
+//                                             <Resistance style={styles.statusButtons}/>
+//                                             <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.resistance} borderColor={'transparent'}/>
+
                                 <Text style={styles.statusTitle}>Status</Text>
                                     {status && (
                                         <View style={{ alignItems: 'center' }}>
@@ -394,15 +538,16 @@ const Jogo = () => {
                                     </TouchableOpacity> */}
                                 <View style={{flex: 1, transform: [{scale: 0.9}]}}>
                                     <Text style={styles.statusTitle}>Tarefas Semanais</Text>
-                                    <View style={{flexDirection: 'row', top: 10}}>
-                                        <Clock style={styles.clockButton}/>
+                                    {/* <View style={{flexDirection: 'row', top: 10}}> */}
+                                    <View>
+                                        <Clock style={styles.clockButton2}/>
                                         {/* Atenção, essas duas linhas (e todos os outros desafios) tem que ser substituidos por desafios do banco de dados, no caso
                                         é separado em texto, ou seja, a descrição da missão, e a condição, que vai ser o x/x, por exemplo: "alimente o bichinho
                                         3 vezes", "2/3". Tecnicamente falando, as tarefas semanais são as exatas mesmas das diárias, só que mais longas */}
-                                        <Text style={styles.mission}>Missão 1 </Text>
-                                        <Text style={styles.condition}>Condição</Text>
+                                        <Text style={styles.mission}>Alimente seu bichinho 5 vezes</Text>
+                                        <Text style={styles.condition}>0/5</Text>
                                     </View>
-                                    <View style={{flexDirection: 'row'}}>
+                                    {/* <View style={{flexDirection: 'row'}}>
                                         <Clock style={styles.clockButton}/>
                                         <Text style={styles.mission}>Missão 2 </Text>
                                         <Text style={styles.condition}>Condição</Text>
@@ -416,22 +561,22 @@ const Jogo = () => {
                                         <Clock style={styles.clockButton}/>
                                         <Text style={styles.mission}>Missão 4 </Text>
                                         <Text style={styles.condition}>Condição</Text>                                        
-                                    </View>
+                                    </View> */}
                                 </View>
                             </View>
                         )}
-                        {visPass &&  (
-                            <View style={styles.statusContainer}>
-                                    {/* <TouchableOpacity onPress={handlePass}>
-                                        <Back style={styles.backButton}/>
-                                    </TouchableOpacity> */}
-                                <View style={{flex: 1, alignItems: 'center'}}>
-                                    <Text style={styles.statusPassosTitle}>Contagem de Passos</Text>
-                                    <Image source={images['passos2']} style={styles.passosIcon}/>
-                                    <Text style={styles.statusTitle}>Passos: {currentStepCount}</Text>
-                                </View>
-                            </View>
-                        )}
+                        {/* {visPass &&  ( */}
+                            {/* // <View style={styles.statusContainer}> */}
+                                    {/* {/* <TouchableOpacity onPress={handlePass}> */}
+                                        {/* // <Back style={styles.backButton}/> */}
+                                    {/* // </TouchableOpacity> */}
+                                {/* <View style={{flex: 1, alignItems: 'center'}}> */}
+                                    {/* <Text style={styles.statusPassosTitle}>Contagem de Passos</Text> */}
+                                    {/* <Image source={images['passos2']} style={styles.passosIcon}/> */}
+                                    {/* <Text style={styles.statusTitle}>Passos: {currentStepCount}</Text> */}
+                                {/* </View> */}
+                            {/* </View> */}
+                        {/* // )} */}
                         {visShop &&  (
                             <View style={styles.statusContainer}>
                                     {/* <TouchableOpacity onPress={handleShop}>
@@ -456,7 +601,7 @@ const Jogo = () => {
                                     </View>
                                     <View style={styles.petIcons}>
                                         <TouchableOpacity>
-                                            <Image source={images['carnivalt']} style={styles.pets}/>
+                                            <Image source={images['heradummy']} style={styles.pets}/>
                                         </TouchableOpacity>
                                         <TouchableOpacity>                                            
                                             <Image source={images['banabat']} style={styles.pets}/>
@@ -509,16 +654,22 @@ const Jogo = () => {
                                                 <Text style={styles.modalText2}>Tarefas Semanais</Text>
                                             </View>
                                         </TouchableOpacity>
-                                        <TouchableOpacity onPress={handlePass}>
+                                        {/* <TouchableOpacity onPress={handlePass}>
                                             <View style={{flexDirection: 'row', alignItems: 'left'}}>
                                                 <Passos style={styles.statusButtons}/>
                                                 <Text style={styles.modalText2}>Contador de Passos</Text>
                                             </View>
-                                        </TouchableOpacity>
+                                        </TouchableOpacity> */}
                                         <TouchableOpacity onPress={handleShop}>
                                             <View style={{flexDirection: 'row', alignItems: 'left'}}>
                                                 <Shop style={styles.statusButtons}/>
                                                 <Text style={styles.modalText2}>Mais Pets</Text>
+                                                {/* <Text>Nome do Pet: {escolha}</Text> */}
+                                            </View>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={handleIncremento}>
+                                            <View style={{flexDirection: 'row', alignItems: 'left'}}>
+                                                <Text style={styles.modalTextBeta}>Reseta Incremento</Text>
                                                 {/* <Text>Nome do Pet: {escolha}</Text> */}
                                             </View>
                                         </TouchableOpacity>
@@ -527,7 +678,8 @@ const Jogo = () => {
                             </View>
                         )}
                         <TouchableOpacity onPress={handleDir}>
-                            {escolha !== 0 && (<Animated.Image source={petImages[escolha]}style={[styles.pika2,{transform: [{translateY: moveAnim,},],},]}/>)}
+                            {/* {escolha !== 0 && (<Animated.Image source={petImages[escolha]}style={[styles.pika2,{transform: [{translateY: moveAnim,},],},]}/>)} */}
+                            {escolha !== 0 && (<Animated.Image source={petImages[escolha]}style={[styles.pika2,{transform: [{translateX: moveAnim,},],},]}/>)}
                         </TouchableOpacity>
                     </ImageBackground>
                     )}

@@ -158,8 +158,8 @@ function AppScreen({ navigation }) {
               <Text style={{color: '#4D73FA'}}>Ir para a tela de login</Text>
             </TouchableOpacity>
             <View style={styles.containerIcon}>
-              <FB style={styles.imageLogo}/>
-              <Social2 style={styles.imageLogo2}/>
+              {/* <FB style={styles.imageLogo}/>
+              <Social2 style={styles.imageLogo2}/> */}
             </View>
           </View>
         </View>
