@@ -40,6 +40,11 @@ const Jogo = () => {
     const [pastStepCount, setPastStepCount] = useState(0);
     const [currentStepCount, setCurrentStepCount] = useState(0);
     const [status, setStatus] = useState(null);
+    const [missoes, setMissoes] = useState([]);
+    const [pontos, setPontos] = useState(0);
+    const [criterioNumero, setCriterioNumero] = useState(0);
+    const [criterioTipo, setCriterioTipo] = useState('');
+    const [error, setError] = useState(null);
     //Camera
     const [camera, setCamera] = useState(null)
 
@@ -146,8 +151,16 @@ const Jogo = () => {
         handleVisibility(setVisMenu);
         fetchStatus(); // Chama a função para buscar os status atualizados
     };
-    const handleDia = () => handleVisibility(setVisDia);
-    const handleSem = () => handleVisibility(setVisSem);
+    const handleDia = async () => {
+        handleVisibility(setVisDia);
+        // await obterMissaoAtual();
+        // await pegarCriterios();
+        await fetchMissoes();
+        await verificarMissao();
+    }
+    const handleSem = () => {
+        handleVisibility(setVisSem);
+    }
     const handlePass = () => handleVisibility(setVisPass);
     const handleShop = () => handleVisibility(setVisShop);
 
@@ -231,7 +244,6 @@ const Jogo = () => {
         return <Text>No access to camera</Text>;
     }
 
-
     const fetchStatus = async () => {
         try {
             const usuarioId = await getUsuarioId();
@@ -253,6 +265,78 @@ const Jogo = () => {
         } catch (error) {
             console.error('Erro na conexão:', error);
             Alert.alert('Erro', `Erro na conexão: ${error.message}`);
+        }
+    };
+
+    // const obterMissaoAtual = async () => {
+    //     const usuarioId = await getUsuarioId();
+    //     const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/missao_atual_do_usuario?usuarioId=${parseInt(usuarioId)}`, {
+    //       method: 'GET',
+    //       headers: { 'Content-Type': 'application/json' }
+    //     });
+    //     const data = await response.json();
+    //     if (data.missao_atual) {
+    //       setMissaoAtual(data.missao_atual);
+    //     } else {
+    //       alert(data.id || 'Usuário não encontrado.');
+    //     }
+    //   };
+
+    // const pegarCriterios = async () => {
+    //     try {
+    //         const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/pegar_criterio_numero_e_tipo?missao=${(missaoAtual)}`, { method: 'GET' });
+    //         const data = await response.json();
+    //         if (data.criterio_numero && data.criterio_tipo) {
+    //             setCriterioNumero(data.criterio_numero);
+    //             setCriterioTipo(data.criterio_tipo);
+    //         } else {
+    //             alert(data.error || 'Criterios não encontrados.');
+    //         }
+    //     } catch (error) {
+    //         alert('Erro ao obter critérios.');
+    //         console.error(error);
+    //     }
+    // };
+    const verificarMissao = async () => {
+        try {
+            const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/verificar_missao`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ usuarioId: await getUsuarioId()})
+            });
+            const data = await response.json();
+            console.log(data);
+            if (response.ok) {
+                if (data.message) {
+                    alert(data.message); // Exibir mensagem de sucesso
+                } else {
+                    alert(data.error || 'Erro desconhecido'); // Exibir mensagem de erro
+                }
+            } else {
+                alert('Erro ao verificar missão'); // Exibir mensagem de erro de requisição
+            }
+        } catch (error) {
+            alert('Erro ao verificar missão'); // Exibir mensagem de erro ao fazer a requisição
+            console.error(error);
+        }
+    };
+
+    const fetchMissoes = async () => {
+        try {
+            const usuarioId = await getUsuarioId();
+            const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/missao_diaria?usuarioId=${usuarioId}`);
+            const data = await response.json();
+            
+            if (response.ok) {
+                console.log(data);
+                setMissoes(data);
+            } else {
+                setError(data.error);
+            }
+        } catch (error) {
+            setError("Erro ao buscar missões");
         }
     };
 
@@ -312,44 +396,30 @@ const Jogo = () => {
                             </View>
                         )}
                         {/*A partir daqui, criar cada uma das telas */}
-                        {visDia &&  (
+                        {visDia && (
                             <View style={styles.statusContainer}>
-                                {/*Implementar as missões*/}
-                                    {/* <TouchableOpacity onPress={handleDia}>
-                                        <Back style={styles.backButton}/>
-                                    </TouchableOpacity> */}
-                                <View style={{flex: 1, transform: [{scale: 0.9}]}}>
-                                    <Text style={styles.statusTitle}>Tarefas Diárias</Text>
-                                    <View style={{flexDirection: 'row', top: 10}}>
-                                        <Clock style={styles.clockButton}/>
-                                        {/* Atenção, essas duas linhas (e todos os outros desafios) tem que ser substituidos por desafios do banco de dados, no caso
-                                        é separado em texto, ou seja, a descrição da missão, e a condição, que vai ser o x/x, por exemplo: "alimente o bichinho
-                                        3 vezes", "2/3". Tecnicamente falando, as tarefas semanais são as exatas mesmas das diárias, só que mais longas */}
-                                        <Text style={styles.mission}>Missão 1 </Text>
-                                        <Text style={styles.condition}>Condição</Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row'}}>
-                                        <Clock style={styles.clockButton}/>
-                                        <Text style={styles.mission}>Missão 2 </Text>
-                                        <Text style={styles.condition}>Condição</Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row'}}>
-                                        <Clock style={styles.clockButton}/>
-                                        <Text style={styles.mission}>Missão 3 </Text>
-                                        <Text style={styles.condition}>Condição</Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row'}}>
-                                        <Clock style={styles.clockButton}/>
-                                        <Text style={styles.mission}>Missão 4 </Text>
-                                        <Text style={styles.condition}>Condição</Text>
-                                        
-                                    </View>
+                                {/* <TouchableOpacity onPress={handleDia}>
+                                    <Back style={styles.backButton} />
+                                </TouchableOpacity> */}
+                                <View style={{ flex: 1, transform: [{ scale: 0.9 }] }}>
+                                    <Text style={styles.statusTitle}>Tarefa Diária</Text>
+                                    {error ? (
+                                        <Text style={styles.errorText}>{error}</Text>
+                                    ) : (
+                                        missoes && (
+                                            <View style={{ flexDirection: 'row', top: 10 }}>
+                                                <Clock style={styles.clockButton} />
+                                                <Text style={styles.mission}>Missao: {missoes['descricao']}</Text>
+                                                <Text style={styles.condition}>Progresso: {missoes['progresso']}</Text>
+                                            </View>
+                                        )
+                                    )}
                                 </View>
                             </View>
                         )}
-                        {visSem &&  (
-                            <View style={styles.statusContainer}>
-                                {/*Implementar as missões*/}
+                                {visSem &&  (
+                                <View style={styles.statusContainer}>
+                                    {/*Implementar as missões*/}
                                     {/* <TouchableOpacity onPress={handleSem}>
                                         <Back style={styles.backButton}/>
                                     </TouchableOpacity> */}

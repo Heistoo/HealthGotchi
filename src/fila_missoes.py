@@ -1,18 +1,27 @@
 class Missao:
     #Construtor
-    def __init__(self, id, descricao, pontos):
+    def __init__(self, id, descricao, pontos, criterio_numero,criterio_tipo):
         self.id = id
         self.descricao = descricao
         self.pontos = pontos
+        self.progresso = 0
+        self.criterio_numero = criterio_numero
+        self.criterio_tipo = criterio_tipo
     #toString
     def __repr__(self):
-        return f"Missao(id={self.id}, descricao={self.descricao}, pontos={self.pontos})"
+        return f"Missao(id={self.id}, descricao={self.descricao}, pontos={self.pontos}, progresso={self.progresso})"
+    
+    def get_criterio_numero(self):
+        return self.criterio_numero
+    
+    def get_criterio_tipo(self):
+        return self.criterio_tipo
 
 class FilaMissoes:
     #Construtor da Fila
     def __init__(self, missoes):
         self.fila = missoes
-        self.posicao_usuario = 0  # Inicia na primeira missão
+        self.posicao_usuario = 1  # Inicia na primeira missão
         self.usuario_id = 0 #Apenas o inicializa
     
     def set_usuario_id(self, usuario_id):
@@ -23,6 +32,7 @@ class FilaMissoes:
             self.posicao_usuario += 1
         else:
             self.posicao_usuario = 0
+        self.fila[self.posicao_usuario].progresso = 0#Reinicia o progresso
         return f"Número da próxima missão: {self.posicao_usuario + 1}"
 
     #Não sei se é preciso
@@ -41,8 +51,18 @@ class FilaMissoes:
             return "A fila de missões está vazia."
         
     #Retorna a missão atual
-    def missao_atual(self):
+    def missao_atual(self, index):
         if self.fila:
-            return self.fila[self.posicao_usuario]
+            missao = self.fila[index]
+            return {
+                "descricao": missao.descricao,
+                "progresso": missao.progresso
+            }
         else:
             return "A fila de missões está vazia."
+    
+    def aumentar_progresso(self):
+        self.fila[self.posicao_usuario].progresso += 1
+    
+    def get_progresso(self):
+        return self.fila[self.posicao_usuario].progresso

@@ -40,31 +40,76 @@ const handleVision = async (base64, setFood, setFoodGroup, getUsuarioId) => {
         
         //Faz requisição para o backend, passando o id do usuário e o grupo de alimento e muda os status do pet
         try {
-            
             const usuarioId = await getUsuarioId();
+            console.log(`Usuario ID: ${usuarioId}, Grupo: ${group}`);
 
             const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/edit_status_and_assign_points`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ usuarioId: parseInt(usuarioId), grupo: group})
+                body: JSON.stringify({ usuarioId: parseInt(usuarioId), grupo: group })
             });
-            
-            //Apenas para testes
-            // if (res.ok) {
-            //     const data = await res.json();
-            //     alert(data.message);
-            // } else {
-            //     const errorData = await res.json();
-            //     alert(`Erro: ${errorData.error}`);
-            // }
+
+            if (!res.ok) {
+                const errorData = await res.json();
+                alert(`Erro ao atualizar status: ${errorData.error}`);
+            } else {
+                const data = await res.json();
+                alert(data.message);
+                await aumentarProgresso(usuarioId, group);
+            }
         } catch (error) {
             alert(`Erro na requisição: ${error.message}`);
         }
     }
 
     return parsedResponse;
+};
+
+const aumentarProgresso = async (usuarioId, grupo) => {
+    console.log(`Chamando aumentarProgresso com Usuario ID: ${usuarioId}, Grupo: ${grupo}`);
+
+    try {
+        const validGroups = ["Leguminosas", "Frutas", "Doces, guloseimas e salgadinhos", "Carnes e Ovos"];
+        
+        console.log("Grupo recebido:", grupo);
+
+        if (validGroups.includes(grupo)) {
+            console.log("Grupo válido, enviando requisição...");
+
+            const res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/aumentar_progresso`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ usuarioId: parseInt(usuarioId), grupo: grupo })
+            });
+
+            const contentType = res.headers.get('Content-Type');
+            console.log('Content-Type da resposta:', contentType);
+
+            if (res.ok) {
+                if (contentType && contentType.includes('application/json')) {
+                    const data = await res.json();
+                    alert(data.message);
+                } else {
+                    const text = await res.text();
+                    console.error('Resposta não JSON:', text);
+                    alert(`Resposta inesperada do servidor: ${text}`);
+                }
+            } else {
+                const errorData = await res.json();
+                console.error('Erro na resposta:', errorData);
+                alert(`Erro ao aumentar progresso: ${errorData.error}`);
+            }
+        } else {
+            console.log(`Grupo ${grupo} não é válido para aumentar progresso.`);
+        }
+    } catch (error) {
+        console.error('Erro na requisição:', error);
+        alert(`Erro na requisição: ${error.message}`);
+    }
 };
 
 
