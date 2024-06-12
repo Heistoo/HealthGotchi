@@ -159,8 +159,8 @@ const Login = () => {
                             <Text style={{color: '#4D73FA'}}>Escolhe Inicial</Text>
                         </TouchableOpacity>
                         <View style={styles.containerIcon}>
-                            <FB style={styles.imageLogo}/>
-                            <Social2 style={styles.imageLogo2}/>
+//                             <FB style={styles.imageLogo}/>
+//                             <Social2 style={styles.imageLogo2}/>
                         </View>
                     </View>
                 </View>
@@ -168,5 +168,4 @@ const Login = () => {
         </SafeAreaView>
     );
 };
-
 export default Login;

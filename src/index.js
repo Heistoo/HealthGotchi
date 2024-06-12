@@ -392,6 +392,10 @@ const styles = StyleSheet.create({
       color: 'white',
       fontSize: 30,
     },
+    modalTextBeta:{
+      color: 'transparent',
+      fontSize: 30,
+    },
     modalPassosText: {
       fontSize: 15,
 
@@ -444,19 +448,24 @@ const styles = StyleSheet.create({
     },
     mission:{
       color: "white",
-      fontSize: 20,
-      textAlign: "left",
+      fontSize: 25,
+      textAlign: "center",
       marginBottom: 40,
+      paddingLeft: 20,
     },
     condition:{
       color: "white",
-      fontSize: 20,
-      textAlign: "right",
-      alignItems: "right",
+      fontSize: 25,
+      textAlign: "center",
+      alignItems: "center",
     },
     clockButton:{
-      marginLeft: 30,
-      bottom: 4
+      marginLeft: 15,
+      bottom: -40
+    },
+    clockButton2:{
+      marginLeft: 180,
+      bottom: 0,
     },
   });
 

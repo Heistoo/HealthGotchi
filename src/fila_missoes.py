@@ -46,3 +46,4 @@ class FilaMissoes:
             return self.fila[self.posicao_usuario]
         else:
             return "A fila de missões está vazia."
+
