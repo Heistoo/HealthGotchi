@@ -46,6 +46,7 @@ const Jogo = () => {
         strength: 0.7,
         resistance: 0.7,
     });
+    const [status, setStatus] = useState(null);
     //Camera
     const [camera, setCamera] = useState(null)
 
@@ -156,7 +157,11 @@ const Jogo = () => {
         fetchStatus(); // Chama a função para buscar os status atualizados
     };
     
-    // const handleStatus = () => handleVisibility(setVisMenu);
+    const handleStatus = () => {
+        // Qualquer outra lógica que você tenha para quando "Status do Pet" for selecionado
+        handleVisibility(setVisMenu);
+        fetchStatus(); // Chama a função para buscar os status atualizados
+    };
     const handleDia = () => handleVisibility(setVisDia);
     const handleSem = () => handleVisibility(setVisSem);
     // const handlePass = () => handleVisibility(setVisPass);
@@ -394,29 +399,54 @@ const Jogo = () => {
                                         <Back style={styles.backButton}/>
                                     </TouchableOpacity> */}
                                 <View style={{flex: 1, alignItems: 'center'}}>
-                                    <Text style={styles.statusTitle}>Status</Text>
-                                    <View style={{ alignItems: 'center'}}>
-                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                            <Health style={styles.statusButtons}/>
-                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.health} borderColor={'transparent'}/>
+
+//                                     <Text style={styles.statusTitle}>Status</Text>
+//                                     <View style={{ alignItems: 'center'}}>
+//                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
+//                                             <Health style={styles.statusButtons}/>
+//                                             <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.health} borderColor={'transparent'}/>
+//                                         </View>
+//                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
+//                                             <Energy style={styles.statusButtons}/>
+//                                             <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.energy} borderColor={'transparent'}/>
+//                                         </View>
+//                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
+//                                             <Happy style={styles.statusButtons}/>
+//                                             <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.happy} borderColor={'transparent'}/>
+//                                         </View>
+//                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
+//                                             <Strength style={styles.statusButtons}/>
+//                                             <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.strength} borderColor={'transparent'}/>
+//                                         </View>
+//                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
+//                                             <Resistance style={styles.statusButtons}/>
+//                                             <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.resistance} borderColor={'transparent'}/>
+
+                                <Text style={styles.statusTitle}>Status</Text>
+                                    {status && (
+                                        <View style={{ alignItems: 'center' }}>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                <Health style={styles.statusButtons} />
+                                                <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={status.saudavel} borderColor={'transparent'} />
+                                            </View>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                <Energy style={styles.statusButtons} />
+                                                <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={status.energia} borderColor={'transparent'} />
+                                            </View>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                <Happy style={styles.statusButtons} />
+                                                <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={status.felicidade} borderColor={'transparent'} />
+                                            </View>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                <Strength style={styles.statusButtons} />
+                                                <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={status.forca} borderColor={'transparent'} />
+                                            </View>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                <Resistance style={styles.statusButtons} />
+                                                <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={status.resistencia} borderColor={'transparent'} />
+                                            </View>
                                         </View>
-                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                            <Energy style={styles.statusButtons}/>
-                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.energy} borderColor={'transparent'}/>
-                                        </View>
-                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                            <Happy style={styles.statusButtons}/>
-                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.happy} borderColor={'transparent'}/>
-                                        </View>
-                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                            <Strength style={styles.statusButtons}/>
-                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.strength} borderColor={'transparent'}/>
-                                        </View>
-                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                            <Resistance style={styles.statusButtons}/>
-                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.resistance} borderColor={'transparent'}/>
-                                        </View>
-                                    </View>
+                                    )}
                                 </View>
                             </View>
                         )}
