@@ -52,35 +52,40 @@ def verificar_missao():
     if not criterio_tipo or not criterio_numero:
         return jsonify({"error": "Critérios não encontrados."}), 404
     
-    progresso = fila_missoes_diarias.get_progresso()
+    progresso = criterios.get('progresso')
 
     if criterio_tipo == "Carnes e Ovos":
         if progresso >= 1:#o criterio numero deve ser o progresso para poder saber quando acaba
-            proxima_missao()#melhorar a lógica para verificar se a missão foi completada
+            proxima_missao()
+            proxima_missao_db(usuario_id)#melhorar a lógica para verificar se a missão foi completada
             return jsonify({"message": "Missão completa!"}), 200
         else:
             return jsonify({"message": "Missão não completa."}), 200
     elif criterio_tipo == "refeicoes":
         if progresso >= 3:
             proxima_missao()
+            proxima_missao_db(usuario_id)
             return jsonify({"message": "Missão completa!"}), 200
         else:
             return jsonify({"message": "Missão não completa."}), 200
     elif criterio_tipo == "Leguminosas":
         if progresso >= 1:
             proxima_missao()
+            proxima_missao_db(usuario_id)
             return jsonify({"message": "Missão completa!"}), 200
         else:
             return jsonify({"message": "Missão não completa."}), 200
     elif criterio_tipo == "Frutas":
         if progresso >= 2:
             proxima_missao()
+            proxima_missao_db(usuario_id)
             return jsonify({"message": "Missão completa!"}), 200
         else:
             return jsonify({"message": "Missão não completa."}), 200
     elif criterio_tipo == "Doces, guloseimas e salgadinhos":
         if progresso == 0:
             proxima_missao()
+            proxima_missao_db(usuario_id)
             return jsonify({"message": "Missão completa!"}), 200
         else:
             return jsonify({"message": "Missão não completa."}), 200
@@ -91,6 +96,7 @@ def verificar_missao():
 def aumentar_progresso():
     data = request.get_json()
     usuario_id = data.get('usuarioId')
+    grupo = data.get('grupo')
     
     if not usuario_id:
         return jsonify({"error": "Dados inválidos. 'usuarioId' não fornecido."}), 400
@@ -110,25 +116,28 @@ def aumentar_progresso():
 
     if not criterio_tipo or not criterio_numero:
         return jsonify({"error": "Critérios não encontrados."}), 404
+    
+    if criterio_tipo != grupo and criterio_tipo != "refeicoes":
+        return jsonify({"error": "Grupo de alimento não condiz com a missão."}), 400
 
     if criterio_tipo == "Carnes e Ovos":
-        fila_missoes_diarias.aumentar_progresso()
+        fila_missoes_diarias.aumentar_progresso(missao_atual)
         return jsonify({"message": "Progresso aumentado com sucesso!"}), 200
     
     elif criterio_tipo == "refeicoes":
-        fila_missoes_diarias.aumentar_progresso()
+        fila_missoes_diarias.aumentar_progresso(missao_atual)
         return jsonify({"message": "Progresso aumentado com sucesso!"}), 200
     
     elif criterio_tipo == "Leguminosas":
-        fila_missoes_diarias.aumentar_progresso()
+        fila_missoes_diarias.aumentar_progresso(missao_atual)
         return jsonify({"message": "Progresso aumentado com sucesso!"}), 200
     
     elif criterio_tipo == "Frutas":
-        fila_missoes_diarias.aumentar_progresso()
+        fila_missoes_diarias.aumentar_progresso(missao_atual)
         return jsonify({"message": "Progresso aumentado com sucesso!"}), 200
     
     elif criterio_tipo == "Doces, guloseimas e salgadinhos":
-        fila_missoes_diarias.aumentar_progresso()
+        fila_missoes_diarias.aumentar_progresso(missao_atual)
         return jsonify({"message": "Progresso aumentado com sucesso!"}), 200
     
     else:
@@ -406,6 +415,13 @@ def get_user_id():
         cursor.close()
         connection.close()
         
+def proxima_missao_db(usuarioId):
+    connection = conectar_db()
+    cursor = connection.cursor()
+    update_query = "UPDATE usuario SET missao_atual_diaria = missao_atual_diaria + 1 WHERE id = %s"
+    cursor.execute(update_query, (usuarioId,))
+    connection.commit()
+        
 @app.route('/missao_diaria', methods=['GET'])
 def get_missao_diaria():
     usuario_id = request.args.get('usuarioId')
@@ -413,13 +429,12 @@ def get_missao_diaria():
     if missao_atual_index is None:
         return jsonify({"error": "Erro ao obter a missão atual do usuário."}), 404
 
-    return jsonify(fila_missoes_diarias.missao_atual(missao_atual_index))
+    return jsonify(fila_missoes_diarias.missao_atual(missao_atual_index-1))
         
 def pegar_criterio_numero_e_tipo(missao_atual_index):
     missao = fila_missoes_diarias.fila[missao_atual_index-1]
-    progresso = fila_missoes_diarias.get_progresso()
     if missao:
-        return {"criterio_numero": missao.get_criterio_numero(), "criterio_tipo": missao.get_criterio_tipo(), "progresso": progresso}
+        return {"criterio_numero": missao.get_criterio_numero(), "criterio_tipo": missao.get_criterio_tipo(), "progresso": missao.get_progresso()}
     else:
         return {"error": "Missão não encontrada."}
 

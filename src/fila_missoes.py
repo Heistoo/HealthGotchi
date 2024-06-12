@@ -16,6 +16,9 @@ class Missao:
     
     def get_criterio_tipo(self):
         return self.criterio_tipo
+    
+    def get_progresso(self):
+        return self.progresso
 
 class FilaMissoes:
     #Construtor da Fila
@@ -28,11 +31,11 @@ class FilaMissoes:
         self.usuario_id = usuario_id
 
     def proxima_missao(self):
-        if (self.posicao_usuario+1) % len(self.fila) == 0:
+        if (self.posicao_usuario+1) % len(self.fila) != 0:
             self.posicao_usuario += 1
         else:
             self.posicao_usuario = 0
-        self.fila[self.posicao_usuario].progresso = 0#Reinicia o progresso
+        self.fila[self.posicao_usuario].progresso = 0  # Reinicia o progresso
         return f"Número da próxima missão: {self.posicao_usuario + 1}"
 
     #Não sei se é preciso
@@ -61,8 +64,5 @@ class FilaMissoes:
         else:
             return "A fila de missões está vazia."
     
-    def aumentar_progresso(self):
-        self.fila[self.posicao_usuario].progresso += 1
-    
-    def get_progresso(self):
-        return self.fila[self.posicao_usuario].progresso
+    def aumentar_progresso(self, index):
+        self.fila[index-1].progresso += 1
