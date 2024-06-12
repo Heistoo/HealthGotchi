@@ -147,14 +147,11 @@ const Jogo = () => {
     };
     
     const handleStatus = () => {
-        // Qualquer outra lógica que você tenha para quando "Status do Pet" for selecionado
         handleVisibility(setVisMenu);
         fetchStatus(); // Chama a função para buscar os status atualizados
     };
     const handleDia = async () => {
         handleVisibility(setVisDia);
-        // await obterMissaoAtual();
-        // await pegarCriterios();
         await fetchMissoes();
         await verificarMissao();
     }
@@ -267,36 +264,6 @@ const Jogo = () => {
             Alert.alert('Erro', `Erro na conexão: ${error.message}`);
         }
     };
-
-    // const obterMissaoAtual = async () => {
-    //     const usuarioId = await getUsuarioId();
-    //     const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/missao_atual_do_usuario?usuarioId=${parseInt(usuarioId)}`, {
-    //       method: 'GET',
-    //       headers: { 'Content-Type': 'application/json' }
-    //     });
-    //     const data = await response.json();
-    //     if (data.missao_atual) {
-    //       setMissaoAtual(data.missao_atual);
-    //     } else {
-    //       alert(data.id || 'Usuário não encontrado.');
-    //     }
-    //   };
-
-    // const pegarCriterios = async () => {
-    //     try {
-    //         const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/pegar_criterio_numero_e_tipo?missao=${(missaoAtual)}`, { method: 'GET' });
-    //         const data = await response.json();
-    //         if (data.criterio_numero && data.criterio_tipo) {
-    //             setCriterioNumero(data.criterio_numero);
-    //             setCriterioTipo(data.criterio_tipo);
-    //         } else {
-    //             alert(data.error || 'Criterios não encontrados.');
-    //         }
-    //     } catch (error) {
-    //         alert('Erro ao obter critérios.');
-    //         console.error(error);
-    //     }
-    // };
     const verificarMissao = async () => {
         try {
             const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/verificar_missao`, {
@@ -407,9 +374,11 @@ const Jogo = () => {
                                         <Text style={styles.errorText}>{error}</Text>
                                     ) : (
                                         missoes && (
-                                            <View style={{ flexDirection: 'row', top: 10 }}>
-                                                <Clock style={styles.clockButton} />
-                                                <Text style={styles.mission}>Missao: {missoes['descricao']}</Text>
+                                            <View style={{ flexDirection: 'column', top: 10, width: "100%" }}>
+                                                <View style={{flexDirection: 'row'}}>
+                                                    <Clock style={styles.clockButton} />
+                                                    <Text style={styles.mission}>Missao: {missoes['descricao']}</Text>
+                                                </View>
                                                 <Text style={styles.condition}>Progresso: {missoes['progresso']}</Text>
                                             </View>
                                         )
