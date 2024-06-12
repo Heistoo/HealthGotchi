@@ -1,6 +1,6 @@
 // Library Imports
 import React, { useState, useRef, useEffect } from 'react';
-import { Text, Button, View, Animated, TouchableOpacity, ImageBackground, Image, Platform, TouchableWithoutFeedback } from 'react-native';
+import { Text, Button, View, Animated, TouchableOpacity, ImageBackground, Image, Platform, TouchableWithoutFeedback, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -39,6 +39,7 @@ const Jogo = () => {
     const [isPedometerAvailable, setIsPedometerAvailable] = useState("checking");
     const [pastStepCount, setPastStepCount] = useState(0);
     const [currentStepCount, setCurrentStepCount] = useState(0);
+    const [status, setStatus] = useState(null);
     //Camera
     const [camera, setCamera] = useState(null)
 
@@ -140,7 +141,11 @@ const Jogo = () => {
         setter((currentValue) => !currentValue);
     };
     
-    const handleStatus = () => handleVisibility(setVisMenu);
+    const handleStatus = () => {
+        // Qualquer outra lógica que você tenha para quando "Status do Pet" for selecionado
+        handleVisibility(setVisMenu);
+        fetchStatus(); // Chama a função para buscar os status atualizados
+    };
     const handleDia = () => handleVisibility(setVisDia);
     const handleSem = () => handleVisibility(setVisSem);
     const handlePass = () => handleVisibility(setVisPass);
@@ -226,6 +231,31 @@ const Jogo = () => {
         return <Text>No access to camera</Text>;
     }
 
+
+    const fetchStatus = async () => {
+        try {
+            const usuarioId = await getUsuarioId();
+            const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/select_status?usuarioId=${parseInt(usuarioId)}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Dados recebidos:', data); // Log para depuração
+                setStatus(data);
+            } else {
+                const errorData = await response.json();
+                console.error('Erro na resposta do servidor:', errorData);
+                Alert.alert('Erro', `Erro na resposta do servidor: ${errorData.error}`);
+            }
+        } catch (error) {
+            console.error('Erro na conexão:', error);
+            Alert.alert('Erro', `Erro na conexão: ${error.message}`);
+        }
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.secondBackground}></View>
@@ -253,29 +283,31 @@ const Jogo = () => {
                                         <Back style={styles.backButton}/>
                                     </TouchableOpacity> */}
                                 <View style={{flex: 1, alignItems: 'center'}}>
-                                    <Text style={styles.statusTitle}>Status</Text>
-                                    <View style={{ alignItems: 'center'}}>
-                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                            <Health style={styles.statusButtons}/>
-                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={0.9} borderColor={'transparent'}/>
+                                <Text style={styles.statusTitle}>Status</Text>
+                                    {status && (
+                                        <View style={{ alignItems: 'center' }}>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                <Health style={styles.statusButtons} />
+                                                <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={status.saudavel} borderColor={'transparent'} />
+                                            </View>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                <Energy style={styles.statusButtons} />
+                                                <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={status.energia} borderColor={'transparent'} />
+                                            </View>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                <Happy style={styles.statusButtons} />
+                                                <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={status.felicidade} borderColor={'transparent'} />
+                                            </View>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                <Strength style={styles.statusButtons} />
+                                                <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={status.forca} borderColor={'transparent'} />
+                                            </View>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                <Resistance style={styles.statusButtons} />
+                                                <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={status.resistencia} borderColor={'transparent'} />
+                                            </View>
                                         </View>
-                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                            <Energy style={styles.statusButtons}/>
-                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={0.9} borderColor={'transparent'}/>
-                                        </View>
-                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                            <Happy style={styles.statusButtons}/>
-                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={0.9} borderColor={'transparent'}/>
-                                        </View>
-                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                            <Strength style={styles.statusButtons}/>
-                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={0.9} borderColor={'transparent'}/>
-                                        </View>
-                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                            <Resistance style={styles.statusButtons}/>
-                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={0.9} borderColor={'transparent'}/>
-                                        </View>
-                                    </View>
+                                    )}
                                 </View>
                             </View>
                         )}
