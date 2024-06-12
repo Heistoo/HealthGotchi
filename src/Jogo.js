@@ -1,6 +1,6 @@
 // Library Imports
 import React, { useState, useRef, useEffect } from 'react';
-import { Text, Button, View, Animated, TouchableOpacity, ImageBackground, Image, Platform, TouchableWithoutFeedback } from 'react-native';
+import { Text, Button, View, Animated, TouchableOpacity, ImageBackground, Image, Platform, TouchableWithoutFeedback, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -40,15 +40,15 @@ const Jogo = () => {
     const [pastStepCount, setPastStepCount] = useState(0);
     const [currentStepCount, setCurrentStepCount] = useState(0);
     const [progresso, setProgresso] = useState({
-        health: 0.9, 
-        energy: 0.9,
-        happy: 0.9,
-        strength: 0.9,
-        resistance: 0.9,
-      });
+        health: 0.7, 
+        energy: 0.7,
+        happy: 0.7,
+        strength: 0.7,
+        resistance: 0.7,
+    });
     //Camera
     const [camera, setCamera] = useState(null)
-    const [escolhaInicial, setEscolhaInicial] = useState(0);
+
 
     // Image Usage
     const images = {
@@ -61,18 +61,18 @@ const Jogo = () => {
         'sticker' : require('./assets/sticker.png'),
         'decorative': require('./assets/decorative-button.png'),
         'passos2': require('./assets/menu/passos2.png'),
-        // 'asphalt':    require('./assets/pets/asphalt.png'),
-        // 'banabat':    require('./assets/pets/banabat.png'),
-        // 'brekorb':    require('./assets/pets/brekorb.png'),
-        // 'bugwheel':   require('./assets/pets/bugwheel.png'),
-        // 'heradummy':  require('./assets/pets/heradummy.png'),
-        // 'charcopala': require('./assets/pets/charcopala.png'),
-        // 'cromirin':   require('./assets/pets/cromirin.png'),
-        // 'feveroar':   require('./assets/pets/feveroar.png'),
-        // 'hydraqua':   require('./assets/pets/hydraqua.png'),
-        // 'minde':      require('./assets/pets/minde.png'),
-        // 'toxtoad':    require('./assets/pets/toxtoad.png'),
-        // 'wickiked':   require('./assets/pets/wickiked.png'),
+        'asphalt':    require('./assets/pets/asphalt.png'),
+        'banabat':    require('./assets/pets/banabat.png'),
+        'brekorb':    require('./assets/pets/brekorb.png'),
+        'bugwheel':   require('./assets/pets/bugwheel.png'),
+        'heradummy':  require('./assets/pets/heradummy.png'),
+        'charcopala': require('./assets/pets/charcopala.png'),
+        'cromirin':   require('./assets/pets/cromirin.png'),
+        'feveroar':   require('./assets/pets/feveroar.png'),
+        'hydraqua':   require('./assets/pets/hydraqua.png'),
+        'minde':      require('./assets/pets/minde.png'),
+        'toxtoad':    require('./assets/pets/toxtoad.png'),
+        'wickiked':   require('./assets/pets/wickiked.png'),
     }
 
     const setAllStates = (value) => {
@@ -94,6 +94,7 @@ const Jogo = () => {
         setCamera(!camera);
         setPhotoUri(null); // Adicionado para redefinir o estado da foto
         saveBase64(null);  // Adicionado para redefinir o estado da base64
+        verificarProgresso();
     }
     
     //Menu
@@ -141,18 +142,30 @@ const Jogo = () => {
     //Direcional
     const handleDir = () => {
         console.log('Interagindo com o pet...');
+        verificarProgresso();
     };
 
     const handleVisibility = (setter) => {
         setVisibility(!visibility);
         setter((currentValue) => !currentValue);
     };
+
+    const handleStatus = () => {
+        // Qualquer outra lógica que você tenha para quando "Status do Pet" for selecionado
+        handleVisibility(setVisMenu);
+        fetchStatus(); // Chama a função para buscar os status atualizados
+    };
     
-    const handleStatus = () => handleVisibility(setVisMenu);
+    // const handleStatus = () => handleVisibility(setVisMenu);
     const handleDia = () => handleVisibility(setVisDia);
     const handleSem = () => handleVisibility(setVisSem);
-    const handlePass = () => handleVisibility(setVisPass);
+    // const handlePass = () => handleVisibility(setVisPass);
     const handleShop = () => handleVisibility(setVisShop);
+
+    const handleIncremento = () => {
+        AsyncStorage.setItem('incrementeBaixo', 'false');
+        AsyncStorage.setItem('incrementeAlto', 'false');
+    }
 
     //Animação do inicial
     const moveAnim = useRef(new Animated.Value(0)).current;
@@ -203,150 +216,124 @@ const Jogo = () => {
     //Usa pra mostrar o inicial na tela
     useEffect(() => {
         const fetchEscolhaPet = async () => {
-          try {
-            const escolha = await AsyncStorage.getItem('escolha');
-            if (escolha !== null) {
-              setEscolha(Number(escolha));
-              console.log('Escolha carregada:', escolha);
+            try {
+                const escolha = await AsyncStorage.getItem('escolha');
+                if (escolha !== null) {
+                    setEscolha(Number(escolha));
+                    console.log('Escolha carregada:', escolha);
+                }
+            } catch (error) {
+                console.error('Erro ao buscar o pet:', error);
+                Alert.alert('Erro ao buscar o pet:', error.message);
             }
-          } catch (error) {
-            console.error('Erro ao buscar o pet:', error);
-            Alert.alert('Erro ao buscar o pet:', error.message);
-          }
         };
         fetchEscolhaPet();
-      }, []);
+    }, []);
 
     const getUsuarioId = () => {
         return AsyncStorage.getItem('usuario_id');
     };
 
-    const fetchEscolhaPet = async () => {
-        try {
-          const escolhaStored = await AsyncStorage.getItem('escolha');
-          if (escolhaStored !== null) {
-            setEscolha(Number(escolhaStored));
-            setEscolhaInicial(Number(escolhaStored));
-            console.log('Escolha carregada:', escolhaStored);
-            verificarProgresso(Number(escolhaStored)); // Movendo a lógica de verificação de progresso aqui
-          }
-        } catch (error) {
-          console.error('Erro ao buscar o pet:', error);
-          Alert.alert('Erro ao buscar o pet:', error.message);
-        }
-      };
+    useEffect(() => {
+        const fetchEscolhaPet = async () => {
+            try {
+                const escolha = await AsyncStorage.getItem('escolha');
+                if (escolha !== null) {
+                    setEscolha(Number(escolha));
+                    console.log('Escolha carregada:', escolha);
+                }
+            } catch (error) {
+                console.error('Erro ao buscar o pet:', error);
+                Alert.alert('Erro ao buscar o pet:', error.message);
+            }
+        };
 
-      
-      
-      useEffect(() => {
-        console.log("Chamando fetchEscolhaPet...");
         fetchEscolhaPet();
-      }, []);
-      
-      const verificarProgresso = (escolhaAtual) => { // Passando o valor atual de escolha como parâmetro
+    }, []);
+
+    
+    const verificarProgresso = async (escolhaAtual) => { // Passando o valor atual de escolha como parâmetro
         const valoresProgresso = Object.values(progresso);
         console.log('Verificando progresso:', valoresProgresso);
-        if (valoresProgresso.every(valor => valor > 0.3 && valor <= 0.6)) {
-          console.log('Progresso entre 0.3 e 0.6');
-          
-          incrementarEscolha();
-        } else if (valoresProgresso.every(valor => valor > 0.6 && valor <= 1)) {
-          console.log('Progresso entre 0.6 e 1');
-          incrementarEscolha();
-        }
-      };
-      
-      const incrementarEscolha = async () => {
-        try {
-          await AsyncStorage.getItem('escolha', (err, result) => {
-            if (err) {
-              console.error('Erro ao buscar o pet:', error);
-              Alert.alert('Erro ao buscar o pet:', error.message);
-              return;
-            }
-            console.log(escolhaInicial);
-            // if(novaEscolha > escolhaInicial+2){ 
-                const novaEscolha = Number(result) + 1;
-                console.log(novaEscolha);
-                setEscolha(prevEscolha => {
-              console.log('Valor anterior de escolha:', prevEscolha);
-              console.log('Escolha incrementada para:', novaEscolha);
-              AsyncStorage.setItem('escolha', novaEscolha.toString());
-              return novaEscolha;
-            });
-        // }
-          });
-        } catch (error) {
-          console.error('Erro ao atualizar o pet:', error);
-          Alert.alert('Erro ao atualizar o pet:', error.message);
-        }
-      }; 
+        const incrementeBaixo = await AsyncStorage.getItem('incrementeBaixo');
+        const incrementeAlto = await AsyncStorage.getItem('incrementeAlto');
+        console.log(incrementeBaixo);
+        console.log(incrementeAlto);
 
-      //Nada ali em cima funciona como deve
+        if (valoresProgresso.every(valor => valor > 0.3 && valor <= 0.6) && incrementeBaixo !== 'true') {
+            console.log('Progresso entre 0.3 e 0.6');
+            incrementarEscolha('incrementeBaixo');
+        } else if (valoresProgresso.every(valor => valor > 0.6 && valor <= 1) && incrementeAlto !== 'true') {
+            console.log('Progresso entre 0.6 e 1');
+            incrementarEscolha('incrementeAlto');
+        }
+    };
+
+    const incrementarEscolha = async (tipoIncremento) => {
+        try {
+            const result = await AsyncStorage.getItem('escolha');
+            const novaEscolha = Number(result) + 1;
+            console.log(novaEscolha);
+            setEscolha(prevEscolha => {
+                console.log('Valor anterior de escolha:', prevEscolha);
+                console.log('Escolha incrementada para:', novaEscolha);
+                AsyncStorage.setItem('escolha', novaEscolha.toString());
+                AsyncStorage.setItem(tipoIncremento, 'true'); // Marcar incremento como verdadeiro
+                return novaEscolha;
+            });
+        } catch (error) {
+            console.error('Erro ao atualizar o pet:', error);
+            Alert.alert('Erro ao atualizar o pet:', error.message);
+        }
+    };
 
     const petImages = {
         1: require('./assets/pets/tinkazilla.png'),
         2: require('./assets/pets/tinkazilla1.png'),
         3: require('./assets/pets/tinkazilla2.png'),
-
-
         4: require('./assets/pets/rocked.png'),
         5: require('./assets/pets/rocked1.png'),
         6: require('./assets/pets/rocked2.png'),
-        
         7: require('./assets/pets/carnivalt.png'),
         8: require('./assets/pets/carnivalt1.png'),
         9: require('./assets/pets/carnivalt2.png'),
-        
         10: require('./assets/pets/asphalt.png'),
         11: require('./assets/pets/asphalt1.png'),
         12: require('./assets/pets/asphalt1.png'),
-
         13: require('./assets/pets/banabat.png'),
         14: require('./assets/pets/banabat1.png'),
         15: require('./assets/pets/banabat1.png'),
-        
         16: require('./assets/pets/brekorb.png'),
         17: require('./assets/pets/brekorb1.png'),
         18: require('./assets/pets/brekorb1.png'),
-        
         19: require('./assets/pets/bugwheel.png'),
         20: require('./assets/pets/bugwheel1.png'),
         21: require('./assets/pets/bugwheel1.png'),
-        
         22: require('./assets/pets/heradummy.png'),
         23: require('./assets/pets/heradummy1.png'),
         24: require('./assets/pets/heradummy1.png'),
-
         25: require('./assets/pets/charcopala.png'),
         26: require('./assets/pets/charcopala1.png'),
         27: require('./assets/pets/charcopala1.png'),
-
         28: require('./assets/pets/cromirin.png'),
         29: require('./assets/pets/cromirin1.png'),
         30: require('./assets/pets/cromirin2.png'),
-
         31: require('./assets/pets/feveroar.png'),
         32: require('./assets/pets/feveroar1.png'),
         33: require('./assets/pets/feveroar1.png'),
-        
         34: require('./assets/pets/hydraqua.png'),
         35: require('./assets/pets/hydraqua.png'),
         36: require('./assets/pets/hydraqua.png'),
-
         37: require('./assets/pets/minde.png'),
         38: require('./assets/pets/minde1.png'),
         39: require('./assets/pets/minde1.png'),
-
         40: require('./assets/pets/toxtoad.png'),
         41: require('./assets/pets/toxtoad1.png'),
         42: require('./assets/pets/toxtoad1.png'),
-
         43: require('./assets/pets/wickiked.png'),
         44: require('./assets/pets/wickiked1.png'),
         45: require('./assets/pets/wickiked1.png'),
-
-      };
+    };
 
     if (hasPermission === null) {
         return <View />;
@@ -355,6 +342,30 @@ const Jogo = () => {
     if (hasPermission === false) {
         return <Text>No access to camera</Text>;
     }
+
+    const fetchStatus = async () => {
+        try {
+            const usuarioId = await getUsuarioId();
+            const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/select_status?usuarioId=${parseInt(usuarioId)}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Dados recebidos:', data); // Log para depuração
+                setStatus(data);
+            } else {
+                const errorData = await response.json();
+                console.error('Erro na resposta do servidor:', errorData);
+                Alert.alert('Erro', `Erro na resposta do servidor: ${errorData.error}`);
+            }
+        } catch (error) {
+            console.error('Erro na conexão:', error);
+            Alert.alert('Erro', `Erro na conexão: ${error.message}`);
+        }
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -418,29 +429,13 @@ const Jogo = () => {
                                     </TouchableOpacity> */}
                                 <View style={{flex: 1, transform: [{scale: 0.9}]}}>
                                     <Text style={styles.statusTitle}>Tarefas Diárias</Text>
-                                    <View style={{flexDirection: 'row', top: 10}}>
+                                    <View>
                                         <Clock style={styles.clockButton}/>
                                         {/* Atenção, essas duas linhas (e todos os outros desafios) tem que ser substituidos por desafios do banco de dados, no caso
                                         é separado em texto, ou seja, a descrição da missão, e a condição, que vai ser o x/x, por exemplo: "alimente o bichinho
                                         3 vezes", "2/3". Tecnicamente falando, as tarefas semanais são as exatas mesmas das diárias, só que mais longas */}
-                                        <Text style={styles.mission}>Missão 1 </Text>
-                                        <Text style={styles.condition}>Condição</Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row'}}>
-                                        <Clock style={styles.clockButton}/>
-                                        <Text style={styles.mission}>Missão 2 </Text>
-                                        <Text style={styles.condition}>Condição</Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row'}}>
-                                        <Clock style={styles.clockButton}/>
-                                        <Text style={styles.mission}>Missão 3 </Text>
-                                        <Text style={styles.condition}>Condição</Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row'}}>
-                                        <Clock style={styles.clockButton}/>
-                                        <Text style={styles.mission}>Missão 4 </Text>
-                                        <Text style={styles.condition}>Condição</Text>
-                                        
+                                        <Text style={styles.mission}>Alimente seu bichinho 1 vez</Text>
+                                        <Text style={styles.condition}>0/1</Text>
                                     </View>
                                 </View>
                             </View>
@@ -453,15 +448,16 @@ const Jogo = () => {
                                     </TouchableOpacity> */}
                                 <View style={{flex: 1, transform: [{scale: 0.9}]}}>
                                     <Text style={styles.statusTitle}>Tarefas Semanais</Text>
-                                    <View style={{flexDirection: 'row', top: 10}}>
-                                        <Clock style={styles.clockButton}/>
+                                    {/* <View style={{flexDirection: 'row', top: 10}}> */}
+                                    <View>
+                                        <Clock style={styles.clockButton2}/>
                                         {/* Atenção, essas duas linhas (e todos os outros desafios) tem que ser substituidos por desafios do banco de dados, no caso
                                         é separado em texto, ou seja, a descrição da missão, e a condição, que vai ser o x/x, por exemplo: "alimente o bichinho
                                         3 vezes", "2/3". Tecnicamente falando, as tarefas semanais são as exatas mesmas das diárias, só que mais longas */}
-                                        <Text style={styles.mission}>Missão 1 </Text>
-                                        <Text style={styles.condition}>Condição</Text>
+                                        <Text style={styles.mission}>Alimente seu bichinho 5 vezes</Text>
+                                        <Text style={styles.condition}>0/5</Text>
                                     </View>
-                                    <View style={{flexDirection: 'row'}}>
+                                    {/* <View style={{flexDirection: 'row'}}>
                                         <Clock style={styles.clockButton}/>
                                         <Text style={styles.mission}>Missão 2 </Text>
                                         <Text style={styles.condition}>Condição</Text>
@@ -475,22 +471,22 @@ const Jogo = () => {
                                         <Clock style={styles.clockButton}/>
                                         <Text style={styles.mission}>Missão 4 </Text>
                                         <Text style={styles.condition}>Condição</Text>                                        
-                                    </View>
+                                    </View> */}
                                 </View>
                             </View>
                         )}
-                        {visPass &&  (
-                            <View style={styles.statusContainer}>
-                                    {/* <TouchableOpacity onPress={handlePass}>
-                                        <Back style={styles.backButton}/>
-                                    </TouchableOpacity> */}
-                                <View style={{flex: 1, alignItems: 'center'}}>
-                                    <Text style={styles.statusPassosTitle}>Contagem de Passos</Text>
-                                    <Image source={images['passos2']} style={styles.passosIcon}/>
-                                    <Text style={styles.statusTitle}>Passos: {currentStepCount}</Text>
-                                </View>
-                            </View>
-                        )}
+                        {/* {visPass &&  ( */}
+                            {/* // <View style={styles.statusContainer}> */}
+                                    {/* {/* <TouchableOpacity onPress={handlePass}> */}
+                                        {/* // <Back style={styles.backButton}/> */}
+                                    {/* // </TouchableOpacity> */}
+                                {/* <View style={{flex: 1, alignItems: 'center'}}> */}
+                                    {/* <Text style={styles.statusPassosTitle}>Contagem de Passos</Text> */}
+                                    {/* <Image source={images['passos2']} style={styles.passosIcon}/> */}
+                                    {/* <Text style={styles.statusTitle}>Passos: {currentStepCount}</Text> */}
+                                {/* </View> */}
+                            {/* </View> */}
+                        {/* // )} */}
                         {visShop &&  (
                             <View style={styles.statusContainer}>
                                     {/* <TouchableOpacity onPress={handleShop}>
@@ -568,16 +564,22 @@ const Jogo = () => {
                                                 <Text style={styles.modalText2}>Tarefas Semanais</Text>
                                             </View>
                                         </TouchableOpacity>
-                                        <TouchableOpacity onPress={handlePass}>
+                                        {/* <TouchableOpacity onPress={handlePass}>
                                             <View style={{flexDirection: 'row', alignItems: 'left'}}>
                                                 <Passos style={styles.statusButtons}/>
                                                 <Text style={styles.modalText2}>Contador de Passos</Text>
                                             </View>
-                                        </TouchableOpacity>
+                                        </TouchableOpacity> */}
                                         <TouchableOpacity onPress={handleShop}>
                                             <View style={{flexDirection: 'row', alignItems: 'left'}}>
                                                 <Shop style={styles.statusButtons}/>
                                                 <Text style={styles.modalText2}>Mais Pets</Text>
+                                                {/* <Text>Nome do Pet: {escolha}</Text> */}
+                                            </View>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={handleIncremento}>
+                                            <View style={{flexDirection: 'row', alignItems: 'left'}}>
+                                                <Text style={styles.modalTextBeta}>Reseta Incremento</Text>
                                                 {/* <Text>Nome do Pet: {escolha}</Text> */}
                                             </View>
                                         </TouchableOpacity>
