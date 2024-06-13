@@ -1,5 +1,5 @@
 // Library Imports
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Text, Button, View, Animated, TouchableOpacity, ImageBackground, Image, Platform, TouchableWithoutFeedback, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -32,7 +32,6 @@ const Jogo = () => {
     const [visMenu, setVisMenu] = useState(false);
     const [visDia, setVisDia] = useState(false);
     const [visSem, setVisSem] = useState(false);
-    const [visPass, setVisPass] = useState(false);
     const [visShop, setVisShop] = useState(false);
     const [progresso, setProgresso] = useState({
         health: 0.7, 
@@ -74,12 +73,59 @@ const Jogo = () => {
         'wickiked':   require('./assets/pets/wickiked.png'),
     }
 
+    const petImages = {
+        1: require('./assets/pets/tinkazilla.png'),
+        2: require('./assets/pets/tinkazilla1.png'),
+        3: require('./assets/pets/tinkazilla2.png'),
+        4: require('./assets/pets/rocked.png'),
+        5: require('./assets/pets/rocked1.png'),
+        6: require('./assets/pets/rocked2.png'),
+        7: require('./assets/pets/carnivalt.png'),
+        8: require('./assets/pets/carnivalt1.png'),
+        9: require('./assets/pets/carnivalt2.png'),
+        10: require('./assets/pets/asphalt.png'),
+        11: require('./assets/pets/asphalt1.png'),
+        12: require('./assets/pets/asphalt1.png'),
+        13: require('./assets/pets/banabat.png'),
+        14: require('./assets/pets/banabat1.png'),
+        15: require('./assets/pets/banabat1.png'),
+        16: require('./assets/pets/brekorb.png'),
+        17: require('./assets/pets/brekorb1.png'),
+        18: require('./assets/pets/brekorb1.png'),
+        19: require('./assets/pets/bugwheel.png'),
+        20: require('./assets/pets/bugwheel1.png'),
+        21: require('./assets/pets/bugwheel1.png'),
+        22: require('./assets/pets/heradummy.png'),
+        23: require('./assets/pets/heradummy1.png'),
+        24: require('./assets/pets/heradummy1.png'),
+        25: require('./assets/pets/charcopala.png'),
+        26: require('./assets/pets/charcopala1.png'),
+        27: require('./assets/pets/charcopala1.png'),
+        28: require('./assets/pets/cromirin.png'),
+        29: require('./assets/pets/cromirin1.png'),
+        30: require('./assets/pets/cromirin2.png'),
+        31: require('./assets/pets/feveroar.png'),
+        32: require('./assets/pets/feveroar1.png'),
+        33: require('./assets/pets/feveroar1.png'),
+        34: require('./assets/pets/hydraqua.png'),
+        35: require('./assets/pets/hydraqua.png'),
+        36: require('./assets/pets/hydraqua.png'),
+        37: require('./assets/pets/minde.png'),
+        38: require('./assets/pets/minde1.png'),
+        39: require('./assets/pets/minde1.png'),
+        40: require('./assets/pets/toxtoad.png'),
+        41: require('./assets/pets/toxtoad1.png'),
+        42: require('./assets/pets/toxtoad1.png'),
+        43: require('./assets/pets/wickiked.png'),
+        44: require('./assets/pets/wickiked1.png'),
+        45: require('./assets/pets/wickiked1.png'),
+    };
+
     const setAllStates = (value) => {
         setVisibility(value);
         setVisMenu(value);
         setVisDia(value);
         setVisSem(value);
-        setVisPass(value);
         setVisShop(value);
         setCamera(value);
     }
@@ -318,54 +364,6 @@ const Jogo = () => {
         }
     };
 
-    const petImages = {
-        1: require('./assets/pets/tinkazilla.png'),
-        2: require('./assets/pets/tinkazilla1.png'),
-        3: require('./assets/pets/tinkazilla2.png'),
-        4: require('./assets/pets/rocked.png'),
-        5: require('./assets/pets/rocked1.png'),
-        6: require('./assets/pets/rocked2.png'),
-        7: require('./assets/pets/carnivalt.png'),
-        8: require('./assets/pets/carnivalt1.png'),
-        9: require('./assets/pets/carnivalt2.png'),
-        10: require('./assets/pets/asphalt.png'),
-        11: require('./assets/pets/asphalt1.png'),
-        12: require('./assets/pets/asphalt1.png'),
-        13: require('./assets/pets/banabat.png'),
-        14: require('./assets/pets/banabat1.png'),
-        15: require('./assets/pets/banabat1.png'),
-        16: require('./assets/pets/brekorb.png'),
-        17: require('./assets/pets/brekorb1.png'),
-        18: require('./assets/pets/brekorb1.png'),
-        19: require('./assets/pets/bugwheel.png'),
-        20: require('./assets/pets/bugwheel1.png'),
-        21: require('./assets/pets/bugwheel1.png'),
-        22: require('./assets/pets/heradummy.png'),
-        23: require('./assets/pets/heradummy1.png'),
-        24: require('./assets/pets/heradummy1.png'),
-        25: require('./assets/pets/charcopala.png'),
-        26: require('./assets/pets/charcopala1.png'),
-        27: require('./assets/pets/charcopala1.png'),
-        28: require('./assets/pets/cromirin.png'),
-        29: require('./assets/pets/cromirin1.png'),
-        30: require('./assets/pets/cromirin2.png'),
-        31: require('./assets/pets/feveroar.png'),
-        32: require('./assets/pets/feveroar1.png'),
-        33: require('./assets/pets/feveroar1.png'),
-        34: require('./assets/pets/hydraqua.png'),
-        35: require('./assets/pets/hydraqua.png'),
-        36: require('./assets/pets/hydraqua.png'),
-        37: require('./assets/pets/minde.png'),
-        38: require('./assets/pets/minde1.png'),
-        39: require('./assets/pets/minde1.png'),
-        40: require('./assets/pets/toxtoad.png'),
-        41: require('./assets/pets/toxtoad1.png'),
-        42: require('./assets/pets/toxtoad1.png'),
-        43: require('./assets/pets/wickiked.png'),
-        44: require('./assets/pets/wickiked1.png'),
-        45: require('./assets/pets/wickiked1.png'),
-    };
-
     if (hasPermission === null) {
         return <View />;
     }
@@ -398,9 +396,6 @@ const Jogo = () => {
                         <ImageBackground source={images['fundo']} style={styles.fundoContainer}>
                         {visMenu &&  (
                             <View style={styles.statusContainer}>
-                                    {/* <TouchableOpacity onPress={handleStatus}>
-                                        <Back style={styles.backButton}/>
-                                    </TouchableOpacity> */}
                                 <View style={{flex: 1, alignItems: 'center'}}>
                                 <Text style={styles.statusTitle}>Status</Text>
                                     {status && (
