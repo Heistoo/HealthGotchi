@@ -113,7 +113,8 @@ const styles = StyleSheet.create({
       display: 'flex',
       flexDirection: 'row',
       alignItems: "left",
-      paddingLeft: "10%",
+      paddingLeft: "5%",
+      flexWrap: 'wrap'
     },
     pets:{
       height: 80, 
