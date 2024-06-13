@@ -49,6 +49,8 @@ const Jogo = () => {
     const [status, setStatus] = useState(null);
     //Camera
     const [camera, setCamera] = useState(null)
+    const [error, setError] = useState(null);
+    const [missoes, setMissoes] = useState([]);
 
 
     // Image Usage
@@ -151,18 +153,22 @@ const Jogo = () => {
         setter((currentValue) => !currentValue);
     };
 
-    const handleStatus = () => {
-        // Qualquer outra lógica que você tenha para quando "Status do Pet" for selecionado
-        handleVisibility(setVisMenu);
-        fetchStatus(); // Chama a função para buscar os status atualizados
-    };
+    // const handleStatus = () => {
+    //     // Qualquer outra lógica que você tenha para quando "Status do Pet" for selecionado
+    //     handleVisibility(setVisMenu);
+    //     fetchStatus(); // Chama a função para buscar os status atualizados
+    // };
     
     const handleStatus = () => {
         // Qualquer outra lógica que você tenha para quando "Status do Pet" for selecionado
         handleVisibility(setVisMenu);
         fetchStatus(); // Chama a função para buscar os status atualizados
     };
-    const handleDia = () => handleVisibility(setVisDia);
+    const handleDia = async () => {
+        handleVisibility(setVisDia);
+        await fetchMissoes();
+        await verificarMissao();
+    }
     const handleSem = () => handleVisibility(setVisSem);
     // const handlePass = () => handleVisibility(setVisPass);
     const handleShop = () => handleVisibility(setVisShop);
@@ -292,6 +298,73 @@ const Jogo = () => {
         }
     };
 
+    const verificarMissao = async () => {
+        try {
+            const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/verificar_missao`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ usuarioId: await getUsuarioId()})
+            });
+            const data = await response.json();
+            console.log(data);
+            if (response.ok) {
+                if (data.message) {
+                    alert(data.message); // Exibir mensagem de sucesso
+                } else {
+                    alert(data.error || 'Erro desconhecido'); // Exibir mensagem de erro
+                }
+            } else {
+                alert('Erro ao verificar missão'); // Exibir mensagem de erro de requisição
+            }
+        } catch (error) {
+            alert('Erro ao verificar missão'); // Exibir mensagem de erro ao fazer a requisição
+            console.error(error);
+        }
+    };
+
+    const fetchStatus = async () => {
+        try {
+            const usuarioId = await getUsuarioId();
+            const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/select_status?usuarioId=${parseInt(usuarioId)}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Dados recebidos:', data); // Log para depuração
+                setStatus(data);
+            } else {
+                const errorData = await response.json();
+                console.error('Erro na resposta do servidor:', errorData);
+                Alert.alert('Erro', `Erro na resposta do servidor: ${errorData.error}`);
+            }
+        } catch (error) {
+            console.error('Erro na conexão:', error);
+            Alert.alert('Erro', `Erro na conexão: ${error.message}`);
+        }
+    };
+
+    const fetchMissoes = async () => {
+        try {
+            const usuarioId = await getUsuarioId();
+            const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/missao_diaria?usuarioId=${usuarioId}`);
+            const data = await response.json();
+            
+            if (response.ok) {
+                console.log(data);
+                setMissoes(data);
+            } else {
+                setError(data.error);
+            }
+        } catch (error) {
+            setError("Erro ao buscar missões");
+        }
+    };
+
     const petImages = {
         1: require('./assets/pets/tinkazilla.png'),
         2: require('./assets/pets/tinkazilla1.png'),
@@ -348,29 +421,7 @@ const Jogo = () => {
         return <Text>No access to camera</Text>;
     }
 
-    const fetchStatus = async () => {
-        try {
-            const usuarioId = await getUsuarioId();
-            const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/select_status?usuarioId=${parseInt(usuarioId)}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            });
-            if (response.ok) {
-                const data = await response.json();
-                console.log('Dados recebidos:', data); // Log para depuração
-                setStatus(data);
-            } else {
-                const errorData = await response.json();
-                console.error('Erro na resposta do servidor:', errorData);
-                Alert.alert('Erro', `Erro na resposta do servidor: ${errorData.error}`);
-            }
-        } catch (error) {
-            console.error('Erro na conexão:', error);
-            Alert.alert('Erro', `Erro na conexão: ${error.message}`);
-        }
-    };
+    
 
     return (
         <SafeAreaView style={styles.container}>
@@ -390,8 +441,7 @@ const Jogo = () => {
                             type={Camera.Constants.Type.back}
                             ref={cameraRef}
                         />
-                    ): (
-                        
+                    ): (                       
                         <ImageBackground source={images['fundo']} style={styles.fundoContainer}>
                         {visMenu &&  (
                             <View style={styles.statusContainer}>
@@ -400,27 +450,27 @@ const Jogo = () => {
                                     </TouchableOpacity> */}
                                 <View style={{flex: 1, alignItems: 'center'}}>
 
-//                                     <Text style={styles.statusTitle}>Status</Text>
-//                                     <View style={{ alignItems: 'center'}}>
-//                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-//                                             <Health style={styles.statusButtons}/>
-//                                             <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.health} borderColor={'transparent'}/>
-//                                         </View>
-//                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-//                                             <Energy style={styles.statusButtons}/>
-//                                             <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.energy} borderColor={'transparent'}/>
-//                                         </View>
-//                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-//                                             <Happy style={styles.statusButtons}/>
-//                                             <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.happy} borderColor={'transparent'}/>
-//                                         </View>
-//                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-//                                             <Strength style={styles.statusButtons}/>
-//                                             <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.strength} borderColor={'transparent'}/>
-//                                         </View>
-//                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-//                                             <Resistance style={styles.statusButtons}/>
-//                                             <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.resistance} borderColor={'transparent'}/>
+                                     {/* <Text style={styles.statusTitle}>Status</Text>
+                                    <View style={{ alignItems: 'center'}}>
+                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                             <Health style={styles.statusButtons}/>
+                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.health} borderColor={'transparent'}/>
+                                         </View>
+                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                             <Energy style={styles.statusButtons}/>
+                                             <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.energy} borderColor={'transparent'}/>
+                                         </View>
+                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                             <Happy style={styles.statusButtons}/>
+                                             <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.happy} borderColor={'transparent'}/>
+                                         </View>
+                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                             <Strength style={styles.statusButtons}/>
+                                             <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.strength} borderColor={'transparent'}/>
+                                      </View>
+                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                             <Resistance style={styles.statusButtons}/>
+                                             <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.resistance} borderColor={'transparent'}/> */}
 
                                 <Text style={styles.statusTitle}>Status</Text>
                                     {status && (
@@ -459,14 +509,21 @@ const Jogo = () => {
                                     </TouchableOpacity> */}
                                 <View style={{flex: 1, transform: [{scale: 0.9}]}}>
                                     <Text style={styles.statusTitle}>Tarefas Diárias</Text>
-                                    <View>
-                                        <Clock style={styles.clockButton}/>
-                                        {/* Atenção, essas duas linhas (e todos os outros desafios) tem que ser substituidos por desafios do banco de dados, no caso
-                                        é separado em texto, ou seja, a descrição da missão, e a condição, que vai ser o x/x, por exemplo: "alimente o bichinho
-                                        3 vezes", "2/3". Tecnicamente falando, as tarefas semanais são as exatas mesmas das diárias, só que mais longas */}
-                                        <Text style={styles.mission}>Alimente seu bichinho 1 vez</Text>
-                                        <Text style={styles.condition}>0/1</Text>
-                                    </View>
+                                    {error ? (
+                                        <Text style={styles.errorText}>{error}</Text>
+                                    ) : (
+                                        missoes && (
+                                            <View style={{ flexDirection: 'row', top: 10 }}>
+                                                <Clock style={styles.clockButton} />
+                                                <Text style={styles.mission}>
+                                                    Missao: {missoes['descricao']}
+                                                </Text>
+                                                <Text style={styles.condition}>
+                                                    Progresso: {missoes['progresso']}
+                                                </Text>
+                                            </View>
+                                        )
+                                    )}
                                 </View>
                             </View>
                         )}

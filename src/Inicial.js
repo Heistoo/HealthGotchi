@@ -66,7 +66,7 @@ const Inicial = () => {
         // Chame a função para criar o bichinho no backend
         try {
           await AsyncStorage.setItem('escolha', escolha.toString());
-          const resultado = await criarBichinho(especie, usuarioId);
+          const resultado = await criarBichinho(nomePet, usuarioId);
           if (resultado) {
             navigation.navigate('Jogo');
           }
