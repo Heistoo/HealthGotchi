@@ -114,7 +114,7 @@ function AppScreen({ navigation }) {
         const usuarioId = await fetchUserId(email, senha);
         if (usuarioId) {
           await AsyncStorage.setItem('usuario_id', usuarioId.toString());
-          Alert.alert('Usuário registrado com sucesso!');
+          // Alert.alert('Usuário registrado com sucesso!');
           navigation.navigate('Inicial');
         }
       } else {

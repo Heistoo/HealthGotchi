@@ -107,7 +107,7 @@ const Login = () => {
         <SafeAreaView style={styles.container2}>
             <ImageBackground source={images['login']} style={styles.containerbg}>
                 <View style={styles.titleContainer2}>
-                    <Tinka style={styles.tinka}/>
+                    <Tinka style={styles.tinka} />
                     <Text style={styles.titulo2}>HealthGotchi</Text>
                 </View>
                 <View style={styles.mainContainer}>
@@ -120,13 +120,13 @@ const Login = () => {
                         />
                         <Text style={styles.placeholder2}>Senha</Text>
                         <View style={styles.passwordContainer}>
-                          <TextInput
-                              style={[styles.input2, styles.roundedInput, styles.passwordInput]}
-                              secureTextEntry={!showPassword}
-                              value={senha}
-                              onChangeText={setSenha}
-                          />
-                          <TouchableOpacity onPress={toggleShowPassword} style={styles.iconContainer}>
+                            <TextInput
+                                style={[styles.input2, styles.roundedInput, styles.passwordInput]}
+                                secureTextEntry={!showPassword}
+                                value={senha}
+                                onChangeText={setSenha}
+                            />
+                            <TouchableOpacity onPress={toggleShowPassword} style={styles.iconContainer}>
                                 <MaterialCommunityIcons 
                                     name={showPassword ? 'eye-off' : 'eye'} 
                                     size={24} 
@@ -159,8 +159,9 @@ const Login = () => {
                             <Text style={{color: '#4D73FA'}}>Escolhe Inicial</Text>
                         </TouchableOpacity>
                         <View style={styles.containerIcon}>
-//                             <FB style={styles.imageLogo}/>
-//                             <Social2 style={styles.imageLogo2}/>
+                            {/* Se os componentes FB e Social2 forem imagens ou outros componentes, certifique-se de que não estão causando problemas */}
+                            {/* <FB style={styles.imageLogo} />
+                            <Social2 style={styles.imageLogo2} /> */}
                         </View>
                     </View>
                 </View>
