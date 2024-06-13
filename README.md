@@ -1,13 +1,14 @@
 # HealthGotchi - WIP
 3rd College project.
 
-Reactjs Game based on Pokemon with subjects, functions and gameplay following on a healthy lifestyle. 
-Will utilize GPS functions such as Google Maps alongside with having a diverse collection of Pokemon, calendar with daily and weekly activities for the user to work with and more.
+React.js Game based on Pokemon with subjects, functions and gameplay following on a healthy lifestyle. 
+Will utilize A.I recognition for gameplay alongside with having a diverse collection of Pokemon and a calendar of daily missions to complete.
 
 ## Basic Information
-| Languages being utilized  |
+| Programming Languages  |
 | ------------- |
 | React  |
+| Python  |
 | AWS for back-end  |
 | JavaScript  |
 | Node.js  |
