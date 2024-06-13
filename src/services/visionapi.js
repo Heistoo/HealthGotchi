@@ -98,10 +98,6 @@ const aumentarProgresso = async (usuarioId, grupo) => {
                     console.error('Resposta não JSON:', text);
                     alert(`Resposta inesperada do servidor: ${text}`);
                 }
-            } else {
-                // const errorData = await res.json();
-                // // console.error('Erro na resposta:', errorData);
-                // // alert(`Erro ao aumentar progresso: ${errorData.error}`);
             }
         } else {
             console.log(`Grupo ${grupo} não é válido para aumentar progresso.`);
