@@ -501,26 +501,24 @@ const Jogo = () => {
                             </View>
                         )}
                         {/*A partir daqui, criar cada uma das telas */}
-                        {visDia &&  (
+                        {visDia && (
                             <View style={styles.statusContainer}>
-                                {/*Implementar as missões*/}
-                                    {/* <TouchableOpacity onPress={handleDia}>
-                                        <Back style={styles.backButton}/>
-                                    </TouchableOpacity> */}
-                                <View style={{flex: 1, transform: [{scale: 0.9}]}}>
+                                {/* Implementar as missões */}
+                                {/* <TouchableOpacity onPress={handleDia}>
+                                    <Back style={styles.backButton}/>
+                                </TouchableOpacity> */}
+                                <View style={{ flex: 1, transform: [{ scale: 0.9 }] }}>
                                     <Text style={styles.statusTitle}>Tarefas Diárias</Text>
                                     {error ? (
                                         <Text style={styles.errorText}>{error}</Text>
                                     ) : (
                                         missoes && (
-                                            <View style={{ flexDirection: 'row', top: 10 }}>
-                                                <Clock style={styles.clockButton} />
-                                                <Text style={styles.mission}>
-                                                    Missao: {missoes['descricao']}
-                                                </Text>
-                                                <Text style={styles.condition}>
-                                                    Progresso: {missoes['progresso']}
-                                                </Text>
+                                            <View style={{ flexDirection: 'column', top: 10, width: '100%' }}>
+                                                <View style={{ flexDirection: 'row' }}>
+                                                    <Clock style={styles.clockButton} />
+                                                    <Text style={styles.mission}>Missao: {missoes['descricao']}</Text>
+                                                </View>
+                                                <Text style={styles.condition}>Progresso: {missoes['progresso']}</Text>
                                             </View>
                                         )
                                     )}
@@ -533,33 +531,6 @@ const Jogo = () => {
                                     {/* <TouchableOpacity onPress={handleSem}>
                                         <Back style={styles.backButton}/>
                                     </TouchableOpacity> */}
-                                <View style={{flex: 1, transform: [{scale: 0.9}]}}>
-                                    <Text style={styles.statusTitle}>Tarefas Semanais</Text>
-                                    {/* <View style={{flexDirection: 'row', top: 10}}> */}
-                                    <View>
-                                        <Clock style={styles.clockButton2}/>
-                                        {/* Atenção, essas duas linhas (e todos os outros desafios) tem que ser substituidos por desafios do banco de dados, no caso
-                                        é separado em texto, ou seja, a descrição da missão, e a condição, que vai ser o x/x, por exemplo: "alimente o bichinho
-                                        3 vezes", "2/3". Tecnicamente falando, as tarefas semanais são as exatas mesmas das diárias, só que mais longas */}
-                                        <Text style={styles.mission}>Alimente seu bichinho 5 vezes</Text>
-                                        <Text style={styles.condition}>0/5</Text>
-                                    </View>
-                                    {/* <View style={{flexDirection: 'row'}}>
-                                        <Clock style={styles.clockButton}/>
-                                        <Text style={styles.mission}>Missão 2 </Text>
-                                        <Text style={styles.condition}>Condição</Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row'}}>
-                                        <Clock style={styles.clockButton}/>
-                                        <Text style={styles.mission}>Missão 3 </Text>
-                                        <Text style={styles.condition}>Condição</Text>
-                                    </View>
-                                    <View style={{flexDirection: 'row'}}>
-                                        <Clock style={styles.clockButton}/>
-                                        <Text style={styles.mission}>Missão 4 </Text>
-                                        <Text style={styles.condition}>Condição</Text>                                        
-                                    </View> */}
-                                </View>
                             </View>
                         )}
                         {/* {visPass &&  ( */}
@@ -643,12 +614,6 @@ const Jogo = () => {
                                             <View style={{flexDirection: 'row', alignItems: 'left'}}>
                                                 <Tarefas style={styles.statusButtons}/>
                                                 <Text style={styles.modalText2}>Tarefas Diárias</Text>
-                                            </View>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity onPress={handleSem}>
-                                            <View style={{flexDirection: 'row', alignItems: 'left'}}>
-                                                <Tarefas style={styles.statusButtons}/>
-                                                <Text style={styles.modalText2}>Tarefas Semanais</Text>
                                             </View>
                                         </TouchableOpacity>
                                         {/* <TouchableOpacity onPress={handlePass}>

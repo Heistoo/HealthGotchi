@@ -32,18 +32,18 @@ def verificar_missao():
     missao_atual = missao_atual_do_usuario(usuario_id)
     
     if missao_atual is None:
-        return jsonify({"error": "Erro ao obter a missão atual do usuário."}), 404
+        return jsonify({"error": "Erro ao obter a missão atual do usuário."}), 401
 
     criterios = pegar_criterio_numero_e_tipo(missao_atual)
     
     if "error" in criterios:
-        return jsonify(criterios), 404
+        return jsonify(criterios), 402
     
     criterio_numero = criterios.get('criterio_numero')
     criterio_tipo = criterios.get('criterio_tipo')
 
     if not criterio_tipo or not criterio_numero:
-        return jsonify({"error": "Critérios não encontrados."}), 404
+        return jsonify({"error": "Critérios não encontrados."}), 403
     
     progresso = criterios.get('progresso')
 
