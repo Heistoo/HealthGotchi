@@ -9,7 +9,6 @@ Will utilize A.I recognition for gameplay alongside with having a diverse collec
 | ------------- |
 | React  |
 | Python  |
-| AWS for back-end  |
 | JavaScript  |
 | Node.js  |
 
