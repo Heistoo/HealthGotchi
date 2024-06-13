@@ -131,42 +131,42 @@ const Inicial = () => {
 
     return (
       <SafeAreaView style={styles.containerInicial}>
-      <View style={styles.modalBackground}></View>
-      <Modal
-      animationType="slide"
-      transparent={true}
-      visible={modalVisible}
-      onRequestClose={() => {
-        popUp();
-      }}
-      >
-      <View style={styles.modalBackground}>
-        <View style={styles.modalContent}>
-          <Text style={styles.modalText}>Bem Vindo ao HeathGotchi, com o nosso aplicativo você escaneia alimentos para deixar seu pet e você saudáveis, dito isso, você pode apertar o botão da câmera para escanear alimentos a cada 3 horas, se você não alimentar seu pet em certo tempo os status dele cairão, e se fizer tudo certo ele vai evoluir, dito isso vamos escolher um pet para você.</Text>
-          <Button title="OK" onPress={() => setModalVisible(false)} color="#26295E" />
+        <View style={styles.modalBackground}></View>
+        <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          popUp();
+        }}
+        >
+        <View style={styles.modalBackground}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalText}>Bem Vindo ao HeathGotchi, com o nosso aplicativo você escaneia alimentos para deixar seu pet e você saudáveis, dito isso, você pode apertar o botão da câmera para escanear alimentos a cada 3 horas, se você não alimentar seu pet em certo tempo os status dele cairão, e se fizer tudo certo ele vai evoluir, dito isso vamos escolher um pet para você.</Text>
+            <Button title="OK" onPress={() => setModalVisible(false)} color="#26295E" />
+          </View>
         </View>
-      </View>
-      </Modal>
+        </Modal>
 
-      <Text style={styles.titulo3}>Escolha seu Inicial</Text>
+        <Text style={styles.titulo3}>Escolha seu Inicial</Text>
 
-      <View style={styles.petSelectionContainer}>
-        <TouchableOpacity onPress={handleTink} style={styles.petTouchable}>
-          <Image source={images['tinkazilla']} style={styles.petImage}/>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleRock} style={styles.petTouchable}>
-          <Image source={images['rocked']} style={styles.petImage}/>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleCarni} style={styles.petTouchable}> 
-          <Image source={images['carnivalt']} style={styles.petImage}/>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.petSelectionContainer}>
+          <TouchableOpacity onPress={handleTink} style={styles.petTouchable}>
+            <Image source={images['tinkazilla']} style={styles.petImage}/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleRock} style={styles.petTouchable}>
+            <Image source={images['rocked']} style={styles.petImage}/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleCarni} style={styles.petTouchable}> 
+            <Image source={images['carnivalt']} style={styles.petImage}/>
+          </TouchableOpacity>
+        </View>
 
-      <View style={styles.buttoncontainer2}>
-        <TouchableOpacity onPress={() => selected("Jogo")} style={buttonStyle}>
-          <Text style={styles.text}>Escolha</Text>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.buttoncontainer2}>
+          <TouchableOpacity onPress={() => selected("Jogo")} style={buttonStyle}>
+            <Text style={styles.text}>Escolha</Text>
+          </TouchableOpacity>
+        </View>
       </SafeAreaView>
     );
 }; 

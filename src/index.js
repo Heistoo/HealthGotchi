@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
   },
   // Camera box
   cameraContainer:{
-    // backgroundColor: '#FFFFFF',
     top: 40,
     width: '90%',
     height:'63%',
@@ -105,13 +104,6 @@ const styles = StyleSheet.create({
       height: 50, 
       width: 50,
     },
-    // backButton: {
-    //   height: '5%', 
-    //   width: '5%',
-    //   position: 'absolute',
-    //   left: 40,
-    //   bottom: -400,
-    // },
     passosIcon: {
       height: '60%', 
       width: '60%',
@@ -184,8 +176,6 @@ const styles = StyleSheet.create({
     tinka:{
       width: 70,
       height: 70,
-      // alignSelf: 'flex-center',
-      // position: 'absolute',
       right: 120,
       zIndex: 1,
     },
@@ -224,7 +214,6 @@ const styles = StyleSheet.create({
       marginBottom: 20,
       borderBottomColor: '#111111',
       borderBottomWidth: 1,
-      // position:"relative",
     },
     // Login page (roundedI and input2)
     input2: {
@@ -281,18 +270,10 @@ const styles = StyleSheet.create({
     },
     imageLogo:{
       position:"relative",
-      // left:"15%",
-      // top:"70%",
-      // width:"21%",
-      // height:"10%",
     },
     imageLogo2:{
       position:"relative",
       marginLeft: 80,
-      // left:"70%",
-      // top:"70%",
-      // width:"21%",
-      // height:"10%",
     },
     // Container for menu/camera and dir buttons
     gameContainer: {
@@ -326,9 +307,6 @@ const styles = StyleSheet.create({
       height: 55,
       position: 'absolute',
     },
-    // dirButton:{
-    //   left: 70,
-    // },
     stickerContainer: {
       display: 'flex',
       bottom: -130,

@@ -1,6 +1,6 @@
 //Library Imports
 import { registerRootComponent } from 'expo';
-import { Text, View, Image, SafeAreaView, ImageBackground, TextInput, TouchableOpacity, Linking, AppState, Alert } from 'react-native';
+import { Text, View, Image, SafeAreaView, ImageBackground, TextInput, TouchableOpacity, Alert } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -10,8 +10,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../src/index.js';
 
 // Image imports
-import FB from './assets/facebookicon.svg';
-import Social2 from './assets/social2.svg'
 import Pika from './assets/pikachu.svg';
 
 // Navigator Imports (For each screen file, add it here)
@@ -126,8 +124,6 @@ function AppScreen({ navigation }) {
 
     setLoading(false);
   };
-  //checkbox state
-  const [isChecked, setChecked] = React.useState(false);
   // on press = goes to Login page
   const handleLinkPress = (screenName) => {
     navigation.navigate(screenName);
@@ -158,8 +154,6 @@ function AppScreen({ navigation }) {
               <Text style={{color: '#4D73FA'}}>Ir para a tela de login</Text>
             </TouchableOpacity>
             <View style={styles.containerIcon}>
-              {/* <FB style={styles.imageLogo}/>
-              <Social2 style={styles.imageLogo2}/> */}
             </View>
           </View>
         </View>

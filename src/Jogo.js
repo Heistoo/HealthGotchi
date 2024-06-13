@@ -6,7 +6,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import ProgressBar from 'react-native-progress/Bar';
 import { Camera } from 'expo-camera/legacy';
-import { Pedometer } from 'expo-sensors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Stylesheet
@@ -18,7 +17,6 @@ import Resistance from './assets/menu/resistance.svg'
 import Health from './assets/menu/health.svg'
 import Happy from './assets/menu/happiness.svg' 
 import Energy from './assets/menu/energy.svg'
-import Passos from './assets/menu/passos.svg'
 import Status from './assets/menu/status.svg'
 import Tarefas from './assets/menu/tarefas.svg'
 import Shop from './assets/menu/shop.svg'
@@ -36,9 +34,6 @@ const Jogo = () => {
     const [visSem, setVisSem] = useState(false);
     const [visPass, setVisPass] = useState(false);
     const [visShop, setVisShop] = useState(false);
-    const [isPedometerAvailable, setIsPedometerAvailable] = useState("checking");
-    const [pastStepCount, setPastStepCount] = useState(0);
-    const [currentStepCount, setCurrentStepCount] = useState(0);
     const [progresso, setProgresso] = useState({
         health: 0.7, 
         energy: 0.7,
@@ -47,6 +42,7 @@ const Jogo = () => {
         resistance: 0.7,
     });
     const [status, setStatus] = useState(null);
+
     //Camera
     const [camera, setCamera] = useState(null)
     const [error, setError] = useState(null);
@@ -107,41 +103,6 @@ const Jogo = () => {
         setVisibility(!visibility);
     }
 
-    //Pedômetro
-    useEffect(() => {
-        // Verifica se o Pedometer está disponível
-        Pedometer.isAvailableAsync().then(
-            result => {
-                setIsPedometerAvailable(String(result));
-            },
-            error => {
-                setIsPedometerAvailable("Could not get isPedometerAvailable: " + error);
-            }
-        );
-
-        // Inscreve-se para contar os passos atuais
-        const subscription = Pedometer.watchStepCount(result => {
-            setCurrentStepCount(result.steps);
-        });
-
-        // Obtém a contagem de passos das últimas 24 horas
-        const end = new Date();
-        const start = new Date();
-        start.setDate(end.getDate() - 1);
-
-        Pedometer.getStepCountAsync(start, end).then(
-            result => {
-                setPastStepCount(result.steps);
-            },
-            error => {
-                setPastStepCount("Could not get stepCount: " + error);
-            }
-        );
-
-        // Limpeza na desmontagem do componente
-        return () => subscription && subscription.remove();
-    }, []);
-
     //Direcional
     const handleDir = () => {
         console.log('Interagindo com o pet...');
@@ -152,15 +113,8 @@ const Jogo = () => {
         setVisibility(!visibility);
         setter((currentValue) => !currentValue);
     };
-
-    // const handleStatus = () => {
-    //     // Qualquer outra lógica que você tenha para quando "Status do Pet" for selecionado
-    //     handleVisibility(setVisMenu);
-    //     fetchStatus(); // Chama a função para buscar os status atualizados
-    // };
     
     const handleStatus = () => {
-        // Qualquer outra lógica que você tenha para quando "Status do Pet" for selecionado
         handleVisibility(setVisMenu);
         fetchStatus(); // Chama a função para buscar os status atualizados
     };
@@ -170,7 +124,6 @@ const Jogo = () => {
         await verificarMissao();
     }
     const handleSem = () => handleVisibility(setVisSem);
-    // const handlePass = () => handleVisibility(setVisPass);
     const handleShop = () => handleVisibility(setVisShop);
 
     const handleIncremento = () => {
@@ -449,29 +402,6 @@ const Jogo = () => {
                                         <Back style={styles.backButton}/>
                                     </TouchableOpacity> */}
                                 <View style={{flex: 1, alignItems: 'center'}}>
-
-                                     {/* <Text style={styles.statusTitle}>Status</Text>
-                                    <View style={{ alignItems: 'center'}}>
-                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                             <Health style={styles.statusButtons}/>
-                                            <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.health} borderColor={'transparent'}/>
-                                         </View>
-                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                             <Energy style={styles.statusButtons}/>
-                                             <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.energy} borderColor={'transparent'}/>
-                                         </View>
-                                         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                             <Happy style={styles.statusButtons}/>
-                                             <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.happy} borderColor={'transparent'}/>
-                                         </View>
-                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                             <Strength style={styles.statusButtons}/>
-                                             <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.strength} borderColor={'transparent'}/>
-                                      </View>
-                                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                                             <Resistance style={styles.statusButtons}/>
-                                             <ProgressBar width={100} height={20} animated={true} color={'orange'} progress={progresso.resistance} borderColor={'transparent'}/> */}
-
                                 <Text style={styles.statusTitle}>Status</Text>
                                     {status && (
                                         <View style={{ alignItems: 'center' }}>
@@ -500,13 +430,8 @@ const Jogo = () => {
                                 </View>
                             </View>
                         )}
-                        {/*A partir daqui, criar cada uma das telas */}
                         {visDia && (
                             <View style={styles.statusContainer}>
-                                {/* Implementar as missões */}
-                                {/* <TouchableOpacity onPress={handleDia}>
-                                    <Back style={styles.backButton}/>
-                                </TouchableOpacity> */}
                                 <View style={{ flex: 1, transform: [{ scale: 0.9 }] }}>
                                     <Text style={styles.statusTitle}>Tarefas Diárias</Text>
                                     {error ? (
@@ -526,34 +451,13 @@ const Jogo = () => {
                             </View>
                         )}
                         {visSem &&  (
-                            <View style={styles.statusContainer}>
-                                {/*Implementar as missões*/}
-                                    {/* <TouchableOpacity onPress={handleSem}>
-                                        <Back style={styles.backButton}/>
-                                    </TouchableOpacity> */}
-                            </View>
+                            <View style={styles.statusContainer}></View>
                         )}
-                        {/* {visPass &&  ( */}
-                            {/* // <View style={styles.statusContainer}> */}
-                                    {/* {/* <TouchableOpacity onPress={handlePass}> */}
-                                        {/* // <Back style={styles.backButton}/> */}
-                                    {/* // </TouchableOpacity> */}
-                                {/* <View style={{flex: 1, alignItems: 'center'}}> */}
-                                    {/* <Text style={styles.statusPassosTitle}>Contagem de Passos</Text> */}
-                                    {/* <Image source={images['passos2']} style={styles.passosIcon}/> */}
-                                    {/* <Text style={styles.statusTitle}>Passos: {currentStepCount}</Text> */}
-                                {/* </View> */}
-                            {/* </View> */}
-                        {/* // )} */}
                         {visShop &&  (
                             <View style={styles.statusContainer}>
-                                    {/* <TouchableOpacity onPress={handleShop}>
-                                        {/* <Back style={styles.backButton}/> */}
-                                    {/* </TouchableOpacity> */}
                                 <View style={{flex: 1, left: 10}}>
                                     <Text style={styles.statusTitle}>Desbloqueáveis</Text>
                                     <View style={styles.petIcons}>
-                                        {/*Observação: vai ser necessário criar um método de desbloquear eles e implementar no jogo*/}
                                         <TouchableOpacity>                                            
                                             <Image source={images['asphalt']} style={styles.pets}/>
                                         </TouchableOpacity>
@@ -601,7 +505,6 @@ const Jogo = () => {
                         {visibility &&  (
                             <View style={styles.statusContainer}>
                                 <View style={{flex: 1, alignItems: 'center', transform: [{scale: 0.9}]}}>
-                                    {/* <Menu style={styles.statusButtons}/> */}
                                     <Text style={styles.statusTitle}>Menu</Text>
                                     <View style={{ alignItems: 'left'}}>
                                         <TouchableOpacity onPress={handleStatus}>
@@ -616,23 +519,15 @@ const Jogo = () => {
                                                 <Text style={styles.modalText2}>Tarefas Diárias</Text>
                                             </View>
                                         </TouchableOpacity>
-                                        {/* <TouchableOpacity onPress={handlePass}>
-                                            <View style={{flexDirection: 'row', alignItems: 'left'}}>
-                                                <Passos style={styles.statusButtons}/>
-                                                <Text style={styles.modalText2}>Contador de Passos</Text>
-                                            </View>
-                                        </TouchableOpacity> */}
                                         <TouchableOpacity onPress={handleShop}>
                                             <View style={{flexDirection: 'row', alignItems: 'left'}}>
                                                 <Shop style={styles.statusButtons}/>
                                                 <Text style={styles.modalText2}>Mais Pets</Text>
-                                                {/* <Text>Nome do Pet: {escolha}</Text> */}
                                             </View>
                                         </TouchableOpacity>
                                         <TouchableOpacity onPress={handleIncremento}>
                                             <View style={{flexDirection: 'row', alignItems: 'left'}}>
                                                 <Text style={styles.modalTextBeta}>Reseta Incremento</Text>
-                                                {/* <Text>Nome do Pet: {escolha}</Text> */}
                                             </View>
                                         </TouchableOpacity>
                                     </View>
@@ -640,7 +535,6 @@ const Jogo = () => {
                             </View>
                         )}
                         <TouchableOpacity onPress={handleDir}>
-                            {/* {escolha !== 0 && (<Animated.Image source={petImages[escolha]}style={[styles.pika2,{transform: [{translateY: moveAnim,},],},]}/>)} */}
                             {escolha !== 0 && (<Animated.Image source={petImages[escolha]}style={[styles.pika2,{transform: [{translateX: moveAnim,},],},]}/>)}
                         </TouchableOpacity>
                     </ImageBackground>
